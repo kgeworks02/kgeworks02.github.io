@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TALKTIDE | 제품 소개</title>
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet"/>
+<style>
+/* 글꼴 순서: ① 컴퓨터에 설치된 Pretendard → ② 같은 폴더의 fonts/ 안 파일(오프라인용) → ③ 인터넷(아래 link) */
+@font-face{font-family:'PretendardLocal';font-weight:100;font-display:swap;src:local('Pretendard Thin'),local('Pretendard-Thin'),url('fonts/Pretendard-Thin.woff2') format('woff2');}
+@font-face{font-family:'PretendardLocal';font-weight:200;font-display:swap;src:local('Pretendard ExtraLight'),local('Pretendard-ExtraLight'),url('fonts/Pretendard-ExtraLight.woff2') format('woff2');}
+@font-face{font-family:'PretendardLocal';font-weight:300;font-display:swap;src:local('Pretendard Light'),local('Pretendard-Light'),url('fonts/Pretendard-Light.woff2') format('woff2');}
+@font-face{font-family:'PretendardLocal';font-weight:400;font-display:swap;src:local('Pretendard Regular'),local('Pretendard-Regular'),url('fonts/Pretendard-Regular.woff2') format('woff2');}
+@font-face{font-family:'PretendardLocal';font-weight:500;font-display:swap;src:local('Pretendard Medium'),local('Pretendard-Medium'),url('fonts/Pretendard-Medium.woff2') format('woff2');}
+@font-face{font-family:'PretendardLocal';font-weight:600;font-display:swap;src:local('Pretendard SemiBold'),local('Pretendard-SemiBold'),url('fonts/Pretendard-SemiBold.woff2') format('woff2');}
+
+/* =========================================================
+   DESIGN TOKENS — 웜 미니멀리즘 · 네추럴 · 뮤트 (디자인 가이드)
+   ========================================================= */
+:root{
+  --bg:#FFFFFF;          /* 전체 배경: 화이트 */
+  --section-bg:#F7EDE1;  /* 서브 컬러(구분용) */
+  --text:#3D2E21;        /* 텍스트 */
+  --accent:#A2BA75;      /* 포인트 */
+  --nav:#667DAD;         /* 내비게이션 폰트 */
+  --sub:#7D6B5C; --line:#E6DCD0; --img:#F0E8DF;
+
+  --container:1440px; --margin:80px; --gutter:24px;
+  --section:96px; --title-gap:48px;
+  --ease:cubic-bezier(.22,.61,.36,1); --fast:.3s; --slow:.8s;
+  --header:80px;
+}
+@media (max-width:768px){
+  :root{--margin:20px;--gutter:16px;--section:56px;--title-gap:32px;--header:56px}
+}
+
+/* =========================================================
+   BASE + TYPOGRAPHY
+   타이틀 48 SemiBold / 서브 타이틀 32 Light / 설명1 16 ExtraLight / 설명2 14 Thin
+   ========================================================= */
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:"PretendardLocal","Pretendard","Pretendard Variable",-apple-system,BlinkMacSystemFont,sans-serif;
+  font-weight:100;font-size:14px;line-height:1.8;color:var(--text);background:var(--bg);
+  padding-top:var(--header);-webkit-font-smoothing:antialiased;
+}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit}
+.h1{font-size:48px;font-weight:600;line-height:1.3;letter-spacing:-0.01em}
+.h2{font-size:32px;font-weight:300;line-height:1.45}
+.h3{font-size:16px;font-weight:200;line-height:1.5}
+.body{font-size:14px;font-weight:100}
+.sub{color:var(--sub)}
+.eyebrow{font-size:14px;font-weight:100;letter-spacing:.1em;text-transform:uppercase;color:var(--sub)}
+@media (max-width:768px){.h1{font-size:32px}.h2{font-size:24px}}
+
+/* GRID */
+.container{max-width:var(--container);margin:0 auto;padding:0 var(--margin)}
+.grid{display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--gutter);row-gap:48px}
+@media (max-width:768px){.grid{grid-template-columns:repeat(4,1fr);row-gap:32px}}
+section.block{padding:var(--section) 0 0;scroll-margin-top:var(--header)}
+
+/* 섹션 제목: 번호 + 영문 타이틀 + 한글 설명 + 하단 선 */
+.s-head{display:grid;grid-template-columns:64px 1fr;align-items:baseline;padding-bottom:20px;border-bottom:1px solid var(--line);margin-bottom:var(--title-gap)}
+.s-head .no{font-size:14px;font-weight:100;letter-spacing:.1em;color:var(--sub)}
+.s-head .h2{text-transform:uppercase;letter-spacing:.02em}
+.s-head .desc{grid-column:2;font-size:16px;font-weight:200;color:var(--sub);margin-top:4px}
+@media (max-width:768px){.s-head{grid-template-columns:40px 1fr}}
+
+/* 이미지 자리 (실제 이미지는 style="background-image:url(...)" 로 교체) */
+.ph{position:relative;width:100%;background:var(--img) center/cover no-repeat;overflow:hidden}
+.ph::after{content:attr(data-label);position:absolute;left:12px;bottom:12px;font-size:14px;font-weight:100;letter-spacing:.1em;color:var(--text);opacity:.5}
+.ph[style*="url("]::after{content:none}
+.r1-1{aspect-ratio:1/1}.r4-3{aspect-ratio:4/3}.r3-2{aspect-ratio:3/2}.r16-9{aspect-ratio:16/9}
+
+/* 버튼: 텍스트 + 하단의 얇은 선/도형 요소 */
+.btn{position:relative;display:inline-flex;align-items:center;gap:12px;padding:0 0 10px;border:0;border-radius:0;
+  font-size:16px;font-weight:200;letter-spacing:.1em;cursor:pointer;background:none;color:var(--text)}
+.btn::before{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:currentColor}
+.btn::after{content:"";position:absolute;left:0;bottom:-2px;width:5px;height:5px;background:var(--accent);transition:left var(--fast) var(--ease)}
+.btn:hover::after{left:calc(100% - 5px)}
+.btn .arrow{display:inline-block;transition:transform var(--fast) var(--ease)}
+.btn:hover .arrow{transform:translate(3px,-3px)}
+a:focus-visible,button:focus-visible{outline:2px solid var(--nav);outline-offset:3px}
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+.header{position:fixed;top:0;left:0;right:0;z-index:50;height:var(--header);background:var(--bg);border-bottom:1px solid var(--line);transition:transform var(--fast) var(--ease)}
+.header.hide{transform:translateY(-100%)}
+.header .container{height:100%;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.logo{font-size:20px;font-weight:600;letter-spacing:.06em;white-space:nowrap}
+.nav{display:flex;gap:64px;list-style:none}
+.nav a{font-size:16px;font-weight:200;letter-spacing:.06em;color:var(--nav);padding:4px 0;border-bottom:1px solid transparent;transition:border-color var(--fast) var(--ease)}
+.nav a:hover,.nav a.active{border-color:currentColor}
+.icon{width:20px;height:20px;stroke:var(--text);stroke-width:1.3;fill:none;display:block}
+.icon-btn{position:relative;background:none;border:0;cursor:pointer;padding:4px}
+.cart-count{position:absolute;right:-6px;top:-4px;min-width:16px;height:16px;padding:0 4px;background:var(--accent);color:var(--text);
+  font-size:11px;font-weight:400;line-height:16px;text-align:center;transform:scale(0);transition:transform var(--fast) var(--ease)}
+.cart-count.show{transform:scale(1)}
+.cart-count.bump{animation:bump .5s var(--ease)}
+@keyframes bump{40%{transform:scale(1.4)}}
+.m-only{display:none}
+@media (max-width:900px){
+  .nav{display:none}
+  .m-only{display:block}
+}
+/* 메뉴 클릭 시 부드럽게 열리는 내비게이션 (모바일) */
+.m-menu{position:fixed;inset:0;z-index:60;background:var(--bg);opacity:0;visibility:hidden;transition:opacity .4s var(--ease),visibility .4s;padding:0 20px}
+.m-menu.open{opacity:1;visibility:visible}
+.m-menu-top{height:var(--header);display:flex;align-items:center;justify-content:space-between}
+.m-menu ul{list-style:none;margin-top:16px}
+.m-menu li{opacity:0;transform:translateY(-8px);transition:opacity .4s var(--ease),transform .4s var(--ease)}
+.m-menu.open li{opacity:1;transform:none}
+.m-menu li a{height:56px;display:flex;align-items:center;border-bottom:1px solid var(--line);font-size:16px;font-weight:200;letter-spacing:.06em;color:var(--nav)}
+
+/* =========================================================
+   01 HERO — 메인 제품 사용 이미지 위에 텍스트
+   ========================================================= */
+.hero{position:relative;height:min(52vw,calc(100vh - var(--header)));min-height:520px;overflow:hidden}
+.hero .ph{position:absolute;inset:0;height:100%;animation:heroImg 1.6s var(--ease) both}
+@keyframes heroImg{from{transform:scale(1.05)}to{transform:scale(1)}}
+/* 텍스트 가독성: 왼쪽만 살짝 밝게 덮음 (실제 이미지를 넣었을 때 효과가 남) */
+.hero .veil{position:absolute;inset:0;background:linear-gradient(90deg,rgba(255,255,255,.82) 0%,rgba(255,255,255,.55) 32%,rgba(255,255,255,0) 60%)}
+.hero .container{position:relative;height:100%;display:flex;flex-direction:column;justify-content:center}
+.hero-copy{max-width:640px;display:flex;flex-direction:column;gap:16px}
+.hero-copy > *{animation:riseIn .8s var(--ease) both}
+.hero-copy > *:nth-child(2){animation-delay:.1s}
+.hero-copy > *:nth-child(3){animation-delay:.2s}
+.hero-copy > *:nth-child(4){animation-delay:.3s}
+.hero-copy > *:nth-child(5){animation-delay:.4s}
+.hero-copy .h3{color:var(--sub)}
+.hero-copy .btn{align-self:flex-start;margin-top:24px}
+@keyframes riseIn{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+/* Scroll to Explore */
+.scroll-cue{position:absolute;left:0;right:0;margin:0 auto;width:max-content;bottom:24px;display:flex;flex-direction:column;align-items:center;gap:10px;
+  font-size:14px;font-weight:100;letter-spacing:.1em;animation:riseIn .8s var(--ease) .7s both}
+.scroll-cue .bar{position:relative;width:1px;height:40px;background:var(--line);overflow:hidden}
+.scroll-cue .bar::after{content:"";position:absolute;left:0;top:-40%;width:1px;height:40%;background:var(--text);animation:cue 1.8s var(--ease) infinite}
+@keyframes cue{to{top:100%}}
+@media (max-width:768px){
+  .hero{height:auto;min-height:0;aspect-ratio:auto}
+  .hero .ph{position:relative;inset:auto;aspect-ratio:4/5}
+  .hero .veil{display:none}
+  .hero .container{position:static;padding-top:32px}
+  .scroll-cue{display:none}
+}
+
+/* =========================================================
+   02 PERSONA & PROBLEM
+   ========================================================= */
+.persona{grid-column:1 / span 4}
+.persona .eyebrow{margin-top:20px}
+.persona .h2{font-size:24px;margin:4px 0 6px}
+.pain{grid-column:5 / span 8;background:var(--section-bg);padding:40px 48px}
+.pain .h3{font-size:24px;font-weight:300;margin:8px 0 24px}
+.list{list-style:none;border-top:1px solid rgba(61,46,33,.15)}
+.list li{display:grid;grid-template-columns:48px 1fr;align-items:baseline;padding:20px 0;border-bottom:1px solid rgba(61,46,33,.15)}
+.list .n{font-size:14px;font-weight:100;letter-spacing:.1em;color:var(--sub)}
+.list .t{font-size:16px;font-weight:200}
+@media (max-width:768px){.persona,.pain{grid-column:1 / -1}.pain{padding:28px 20px}}
+
+/* =========================================================
+   카드 (이미지 + 이름 + 간략한 설명, 라운드 없음)
+   Hover: 이미지 확대 + 아이콘
+   ========================================================= */
+.card .thumb{position:relative;overflow:hidden}
+.card .ph{transition:transform .7s var(--ease)}
+.card:hover .ph{transform:scale(1.05)}
+.card .zoom{position:absolute;right:16px;top:16px;width:40px;height:40px;display:flex;align-items:center;justify-content:center;background:var(--bg);
+  opacity:0;transform:translateY(-6px);transition:opacity var(--fast) var(--ease),transform var(--fast) var(--ease)}
+.card .zoom .icon{width:18px;height:18px}
+.card:hover .zoom{opacity:1;transform:none}
+.card .info{margin-top:16px;display:flex;flex-direction:column;gap:4px}
+.card .info .h3{font-size:20px;font-weight:300}
+.c4{grid-column:span 4}.c3{grid-column:span 3}
+@media (max-width:1024px){.c3{grid-column:span 6}}
+@media (max-width:768px){.c4,.c3{grid-column:1 / -1}}
+
+/* =========================================================
+   04 INTERACTION FLOW — 입력 → AI 판단 → 물리적 반응
+   ========================================================= */
+.flow{display:grid;grid-template-columns:1fr 48px 1fr 48px 1fr;align-items:stretch}
+.step{background:var(--section-bg);padding:28px 32px 36px;display:flex;flex-direction:column;gap:8px}
+.step .h3{font-size:24px;font-weight:300}
+.arrow-col{display:flex;align-items:center;justify-content:center}
+.arrow-col svg{width:24px;height:24px;stroke:var(--text);stroke-width:1;fill:none}
+@media (max-width:768px){
+  .flow{grid-template-columns:1fr}
+  .arrow-col{height:40px}.arrow-col svg{transform:rotate(90deg)}
+}
+
+/* =========================================================
+   06 PRODUCT DESIGN — 메인 렌더링 + 디테일 2컷
+   ========================================================= */
+.design .main{grid-column:1 / span 8;grid-row:1}
+.design .main .ph{height:100%;min-height:100%}
+.design .detail{grid-column:9 / span 4}
+.design .detail-wrap{display:flex;flex-direction:column;gap:var(--gutter);height:100%}
+.design figcaption{margin-top:12px}
+@media (max-width:768px){
+  .design .main,.design .detail{grid-column:1 / -1;grid-row:auto}
+  .design .main .ph{aspect-ratio:4/3}
+}
+
+/* =========================================================
+   07 SPECIFICATIONS & MATERIALS
+   ========================================================= */
+.spec{display:grid;grid-template-columns:1fr 1fr;column-gap:48px}
+.spec dl{display:grid;grid-template-columns:160px 1fr;align-items:baseline;padding:24px 0 40px;border-top:1px solid var(--line)}
+.spec dl:nth-child(-n+2){border-top:0;padding-top:0}
+.spec dt{font-size:14px;font-weight:100;letter-spacing:.1em;color:var(--sub);text-transform:uppercase}
+.spec dd{font-size:16px;font-weight:200}
+.buy{display:flex;align-items:center;justify-content:space-between;gap:24px;margin-top:24px;padding-top:32px;border-top:1px solid var(--line)}
+.buy .h3{font-size:20px;font-weight:300}
+@media (max-width:768px){
+  .spec{grid-template-columns:1fr}
+  .spec dl:nth-child(2){border-top:1px solid var(--line);padding-top:20px}
+  .spec dl{grid-template-columns:120px 1fr;padding:20px 0 28px}
+  .buy{flex-direction:column;align-items:flex-start}
+}
+
+/* Added to cart 피드백 */
+.btn.added{color:var(--sub)}
+.toast{position:fixed;left:50%;bottom:32px;z-index:80;transform:translate(-50%,16px);opacity:0;pointer-events:none;
+  display:flex;align-items:center;gap:12px;padding:14px 24px;background:var(--text);color:#FFFFFF;font-size:14px;font-weight:200;letter-spacing:.06em;
+  transition:opacity var(--fast) var(--ease),transform var(--fast) var(--ease)}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.toast .check{width:16px;height:16px;stroke:var(--accent);stroke-width:2;fill:none}
+
+/* FOOTER */
+.footer{margin-top:var(--section);border-top:1px solid var(--line)}
+.footer .container{display:flex;justify-content:space-between;align-items:center;gap:16px;padding-top:32px;padding-bottom:40px}
+.footer small{font-size:14px;font-weight:100;color:var(--sub)}
+.to-top{font-size:14px;font-weight:100;letter-spacing:.1em;background:none;border:0;cursor:pointer;display:inline-flex;gap:8px;align-items:center}
+.to-top .arrow{transition:transform var(--fast) var(--ease)}
+.back-link:hover .arrow{transform:translateX(-3px)}
+.to-top:hover .arrow{transform:translateY(-3px)}
+
+/* Scroll Effect — 스크롤 시 부드럽게 나타남 */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity var(--slow) var(--ease),transform var(--slow) var(--ease)}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .reveal{opacity:1;transform:none}
+}
+</style>
+<style>/* TALKTIDE content imagery inside the original product template */
+#function .ph,#scenario .ph,#design .ph,#concept .persona .ph{background-color:#f5f1eb!important;background-size:contain!important;background-position:center!important}
+#function .ph,#scenario .ph{aspect-ratio:16/9}
+#design .main .ph{min-height:350px!important}
+#design .detail .ph{background-size:contain!important}
+.hero>.ph{background-size:cover!important;background-position:60% center!important}
+@media(max-width:700px){.hero>.ph{background-position:63% center!important}}
+</style></head>
+<body>
+<!-- ================= HEADER ================= -->
+<header class="header" id="header">
+<div class="container">
+<a class="logo" data-plogo="" href="#top">PRODUCT</a>
+<ul class="nav" id="nav">
+<li><a href="#concept">CONCEPT</a></li>
+<li><a href="#function">FUNCTION</a></li>
+<li><a href="#scenario">SCENARIO</a></li>
+<li><a href="#design">DESIGN</a></li>
+</ul>
+<div style="display:flex;gap:16px;align-items:center">
+<button aria-label="장바구니" class="icon-btn">
+<svg class="icon" viewbox="0 0 24 24"><path d="M5 8h14l-1 12H6L5 8z"></path><path d="M9 8V6a3 3 0 0 1 6 0v2"></path></svg>
+<span class="cart-count" id="cartCount">0</span>
+</button>
+<button aria-label="메뉴 열기" class="icon-btn m-only" id="openMenu">
+<svg class="icon" viewbox="0 0 24 24"><path d="M3 7h18M3 12h18M3 17h18"></path></svg>
+</button>
+</div>
+</div>
+</header>
+<div aria-hidden="true" class="m-menu" id="mMenu">
+<div class="m-menu-top">
+<span class="logo" data-plogo="">PRODUCT</span>
+<button aria-label="메뉴 닫기" class="icon-btn" id="closeMenu"><svg class="icon" viewbox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19"></path></svg></button>
+</div>
+<ul>
+<li><a href="#concept">CONCEPT</a></li>
+<li><a href="#function">FUNCTION</a></li>
+<li><a href="#scenario">SCENARIO</a></li>
+<li><a href="#design">DESIGN</a></li>
+</ul>
+</div>
+<main id="top">
+<!-- ================= 01 PRODUCT INTRODUCTION ================= -->
+<section class="hero">
+<!-- 메인 제품 사용 이미지: style="background-image:url('images/main.jpg')" 를 추가하면 교체돼요 -->
+<div class="ph has-photo" data-label="" style=';background-image:url("images/talktide_00.webp");background-size:contain;background-position:center;background-repeat:no-repeat;;background-size:cover;background-position:60% center;'></div>
+<div class="veil"></div>
+<div class="container">
+<div class="hero-copy">
+<p class="eyebrow"><span data-pno-eyebrow=""></span>01 / Product Introduction</p>
+<h1 class="h1" data-pname="">TALKTIDE</h1>
+<p class="h2">흥정의 흐름을 읽는 대화 분석 팔찌</p>
+<p class="h3">상인과의 대화를 실시간으로 분석해 협상 흐름을 진동으로 알려주는 웨어러블 AI 디바이스입니다.</p>
+<a class="btn" href="#concept">EXPLORE MORE <span class="arrow">↗</span></a>
+</div>
+</div>
+<div aria-hidden="true" class="scroll-cue"><span>Scroll to Explore</span><span class="bar"></span></div>
+</section>
+<!-- ================= 02 PERSONA & PROBLEM ================= -->
+<section class="block" id="concept">
+<div class="container">
+<div class="s-head reveal">
+<span class="no">02</span>
+<h2 class="h2">Persona &amp; Problem</h2>
+<p class="desc">페르소나와 해결하고자 하는 문제</p>
+</div>
+<div class="grid">
+<div class="persona reveal">
+<div class="ph r1-1 has-photo" data-label="" style=';background-image:url("images/talktide_01.webp");background-size:contain;background-position:center;background-repeat:no-repeat;'></div>
+<p class="eyebrow">Persona</p>
+<h3 class="h2">한도윤 (41세) / 빈티지 리셀러</h3>
+<p class="body sub">오전에는 구매자로 발품을 팔고, 오후에는 좌판을 여는 판매자이다.</p>
+</div>
+<div class="pain reveal">
+<p class="eyebrow">User Pain Points</p>
+<h3 class="h3">흥정 과정에서 사용자가 겪는 주요 불편함</h3>
+<ul class="list">
+<li><span class="n">01</span><span class="t">상인의 반응을 정확히 읽기 어려워 타이밍을 놓친다.</span></li>
+<li><span class="n">02</span><span class="t">짧은 대화만으로는 상대의 의도를 판단하기 어렵다.</span></li>
+<li><span class="n">03</span><span class="t">경험과 감에 의존해 협상 결과가 일정하지 않다.</span></li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<!-- ================= 03 KEY FEATURES ================= -->
+<section class="block" id="function">
+<div class="container">
+<div class="s-head reveal">
+<span class="no">03</span>
+<h2 class="h2">Key Features</h2>
+<p class="desc">제품의 핵심 기능과 작동 원리</p>
+</div>
+<div class="grid" data-stagger="">
+<article class="card c4 reveal">
+<div class="thumb"><div class="ph r16-9 has-photo" data-label="" style=';background-image:url("images/talktide_02.webp");background-size:contain;background-position:center;background-repeat:no-repeat;'></div><span class="zoom"><svg class="icon" viewbox="0 0 24 24"><circle cx="11" cy="11" r="6"></circle><path d="M20 20l-4.5-4.5M11 8v6M8 11h6"></path></svg></span></div>
+<div class="info"><h3 class="h3">대화 분석 기반의 실시간 상황 인식</h3><p class="body sub">상인의 말투·억양·태도를 분석해 협상 흐름을 파악합니다.</p></div>
+</article>
+<article class="card c4 reveal">
+<div class="thumb"><div class="ph r16-9 has-photo" data-label="" style=';background-image:url("images/talktide_03.webp");background-size:contain;background-position:center;background-repeat:no-repeat;'></div><span class="zoom"><svg class="icon" viewbox="0 0 24 24"><circle cx="11" cy="11" r="6"></circle><path d="M20 20l-4.5-4.5M11 8v6M8 11h6"></path></svg></span></div>
+<div class="info"><h3 class="h3">3단계 진동 힌트 제공</h3><p class="body sub">망설임, 긍정 신호, 결심에 가까운 신호를 서로 다른 진동 패턴으로 전달합니다.</p></div>
+</article>
+<article class="card c4 reveal">
+<div class="thumb"><div class="ph r16-9 has-photo" data-label="" style=';background-image:url("images/talktide_04.webp");background-size:contain;background-position:center;background-repeat:no-repeat;'></div><span class="zoom"><svg class="icon" viewbox="0 0 24 24"><circle cx="11" cy="11" r="6"></circle><path d="M20 20l-4.5-4.5M11 8v6M8 11h6"></path></svg></span></div>
+<div class="info"><h3 class="h3">사용자 피드백으로 학습</h3><p class="body sub">신호가 맞으면 오른쪽, 아니라면 왼쪽 끝을 눌러 AI가 다음 판단에 반영합니다.</p></div>
+</article>
+</div>
+</div>
+</section>
+<!-- ================= 04 INTERACTION FLOW ================= -->
+<section class="block" id="flow">
+<div class="container">
+<div class="s-head reveal">
+<span class="no">04</span>
+<h2 class="h2">Interaction Flow</h2>
+<p class="desc">입력 정보 → AI 판단 → 물리적 반응</p>
+</div>
+<div class="flow" data-stagger="">
+<div class="step reveal"><p class="eyebrow">01 / Input</p><h3 class="h3">입력 정보</h3><p class="body sub">대화 음성 수집 (속도 · 억양 · 침묵 등)</p></div>
+<div aria-hidden="true" class="arrow-col reveal"><svg viewbox="0 0 24 24"><path d="M3 12h17M15 7l5 5-5 5"></path></svg></div>
+<div class="step reveal"><p class="eyebrow">02 / AI Process</p><h3 class="h3">AI 판단</h3><p class="body sub">대화 분석 및 협상 흐름 해석</p></div>
+<div aria-hidden="true" class="arrow-col reveal"><svg viewbox="0 0 24 24"><path d="M3 12h17M15 7l5 5-5 5"></path></svg></div>
+<div class="step reveal"><p class="eyebrow">03 / Output</p><h3 class="h3">물리적 반응</h3><p class="body sub">상황에 맞는 진동 신호 제공 (망설임 / 긍정 / 결심)</p></div>
+</div>
+</div>
+</section>
+<!-- ================= 05 USE SCENARIO ================= -->
+<section class="block" id="scenario">
+<div class="container">
+<div class="s-head reveal">
+<span class="no">05</span>
+<h2 class="h2">Use Scenario</h2>
+<p class="desc">제품을 사용하는 상황과 경험의 흐름</p>
+</div>
+<div class="grid" data-stagger="">
+<article class="card c3 reveal">
+<div class="thumb"><div class="ph r3-2 has-photo" data-label="" style=';background-image:url("images/talktide_05.webp");background-size:contain;background-position:center;background-repeat:no-repeat;'></div><span class="zoom"><svg class="icon" viewbox="0 0 24 24"><circle cx="11" cy="11" r="6"></circle><path d="M20 20l-4.5-4.5M11 8v6M8 11h6"></path></svg></span></div>
+<div class="info"><h3 class="h3">01 / 신호 알림 시작</h3><p class="body sub">대화는 계속 분석하고 있으며, 버튼을 누르면 분석 결과에 따른 진동 신호 알림을 시작한다.</p></div>
+</article>
+<article class="card c3 reveal">
+<div class="thumb"><div class="ph r3-2 has-photo" data-label="" style=';background-image:url("images/talktide_06.webp");background-size:contain;background-position:center;background-repeat:no-repeat;'></div><span class="zoom"><svg class="icon" viewbox="0 0 24 24"><circle cx="11" cy="11" r="6"></circle><path d="M20 20l-4.5-4.5M11 8v6M8 11h6"></path></svg></span></div>
+<div class="info"><h3 class="h3">02 / 타이밍 알림</h3><p class="body sub">상황에 맞는 진동 신호를 손목으로 전달받는다.</p></div>
+</article>
+<article class="card c3 reveal">
+<div class="thumb"><div class="ph r3-2 has-photo" data-label="" style=';background-image:url("images/talktide_07.webp");background-size:contain;background-position:center;background-repeat:no-repeat;'></div><span class="zoom"><svg class="icon" viewbox="0 0 24 24"><circle cx="11" cy="11" r="6"></circle><path d="M20 20l-4.5-4.5M11 8v6M8 11h6"></path></svg></span></div>
+<div class="info"><h3 class="h3">03 / 신호에 대한 피드백</h3><p class="body sub">신호가 맞으면 오른쪽, 아니라면 왼쪽 끝을 눌러 피드백한다.</p></div>
+</article>
+<article class="card c3 reveal">
+<div class="thumb"><div class="ph r3-2 has-photo" data-label="" style=';background-image:url("images/talktide_08.webp");background-size:contain;background-position:center;background-repeat:no-repeat;'></div><span class="zoom"><svg class="icon" viewbox="0 0 24 24"><circle cx="11" cy="11" r="6"></circle><path d="M20 20l-4.5-4.5M11 8v6M8 11h6"></path></svg></span></div>
+<div class="info"><h3 class="h3">04 / 좋은 타이밍에 합의</h3><p class="body sub">AI의 도움으로 적절한 타이밍에 거래를 마무리한다.</p></div>
+</article>
+</div>
+</div>
+</section>
+<!-- ================= 06 PRODUCT DESIGN ================= -->
+<section class="block" id="design">
+<div class="container">
+<div class="s-head reveal">
+<span class="no">06</span>
+<h2 class="h2">Product Design</h2>
+<p class="desc">제품 디자인 이미지 및 디테일</p>
+</div>
+<div class="grid design">
+<figure class="main card reveal">
+<div class="thumb" style="height:100%"><div class="ph has-photo" data-label="" style='min-height:100%;background-image:url("images/talktide_09.webp");background-size:contain;background-position:center;background-repeat:no-repeat;'></div></div>
+</figure>
+<div class="detail">
+<div class="detail-wrap" data-stagger="">
+<figure class="card reveal"><div class="thumb"><div class="ph r16-9 has-photo" data-label="" style=';background-image:url("images/talktide_10.webp");background-size:contain;background-position:center;background-repeat:no-repeat;'></div></div></figure>
+<figure class="card reveal"><div class="thumb"><div class="ph r16-9 has-photo" data-label="" style=';background-image:url("images/talktide_10.webp");background-size:contain;background-position:center;background-repeat:no-repeat;'></div></div></figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- ================= 07 SPECIFICATIONS & MATERIALS ================= -->
+<section class="block" id="spec">
+<div class="container">
+<div class="s-head reveal">
+<span class="no">07</span>
+<h2 class="h2">Specifications &amp; Materials</h2>
+<p class="desc">주요 사양 및 소재</p>
+</div>
+<div class="spec reveal">
+<dl><dt>Dimensions</dt><dd>손목 착용형 오픈 커프 구조 (정확한 치수 미제공)</dd></dl>
+<dl><dt>Material</dt><dd>무광 PC/ABS · 반투명 PC · 새틴 알루미늄</dd></dl>
+<dl><dt>Color / CMF</dt><dd>웜 아이보리 · 저채도 로즈 골드 · #A2BA75 포인트</dd></dl>
+<dl><dt>Technology</dt><dd>대화 분석 AI · 촉각 진동 모듈 · 피드백 인터페이스</dd></dl>
+</div>
+<div class="buy reveal">
+<div><p class="eyebrow">Product<span data-pno-sp=""></span></p><h3 class="h3" data-pname="">TALKTIDE</h3></div>
+<button class="btn" id="addCart">ADD TO CART <span class="arrow">+</span></button>
+</div>
+</div>
+</section>
+</main>
+<footer class="footer">
+<div class="container">
+<a class="to-top back-link" href="index.html#products"><span class="arrow">←</span> 2030 동묘시장으로 돌아가기</a>
+<button class="to-top" id="toTop">BACK TO TOP <span class="arrow">↑</span></button>
+</div>
+</footer>
+<div aria-live="polite" class="toast" id="toast" role="status">
+<svg class="check" viewbox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg><span>Added to cart</span>
+</div>
+<script>
+/* =========================================================
+   어떤 제품 페이지인지 표시 — 주소 끝의 #product-1~4 (또는 ?product=1~4) 를 읽어요
+   (동묘시장 페이지의 카드·지도에서 들어오면 자동으로 붙음)
+   제품명은 아래 NAMES에서 바꾸면 돼요
+   ========================================================= */
+const NAMES={1:'제품명 01',2:'TALKTIDE',3:'제품명 03',4:'제품명 04'};
+function readProduct(){
+  const h=location.hash.match(/^#product-([1-4])$/);           // product.html#product-1
+  const q=new URLSearchParams(location.search).get('product'); // product.html?product=1
+  return h?+h[1]:(NAMES[+q]?+q:0);
+}
+function applyProduct(){
+  const n=readProduct(); if(!n)return;
+  document.querySelectorAll('[data-plogo]').forEach(el=>el.textContent=`PRODUCT ${n}`);
+  document.querySelectorAll('[data-pno-eyebrow]').forEach(el=>el.textContent=`Product ${n} · `);
+  document.querySelectorAll('[data-pno-sp]').forEach(el=>el.textContent=` ${n}`);
+  document.querySelectorAll('[data-pname]').forEach(el=>el.textContent=NAMES[n]);
+  document.title=`PRODUCT ${n} · ${NAMES[n]}`;
+}
+applyProduct();
+addEventListener('hashchange',applyProduct);
+
+/* ---------- 스크롤 등장 (순서대로 살짝씩 늦게) ---------- */
+document.querySelectorAll('[data-stagger]').forEach(g=>{
+  [...g.querySelectorAll(':scope > .reveal')].forEach((el,i)=>el.style.transitionDelay=(i*0.1)+'s');
+});
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.15,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* ---------- 메뉴 클릭: 해당 영역이 한 화면에 들어오도록 스크롤 ---------- */
+// 메뉴 → 보여줄 영역 (FUNCTION은 핵심 기능 + 인터랙션 플로우, DESIGN은 디자인 + 사양)
+const TARGETS={concept:['concept'],function:['function','flow'],scenario:['scenario'],design:['design','spec']};
+const headerEl=document.getElementById('header');
+const absTop=el=>el.getBoundingClientRect().top+scrollY;
+function areaOf(key){
+  const ids=TARGETS[key]||[key];
+  const first=document.querySelector('#'+ids[0]+' .container'), last=document.querySelector('#'+ids[ids.length-1]+' .container');
+  return {top:absTop(first), bottom:absTop(last)+last.offsetHeight};
+}
+function targetY(key){
+  let {top,bottom}=areaOf(key);
+  // 함께 보여줄 영역이 화면보다 길면 첫 섹션만 기준으로
+  if(bottom-top+48>innerHeight){const f=document.querySelector('#'+TARGETS[key][0]+' .container');bottom=top+f.offsetHeight;}
+  const h=bottom-top;
+  const goingDown=top>scrollY+headerEl.offsetHeight;
+  const hdr=goingDown?0:headerEl.offsetHeight; // 아래로 내려가면 헤더가 숨겨짐
+  const avail=innerHeight-hdr;
+  return h+48>=avail ? top-hdr-24 : top-hdr-(avail-h)/2;
+}
+document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{
+  const key=a.getAttribute('href').slice(1);
+  if(key==='top'){e.preventDefault();scrollTo({top:0,behavior:'smooth'});return;}
+  if(!TARGETS[key])return;
+  e.preventDefault();
+  TARGETS[key].forEach(id=>document.querySelectorAll('#'+id+' .reveal').forEach(el=>el.classList.add('in')));
+  setTimeout(()=>scrollTo({top:Math.max(0,targetY(key)),behavior:'smooth'}),a.closest('.m-menu')?350:0);
+}));
+
+/* ---------- 현재 보고 있는 섹션을 메뉴에 표시 ---------- */
+const navLinks=[...document.querySelectorAll('#nav a')];
+const owner={concept:'concept',function:'function',flow:'function',scenario:'scenario',design:'design',spec:'design'};
+const so=new IntersectionObserver(es=>es.forEach(e=>{
+  if(e.isIntersecting){const k=owner[e.target.id];navLinks.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+k));}
+}),{rootMargin:'-45% 0px -50% 0px'});
+Object.keys(owner).forEach(id=>so.observe(document.getElementById(id)));
+addEventListener('scroll',()=>{if(scrollY<200)navLinks.forEach(a=>a.classList.remove('active'));},{passive:true});
+
+/* ---------- 헤더: 아래로 스크롤하면 숨김, 위로 올리면 표시 ---------- */
+let lastY=0;
+addEventListener('scroll',()=>{const y=scrollY;headerEl.classList.toggle('hide',y>lastY&&y>160);lastY=y;},{passive:true});
+
+/* ---------- 모바일 메뉴 ---------- */
+const menu=document.getElementById('mMenu');
+menu.querySelectorAll('li').forEach((li,i)=>li.style.transitionDelay=(0.1+i*0.05)+'s');
+const closeM=()=>{menu.classList.remove('open');menu.setAttribute('aria-hidden','true')};
+document.getElementById('openMenu').onclick=()=>{menu.classList.add('open');menu.setAttribute('aria-hidden','false')};
+document.getElementById('closeMenu').onclick=closeM;
+menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeM));
+
+/* ---------- Button Interaction: Added to cart ---------- */
+let cart=0,toastT=0;
+const addBtn=document.getElementById('addCart'),countEl=document.getElementById('cartCount'),toast=document.getElementById('toast');
+addBtn.addEventListener('click',()=>{
+  cart++;
+  countEl.textContent=cart;countEl.classList.add('show');
+  countEl.classList.remove('bump');void countEl.offsetWidth;countEl.classList.add('bump');
+  addBtn.classList.add('added');addBtn.firstChild.textContent='ADDED TO CART ';addBtn.querySelector('.arrow').textContent='✓';
+  toast.classList.add('show');
+  clearTimeout(toastT);
+  toastT=setTimeout(()=>{
+    toast.classList.remove('show');
+    addBtn.classList.remove('added');addBtn.firstChild.textContent='ADD TO CART ';addBtn.querySelector('.arrow').textContent='+';
+  },1800);
+});
+
+/* ---------- BACK TO TOP ---------- */
+document.getElementById('toTop').onclick=()=>scrollTo({top:0,behavior:'smooth'});
+</script>
+</body>
+</html>
