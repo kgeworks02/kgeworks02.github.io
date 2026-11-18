@@ -1,0 +1,25 @@
+{
+  "images": {
+    "product-hero": "assets/images/product-hero.webp",
+    "product-persona": "assets/images/product-persona.webp",
+    "product-feature-01": "assets/images/product-feature-01.webp",
+    "product-feature-02": "assets/images/product-feature-02.webp",
+    "product-feature-03": "assets/images/product-feature-03.webp",
+    "product-scene-01": "assets/images/product-scene-01.webp",
+    "product-scene-02": "assets/images/product-scene-02.webp",
+    "product-scene-03": "assets/images/product-scene-03.webp",
+    "product-scene-04": "assets/images/product-scene-04.webp",
+    "product-rendering-main": "assets/images/product-rendering-main.webp",
+    "product-detail-01": "assets/images/product-detail-01.webp",
+    "product-detail-02": "assets/images/product-detail-02.webp"
+  },
+  "models": {
+    "main": "assets/models/product-model.glb"
+  },
+  "videos": {
+    "scenario": "assets/videos/product-scenario.mp4"
+  },
+  "content": {
+    "product": "assets/content/product.json"
+  }
+}
