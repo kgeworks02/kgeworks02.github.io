@@ -1,0 +1,154 @@
+/* =============================================================
+   dm-features.css — PLACE FEATURES : 세로 스트립 + 호버 모션 + 카드 상세
+   .fx-* 클래스와 #features 안쪽에만 적용됩니다.
+   ============================================================= */
+#features.fx-features{padding:calc(var(--header) + 40px) 0 var(--section);min-height:100vh;display:flex;align-items:center}
+#features .container{width:100%}
+.fx-wrap{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(32px,6vw,96px);align-items:center}
+.fx-intro .eyebrow{margin-bottom:12px}
+.fx-hint{margin-top:36px;display:flex;flex-direction:column;gap:2px;font-size:15px;font-weight:300;color:var(--sub);line-height:1.7}
+.fx-hint-h::before{content:"";display:inline-block;width:28px;height:1px;background:var(--accent);vertical-align:middle;margin-right:12px}
+
+/* ---------- 세로 스트립 ---------- */
+.fx-list{list-style:none;position:relative;perspective:1100px;perspective-origin:50% 50%}
+.fx-item{position:relative}
+.fx-row{position:relative;display:flex;align-items:center;justify-content:space-between;gap:16px;width:100%;min-height:76px;padding:0 24px;
+  text-align:left;color:var(--text);background:transparent;border:0;border-top:1px solid var(--line);cursor:pointer;font:inherit;
+  --w:0}
+.fx-item:last-child .fx-row{border-bottom:1px solid var(--line)}
+.fx-row::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--accent);transform:scaleY(var(--w));transform-origin:50% 50%}
+.fx-in{display:flex;align-items:center;gap:20px;transform-origin:0 50%;min-width:0}
+.fx-no{flex:none;width:24px;font-size:14px;font-weight:300;letter-spacing:.1em;color:var(--sub)}
+.fx-ico{flex:none;width:40px;height:40px;display:block}
+.fx-ico svg{width:100%;height:100%;display:block}
+.fx-t{font-size:22px;font-weight:300;line-height:1.35;letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fx-go{flex:none;font-size:13px;font-weight:300;letter-spacing:.08em;color:var(--sub);opacity:0}
+.fx-go i{font-style:normal;display:inline-block;margin-left:4px}
+.fx-row:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+
+/* 기본(호버 모션 없음 : 터치·모바일·모션 감소) */
+.fx-row:hover{background:rgba(255,255,255,.6)}
+.fx-row:hover .fx-go{opacity:1}
+.fx-row:hover::before{transform:scaleY(1)}
+
+/* 호버 모션 모드 : JS가 행마다 높이·위치·원근·투명도를 계산 */
+.fx-list.fx-live{height:clamp(420px,calc(100vh - var(--header) - 190px),600px);transform-style:preserve-3d}
+.fx-live .fx-item{position:absolute;left:0;right:0;top:0;transform-style:preserve-3d;will-change:transform,height,opacity}
+.fx-live .fx-row{height:100%;min-height:0;background:rgba(255,255,255,calc(var(--w) * .75));box-shadow:0 18px 40px -22px rgba(61,46,33,calc(var(--w) * .45))}
+.fx-live .fx-item:last-child .fx-row{border-bottom:0}
+.fx-live .fx-row:hover{background:rgba(255,255,255,calc(var(--w) * .75))}
+.fx-live .fx-row:hover::before{transform:scaleY(var(--w))}
+.fx-live .fx-row:hover .fx-go{opacity:var(--w)}
+.fx-live .fx-go{opacity:calc((var(--w) - .35) * 1.6)}
+.fx-live .fx-row{border-top-color:rgba(230,220,208,calc(1 - var(--w) * .8))}
+.fx-live .fx-in{will-change:transform}
+.fx-live .fx-t{overflow:visible}
+
+/* ---------- 카드 상세(모달) ---------- */
+.fx-modal{position:fixed;inset:0;z-index:80;display:flex;align-items:center;justify-content:center;padding:24px;visibility:hidden;pointer-events:none}
+.fx-modal[hidden]{display:flex}
+.fx-modal.open{visibility:visible;pointer-events:auto}
+.fx-backdrop{position:absolute;inset:0;background:rgba(246,238,226,.82);opacity:0;transition:opacity .5s var(--ease);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.fx-modal.open .fx-backdrop{opacity:1}
+.fx-dialog{position:relative;width:min(680px,100%);display:flex;flex-direction:column;gap:22px}
+.fx-close{position:absolute;right:-8px;top:-56px;width:44px;height:44px;display:flex;align-items:center;justify-content:center;background:none;border:0;cursor:pointer;color:var(--text);
+  opacity:0;transition:opacity .4s var(--ease) .25s}
+.fx-modal.open .fx-close{opacity:1}
+.fx-close svg,.fx-nav svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}
+.fx-card{position:relative;padding:48px 56px 56px;min-height:340px;background:var(--bg);border:1px solid var(--accent);box-shadow:0 30px 70px -30px rgba(61,46,33,.35);
+  transform-origin:50% 50%;opacity:0;transition:transform .75s var(--ease),opacity .5s var(--ease)}
+.fx-card::before{content:"";position:absolute;left:-1px;right:-1px;top:-1px;height:3px;background:var(--accent);transform:scaleX(0);transform-origin:0 50%;transition:transform .8s var(--ease) .3s}
+.fx-modal.open .fx-card{opacity:1}
+.fx-modal.open .fx-card::before{transform:scaleX(1)}
+.fx-card .top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:56px}
+.fx-card .pic{width:72px;height:72px;color:var(--text)}
+.fx-card .no{font-size:16px;font-weight:300;letter-spacing:.1em;color:var(--nav,var(--sub))}
+.fx-card .t{font-size:32px;font-weight:400;line-height:1.4;letter-spacing:-.01em}
+.fx-card .d{word-break:keep-all;margin-top:14px;font-size:18px;font-weight:300;line-height:1.7;color:var(--sub)}
+.fx-card > *{transition:transform .45s var(--ease),opacity .45s var(--ease)}
+.fx-card.swap-out > *{opacity:0;transform:translateY(-22px)}
+.fx-card.swap-in > *{opacity:0;transform:translateY(22px);transition:none}
+.fx-nav{display:flex;align-items:center;justify-content:center;gap:24px;color:var(--text);opacity:0;transition:opacity .4s var(--ease) .3s}
+.fx-modal.open .fx-nav{opacity:1}
+.fx-nav button{width:44px;height:44px;display:flex;align-items:center;justify-content:center;background:none;border:1px solid var(--line);border-radius:50%;cursor:pointer;color:inherit;transition:border-color .3s var(--ease),background-color .3s var(--ease)}
+.fx-nav button:hover{border-color:var(--accent);background:rgba(255,255,255,.7)}
+.fx-nav button:focus-visible,.fx-close:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.fx-count{font-size:14px;font-weight:300;letter-spacing:.1em;color:var(--sub);min-width:64px;text-align:center}
+
+@media (max-width:1024px){
+  #features.fx-features{min-height:0;display:block;padding:var(--section) 0}
+  .fx-wrap{grid-template-columns:1fr;gap:32px}
+  .fx-hint{margin-top:20px}
+  .fx-t{font-size:19px;white-space:normal}
+}
+@media (max-width:768px){
+  .fx-row{min-height:68px;padding:0 12px}
+  .fx-in{gap:14px}
+  .fx-ico{width:34px;height:34px}
+  .fx-no{display:none}
+  .fx-t{font-size:17px}
+  .fx-go{display:none}
+  .fx-card{padding:32px 26px 36px;min-height:280px}
+  .fx-card .top{margin-bottom:36px}
+  .fx-card .pic{width:56px;height:56px}
+  .fx-card .t{font-size:24px}
+  .fx-card .d{font-size:16px}
+  .fx-close{top:-52px;right:-4px}
+}
+@media (prefers-reduced-motion:reduce){
+  .fx-backdrop,.fx-card,.fx-card::before,.fx-card > *,.fx-close,.fx-nav{transition-duration:.01s;transition-delay:0s}
+}
+
+/* ---------- 왼쪽 글자 : 스크롤하면 한 줄씩 오른쪽 → 왼쪽으로 나타남 ---------- */
+.fx-intro .fx-ln{display:block;will-change:transform,opacity}
+.fx-rev .fx-intro .fx-ln{opacity:0;transform:translate3d(140px,0,0)}
+.fx-hint-h::before{vertical-align:middle}
+.fx-intro .h2{font-weight:500}
+
+/* =============================================================
+   장소 특징 · 기존 글자 배치와 카드 디자인 + 리디자인의 카드 움직임(호버 피시아이·원근·카드 열기)
+   ============================================================= */
+#features.ft.fx-features{padding:calc(var(--header) + 48px) 0 var(--section);min-height:100vh;display:flex;align-items:center}
+.ftx-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(32px,5vw,88px);align-items:center;width:100%}
+.ftx-grid .ft-copy{grid-column:auto}
+.ftx-hint{margin-top:28px;font-size:14px;font-weight:300;color:var(--sub);line-height:1.7}
+.ftx-hint::before{content:"";display:inline-block;width:28px;height:1px;background:var(--accent);vertical-align:middle;margin-right:12px}
+
+/* 카드 (기존 디자인) */
+#features .ftx-card{display:flex;align-items:center;justify-content:space-between;gap:16px;width:100%;min-height:118px;padding:0 32px;
+  background:#FBFAF8;border:0;border-radius:0;box-shadow:0 18px 40px -26px rgba(61,46,33,calc(.25 + var(--w) * .35));text-align:left;cursor:pointer}
+#features .ftx-card::before{width:4px}
+#features .ftx-card .fx-in{display:flex;align-items:center;gap:clamp(18px,2.4vw,40px);min-width:0}
+#features .ftx-card .ft-no{flex:none;font-size:clamp(40px,3.6vw,60px);font-weight:200;line-height:1;letter-spacing:-.04em;color:var(--accent);min-width:1.3em;
+  opacity:calc(.45 + var(--w) * .55)}
+#features .ftx-card .ft-ic{flex:none;display:block}
+#features .ftx-card .ft-ic .pic{width:clamp(40px,3.6vw,54px);height:clamp(40px,3.6vw,54px);color:var(--text);display:block}
+#features .ftx-card .ft-tx{display:flex;flex-direction:column;min-width:0}
+#features .ftx-card .ft-t{font-size:clamp(18px,1.55vw,25px);font-weight:500;line-height:1.3;letter-spacing:-.015em;color:var(--text);word-break:keep-all}
+#features .ftx-card .ft-d{margin-top:6px;font-size:clamp(13px,1vw,15px);font-weight:300;line-height:1.55;color:var(--sub);word-break:keep-all}
+#features .ftx-card .fx-go{align-self:flex-start;margin-top:18px;white-space:nowrap}
+#features .ftx-card:hover{background:#FFFFFF}
+
+/* 호버 모션 모드 (데스크톱): 카드 사이 간격, 펼쳐진 카드만 설명이 또렷하게 */
+#features .fx-list.fx-live{height:clamp(480px,calc(100vh - var(--header) - 150px),660px)}
+#features .fx-live .fx-item{padding:6px 0}
+#features .fx-live .ftx-card{height:100%;min-height:0;background:#FBFAF8;border:0}
+#features .fx-live .ftx-card:hover{background:#FFFFFF}
+#features .fx-live .ftx-card .ft-d{opacity:calc(var(--w) * 1.2 - .1);max-height:calc(var(--w) * 4.8em);overflow:hidden}
+#features .fx-live .ftx-card .ft-t{white-space:nowrap}
+
+/* 모바일·터치: 카드 세로로 나열 */
+@media (max-width:1024px){
+  #features.ft.fx-features{min-height:0;display:block;padding:var(--section) 0}
+  .ftx-grid{grid-template-columns:1fr;gap:32px}
+  #features .ftx-list{display:flex;flex-direction:column;gap:14px}
+  #features .ftx-card{padding:22px 20px;min-height:0}
+  #features .ftx-card .fx-go{display:none}
+}
+@media (max-width:768px){#features .ftx-card .ft-ic{display:none}}
+
+/* 'A' 구멍으로 들어온 직후 : 특징 화면이 잠깐 고정됐다가 스크롤되도록 (데스크톱) */
+@media (min-width:1025px){
+  #features.ft.fx-features.dm-portal-next{display:block;min-height:0;height:175vh;padding:0}
+  #features.dm-portal-next > .ftx-grid{position:sticky;top:0;height:100vh;box-sizing:border-box;padding-top:calc(var(--header) + 48px);padding-bottom:40px;align-content:center}
+}

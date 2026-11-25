@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 빈티지 디스커버리 태그 · 3D 체험</title>
+<style>
+@font-face{font-family:'PretendardLocal';font-weight:300;src:local('Pretendard Light'),url('../assets/fonts/Pretendard-Light.woff2') format('woff2')}
+@font-face{font-family:'PretendardLocal';font-weight:400;src:local('Pretendard Regular'),url('../assets/fonts/Pretendard-Regular.woff2') format('woff2')}
+@font-face{font-family:'PretendardLocal';font-weight:500;src:local('Pretendard Medium'),url('../assets/fonts/Pretendard-Medium.woff2') format('woff2')}
+@font-face{font-family:'PretendardLocal';font-weight:600;src:local('Pretendard SemiBold'),url('../assets/fonts/Pretendard-SemiBold.woff2') format('woff2')}
+</style>
+<style>
+/* VOICE: 조용한 제품 쇼케이스, 만져보는 데모
+   IDEA: 동묘시장 진열대 위에 놓인 실물 태그와 회중시계
+   PICTURE: 화면을 가득 채운 3D 스튜디오 — 직접 끌고 내리는 태그
+   COLOUR and TYPE: 웜 화이트 + 커버의 그린 그레이, 인식 빛의 빨강 한 점 / IBM Plex Sans KR
+   LAYOUT: 위에 3D 무대, 아래에 사용 단계와 화면 내용 편집 */
+:root{color-scheme:light dark;
+  --bg:light-dark(#ecebe8,#141716);--panel:light-dark(#f7f6f3,#1c201f);--ink:light-dark(#1d2422,#e9e7e3);
+  --mute:light-dark(#5e6662,#a3aba7);--line:light-dark(#d6d4cf,#2e3432);--green:light-dark(#5f6f6a,#8fa39c);
+  --red:#e3261b;--chip:light-dark(rgba(255,255,255,.85),rgba(20,23,22,.82))}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 "PretendardLocal","PretendardLocal",system-ui,sans-serif;overflow-x:clip}
+header{padding:22px max(4vw,16px) 14px;display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 18px}
+h1{font-size:clamp(24px,3.2vw,34px);line-height:1.1;margin:0;font-weight:600;text-wrap:balance}
+header p{margin:0;color:var(--mute)}
+html,body{height:100%}body{overflow:hidden}
+.stage{position:relative;height:100%;margin:0;overflow:hidden;background:#c9c9cc;touch-action:none}
+.tools{position:absolute;top:14px;right:14px;display:flex;gap:8px}
+.tools button{min-height:36px;padding:0 14px;border-radius:99px;border:1px solid rgba(255,255,255,.6);background:rgba(255,255,255,.55);color:#3D2E21;font:500 13px "PretendardLocal",sans-serif;cursor:pointer;backdrop-filter:blur(6px)}
+.off{position:absolute;inset:0;display:none;place-items:center;text-align:center;padding:24px;background:#D2D2D4 url('assets/images/product-rendering-main.webp') center/contain no-repeat;color:#3D2E21}
+.off p{background:rgba(255,255,255,.8);padding:12px 18px;font-size:14px}
+.stage canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.chip{position:absolute;top:14px;left:14px;display:flex;align-items:center;gap:8px;padding:8px 14px;border-radius:99px;background:var(--chip);font-weight:500;font-size:15px;backdrop-filter:blur(6px)}
+.dot{width:10px;height:10px;border-radius:50%;background:#9aa19e;transition:background .3s}
+.hint{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);padding:10px 16px;border-radius:12px;background:var(--chip);font-size:15px;max-width:calc(100% - 32px);text-align:center;backdrop-filter:blur(6px)}
+.bubble{position:absolute;left:0;top:0;padding:10px 14px;border-radius:14px;background:#fff;color:#1d2422;font-weight:500;font-size:15px;white-space:nowrap;box-shadow:0 6px 18px rgba(0,0,0,.14);opacity:0;transform:translate(14px,-50%) scale(.9);transition:opacity .35s,transform .35s;pointer-events:none}
+.bubble::after{content:"";position:absolute;left:-7px;top:50%;margin-top:-7px;border:7px solid transparent;border-left:0;border-right-color:#fff}
+.bubble.on{opacity:1;transform:translate(14px,-50%) scale(1)}
+.load{position:absolute;inset:0;display:grid;place-items:center;color:#3b4240;font-weight:500;background:#c9c9cc}
+.panel{display:grid;grid-template-columns:minmax(0,640px);gap:18px;padding:18px max(4vw,16px) 40px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px}
+h2{font-size:18px;margin:0 0 12px;font-weight:600}
+.rail{position:absolute;left:16px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;align-items:flex-start;gap:10px}
+.rail button{display:inline-flex;align-items:center;gap:8px;height:34px;min-height:34px;min-width:34px;padding:0 4px;border-radius:17px;border:0;background:#5f6f6a;color:#f3eee2;font:500 14px "PretendardLocal",sans-serif;box-shadow:inset 0 0 0 1px rgba(243,238,226,.32),0 4px 12px rgba(28,36,33,.18);transition:padding .3s,opacity .25s,transform .2s}
+.rail .n{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;transition:background .3s,color .3s}
+.rail .lb{display:none;font:500 13px "PretendardLocal",sans-serif;white-space:nowrap;letter-spacing:-.01em}
+.rail button.now{padding:0 14px 0 4px}.rail button.now .n{background:#f3eee2;color:#4e5d58}.rail button.now .lb{display:inline}
+.rail button.done{opacity:.6}
+.rail button:hover,.rail button:focus-visible{transform:translateX(2px)}
+.rail button:disabled{opacity:.4;cursor:default;transform:none}
+.cursor{position:absolute;left:0;top:0;width:28px;height:28px;margin:-3px 0 0 -4px;pointer-events:none;opacity:0;transition:opacity .2s;filter:drop-shadow(0 2px 4px rgba(0,0,0,.35))}
+.ripple{position:absolute;left:0;top:0;width:44px;height:44px;margin:-22px 0 0 -22px;border-radius:50%;border:2.5px solid #f3eee2;pointer-events:none;opacity:0}
+.tip{position:absolute;left:62px;width:min(280px,calc(100% - 96px));padding:16px 18px 14px;border-radius:18px;color:#1d2422;overflow:hidden;
+  background:linear-gradient(160deg,rgba(255,255,255,.26) 0%,rgba(255,255,255,.07) 46%,rgba(255,255,255,.14) 100%);
+  border:1px solid rgba(255,255,255,.62);
+  -webkit-backdrop-filter:blur(10px) saturate(1.7) brightness(1.04);backdrop-filter:blur(10px) saturate(1.7) brightness(1.04);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.95),inset 1px 0 0 rgba(255,255,255,.4),inset 0 -1px 0 rgba(255,255,255,.22),inset 0 0 22px rgba(255,255,255,.14),0 10px 28px rgba(24,32,44,.16);
+  opacity:0;transform:translate(-6px,-50%);transition:opacity .22s,transform .22s;pointer-events:none}
+.tip::before{content:"";position:absolute;left:-30%;top:-60%;width:90%;height:120%;background:radial-gradient(closest-side,rgba(255,255,255,.55),rgba(255,255,255,0));opacity:.55;pointer-events:none}
+.tip::after{content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(115deg,transparent 38%,rgba(255,255,255,.28) 46%,transparent 54%);pointer-events:none}
+.tip.on{opacity:1;transform:translate(0,-50%)}
+.tip>*{position:relative;z-index:1}
+.tip-top{display:flex;align-items:baseline;gap:6px;margin-bottom:8px}
+.tip-n{font:300 30px/1 "PretendardLocal",sans-serif;letter-spacing:-.02em;color:#2c3532}
+.tip-of{font:500 12px "PretendardLocal",sans-serif;color:#6b7470}
+.tip-kind{margin-left:auto;padding:3px 9px;border-radius:99px;font:500 12px "PretendardLocal",sans-serif;color:#2f3c38;background:rgba(255,255,255,.35);border:1px solid rgba(255,255,255,.6)}
+.tip b{display:block;font:600 16px/1.3 "PretendardLocal",sans-serif;letter-spacing:-.01em;margin-bottom:4px}
+.tip .desc{display:block;font-size:13.5px;line-height:1.5;color:#3b4441}
+.tip-act{display:flex;align-items:center;gap:8px;margin-top:12px;padding-top:10px;border-top:1px solid rgba(255,255,255,.45);font-size:12.5px;color:#4e5d58}
+.tip-act i{font-style:normal;padding:2px 8px;border-radius:6px;background:#5f6f6a;color:#f3eee2;font:500 12px "PretendardLocal",sans-serif}
+.guide{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;overflow:visible}
+.fields{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px}
+label{display:grid;gap:4px;font-size:13px;color:var(--mute)}
+input,select{font:16px "PretendardLocal",sans-serif;padding:10px 12px;min-height:44px;border-radius:10px;border:1px solid var(--line);background:light-dark(#fff,#131615);color:var(--ink)}
+input:focus-visible,select:focus-visible,button:focus-visible{outline:2px solid var(--green);outline-offset:2px}
+.btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+button{font:500 15px "PretendardLocal",sans-serif;min-height:44px;padding:0 18px;border-radius:10px;border:1px solid var(--line);background:light-dark(#fff,#232826);color:var(--ink);cursor:pointer}
+button.pri{background:var(--green);border-color:var(--green);color:#fff}
+.note{margin:14px 0 0;font-size:13px;color:var(--mute)}
+.seg{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:16px}.seg span{font-size:13px;color:var(--mute);margin-right:4px}
+.seg button[aria-pressed=true]{background:light-dark(#e3e8e5,#26302d);border-color:var(--green);color:var(--ink)}
+
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="stage" id="stage">
+  <div class="tools"><button id="bReset">처음부터 다시</button><button id="bCam">시점 초기화</button></div>
+  <div class="load" id="load">모델 불러오는 중…</div>
+  <div class="chip"><span class="dot" id="dot"></span><span id="status">대기</span></div>
+  <div class="hint" id="hint">태그를 끌어서 끈 끝을 시계 고리에 가져다 대보세요</div>
+  <div class="bubble" id="bubble"></div>
+  <div class="ripple" id="gRipple"></div>
+  <svg class="cursor" id="gCursor" viewBox="0 0 28 28"><path d="M5 3 L5 22 L10 17 L13.5 25 L17 23.5 L13.5 16 L20.5 16 Z" fill="#fff" stroke="#1d2422" stroke-width="1.6" stroke-linejoin="round"/></svg>
+  <div class="rail" id="rail" aria-label="사용 순서"></div>
+  <div class="tip" id="tip"></div>
+</div>
+
+<div hidden><input id="fPrice" value="₩150,000"><select id="fDots"><option>4</option></select><input id="fName" value="Brass Pocket Watch"><input id="fYear" value="c. 1960s"></div>
+
+<div class="off" id="offline"><p>3D 체험은 인터넷에 연결되어 있을 때 동작해요.</p></div>
+<script src="assets/models/tag-experience-model.js" defer></script>
+<script>
+// 3D 엔진(three.js)을 인터넷에서 불러오지 못하면 안내 화면 표시
+setTimeout(() => { if (!window.__tagExpReady) { const o = document.getElementById('offline'); if (o) o.style.display = 'grid'; } }, 9000);
+</script>
+<script type="importmap">
+{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+"three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}
+</script>
+<script type="module">
+import * as THREE from 'three';
+import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
+import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
+import {RoomEnvironment} from 'three/addons/environments/RoomEnvironment.js';
+import {EffectComposer} from 'three/addons/postprocessing/EffectComposer.js';
+import {RenderPass} from 'three/addons/postprocessing/RenderPass.js';
+import {UnrealBloomPass} from 'three/addons/postprocessing/UnrealBloomPass.js';
+import {OutputPass} from 'three/addons/postprocessing/OutputPass.js';
+{
+window.__tagExpReady = true;
+const $ = id => document.getElementById(id);
+const stage = $('stage');
+const GROUND = 0.0157, OPEN = 0.008;
+const ease = t => t < 0.5 ? 4 * t * t * t : 1 - (-2 * t + 2) ** 3 / 2;   // 부드러운 가감속
+const lerp = (a, b, t) => a + (b - a) * t;
+
+// ---------- 장면 ----------
+const renderer = new THREE.WebGLRenderer({antialias:true});
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+stage.prepend(renderer.domElement);
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0xc9c9cc);
+const pmrem = new THREE.PMREMGenerator(renderer);
+scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+
+const camera = new THREE.PerspectiveCamera(32, 1, 0.01, 10);
+const CAM0 = new THREE.Vector3(0.26, 0.30, 0.62), TGT0 = new THREE.Vector3(0.05, 0.11, -0.12);
+camera.position.copy(CAM0);
+
+const sun = new THREE.DirectionalLight(0xffffff, 1.2);
+sun.position.set(-0.3, 0.7, 0.25); sun.castShadow = true;
+Object.assign(sun.shadow.camera, {left:-0.55, right:0.55, top:0.55, bottom:-0.55, near:0.1, far:2.5});
+sun.shadow.mapSize.set(2048, 2048); sun.shadow.bias = -0.0004;
+scene.add(sun, new THREE.HemisphereLight(0xffffff, 0x9a9a9e, 0.35));
+
+// 가판대: 손님이 그 너머에 서 있음
+const ground = new THREE.Mesh(new THREE.BoxGeometry(1.1, 0.04, 0.62), new THREE.MeshStandardMaterial({color:0xc4c4c8, roughness:0.92}));
+ground.position.set(0.05, GROUND - 0.02, -0.03); ground.receiveShadow = true; ground.castShadow = true;
+scene.add(ground);
+
+const composer = new EffectComposer(renderer);
+composer.addPass(new RenderPass(scene, camera));
+const bloom = new UnrealBloomPass(new THREE.Vector2(512, 512), 0.6, 0.55, 1.1);
+composer.addPass(bloom);
+composer.addPass(new OutputPass());
+
+function addMesh(parent, geo, mat, p = [0, 0, 0], r = [0, 0, 0]) {
+  const m = new THREE.Mesh(geo, mat); m.position.set(...p); m.rotation.set(...r);
+  m.castShadow = m.receiveShadow = true; parent.add(m); return m;
+}
+
+// ---------- 회중시계 ----------
+const watch = new THREE.Group(); watch.position.set(0.17, GROUND, -0.07); scene.add(watch);
+const brass = new THREE.MeshStandardMaterial({color:0xc9a25a, metalness:1, roughness:0.28});
+const dialCv = document.createElement('canvas'); dialCv.width = dialCv.height = 512;
+{
+  const g = dialCv.getContext('2d');
+  g.fillStyle = '#f3ead8'; g.fillRect(0, 0, 512, 512); g.translate(256, 256); g.fillStyle = '#2b2118';
+  for (let i = 0; i < 60; i++) { g.save(); g.rotate(i * Math.PI / 30); const b = i % 5 === 0;
+    g.fillRect(-(b ? 5 : 2), -238, b ? 10 : 4, b ? 34 : 14); g.restore(); }
+  g.font = '500 58px serif'; g.textAlign = 'center'; g.textBaseline = 'middle';
+  ['12','3','6','9'].forEach((t, i) => { const a = i * Math.PI / 2; g.fillText(t, Math.sin(a) * 160, -Math.cos(a) * 160); });
+  g.lineCap = 'round'; g.strokeStyle = '#2b2118';
+  g.lineWidth = 12; g.beginPath(); g.moveTo(0, 0); g.lineTo(-70, -95); g.stroke();
+  g.lineWidth = 7; g.beginPath(); g.moveTo(0, 0); g.lineTo(150, -60); g.stroke();
+  g.beginPath(); g.arc(0, 0, 12, 0, 7); g.fill();
+}
+const dialTex = new THREE.CanvasTexture(dialCv); dialTex.colorSpace = THREE.SRGBColorSpace;
+addMesh(watch, new THREE.CylinderGeometry(0.024, 0.024, 0.009, 72), brass, [0, 0.0045, 0]);
+addMesh(watch, new THREE.TorusGeometry(0.0232, 0.0019, 16, 72), brass, [0, 0.009, 0], [-Math.PI / 2, 0, 0]);
+addMesh(watch, new THREE.CircleGeometry(0.0214, 72), new THREE.MeshStandardMaterial({map:dialTex, roughness:0.45}), [0, 0.0093, 0], [-Math.PI / 2, 0, Math.PI / 2]);
+addMesh(watch, new THREE.CylinderGeometry(0.0022, 0.0022, 0.005, 24), brass, [-0.026, 0.0045, 0], [0, 0, Math.PI / 2]);
+addMesh(watch, new THREE.CylinderGeometry(0.0034, 0.0034, 0.003, 24), brass, [-0.0295, 0.0045, 0], [0, 0, Math.PI / 2]);
+const bowMat = brass.clone(); bowMat.emissiveIntensity = 0;
+const bow = addMesh(watch, new THREE.TorusGeometry(0.0062, 0.0012, 14, 40), bowMat, [-0.0365, 0.0045, 0], [-Math.PI / 2, 0, 0]);
+const BOW = new THREE.Vector3(-0.0365, 0.0045, 0).add(watch.position);
+
+// ---------- 손님: 사람 몸을 도형으로 단순화한 3D 피규어 (표정 있음) ----------
+// 기준점 = 가판대 윗면 높이의 몸 중앙. 두 손은 가판대 위에 올려둠
+const guest = new THREE.Group(); guest.position.set(-0.03, GROUND, -0.40); scene.add(guest);
+const M = c => new THREE.MeshStandardMaterial({color:c, roughness:0.75});
+const jacket = M(0x7d6b58), shirt = M(0xe6e0d4), skin = M(0xe5c09d), hairM = M(0x372e29), ink = M(0x221c19), blush = M(0xe7a191);
+const Yv = new THREE.Vector3(0, 1, 0);
+function limb(parent, a, b, r, mat) {                    // 두 점을 잇는 캡슐(팔 마디)
+  const A = new THREE.Vector3(...a), B = new THREE.Vector3(...b), d = B.clone().sub(A);
+  const m = addMesh(parent, new THREE.CapsuleGeometry(r, d.length(), 8, 20), mat);
+  m.position.copy(A).add(B).multiplyScalar(0.5); m.quaternion.setFromUnitVectors(Yv, d.normalize()); return m;
+}
+{
+  // 날씬한 상체: 어깨가 비스듬히 내려와 팔로 이어지는 실루엣
+  const prof = [[0,-0.08],[0.058,-0.08],[0.06,0],[0.063,0.07],[0.066,0.12],[0.064,0.148],[0.056,0.168],[0.04,0.184],[0.02,0.196],[0,0.2]]
+    .map(([r, y]) => new THREE.Vector2(r, y));
+  const torso = addMesh(guest, new THREE.LatheGeometry(prof, 64), jacket); torso.scale.z = 0.6;
+  const v = new THREE.Shape(); v.moveTo(-0.017, 0.04); v.lineTo(0.017, 0.04); v.lineTo(0, -0.035); v.lineTo(-0.017, 0.04);
+  addMesh(guest, new THREE.ShapeGeometry(v), shirt, [0, 0.142, 0.0385], [-0.2, 0, 0]);
+  addMesh(guest, new THREE.BoxGeometry(0.022, 0.009, 0.005), shirt, [-0.011, 0.184, 0.024], [0.6, 0, 0.5]);
+  addMesh(guest, new THREE.BoxGeometry(0.022, 0.009, 0.005), shirt, [0.011, 0.184, 0.024], [0.6, 0, -0.5]);
+  addMesh(guest, new THREE.CylinderGeometry(0.0145, 0.016, 0.036, 24), skin, [0, 0.21, 0]);
+  for (const sx of [-1, 1]) {
+    // 어깨 관절을 몸통 안쪽에 두고 팔 굵기와 같은 둥근 끝으로 이어서, 어깨와 팔이 한 덩어리처럼 보이게
+    const sh = [sx * 0.05, 0.158, 0], el = [sx * 0.074, 0.07, 0.03], wr = [sx * 0.062, 0.016, 0.094];
+    limb(guest, sh, el, 0.0165, jacket);
+    limb(guest, el, wr, 0.015, jacket);
+    addMesh(guest, new THREE.CylinderGeometry(0.0162, 0.0162, 0.007, 20), shirt, [wr[0], wr[1] + 0.002, wr[2] - 0.003], [1.25, 0, 0]);
+    const hand = addMesh(guest, new THREE.SphereGeometry(0.0145, 24, 16), skin, [sx * 0.059, 0.010, 0.111]); hand.scale.set(1, 0.55, 1.35);
+    limb(guest, [sx * 0.05, 0.011, 0.104], [sx * 0.043, 0.009, 0.12], 0.0048, skin);   // 엄지
+  }
+}
+const head = new THREE.Group(); head.position.set(0, 0.212, 0.002); guest.add(head);   // 목을 축으로 끄덕임
+const face = {};
+{
+  const sk = addMesh(head, new THREE.SphereGeometry(0.04, 48, 32), skin, [0, 0.05, 0]); sk.scale.set(0.92, 1.08, 0.95);
+  addMesh(head, new THREE.SphereGeometry(0.0425, 48, 24, 0, Math.PI * 2, 0, Math.PI * 0.5), hairM, [0, 0.056, -0.003], [-0.35, 0, 0]);
+  for (const sx of [-1, 1]) { const e = addMesh(head, new THREE.SphereGeometry(0.009, 16, 12), skin, [sx * 0.037, 0.048, 0]); e.scale.set(0.5, 1, 0.8); }
+  const nose = addMesh(head, new THREE.SphereGeometry(0.0055, 16, 12), skin, [0, 0.046, 0.039]); nose.scale.set(0.9, 1, 1.1);
+  face.eyes = [-1, 1].map(sx => { const e = addMesh(head, new THREE.SphereGeometry(0.0046, 16, 12), ink, [sx * 0.0135, 0.056, 0.0345]); e.scale.set(1, 1.2, 0.6); return e; });
+  face.happyEyes = [-1, 1].map(sx => addMesh(head, new THREE.TorusGeometry(0.0055, 0.0013, 8, 20, Math.PI), ink, [sx * 0.0135, 0.0545, 0.0352]));
+  face.brows = [-1, 1].map(sx => { const b = addMesh(head, new THREE.CapsuleGeometry(0.0013, 0.011, 4, 8), hairM, [sx * 0.0135, 0.0665, 0.034], [0, 0, Math.PI / 2]); b.userData.sx = sx; return b; });
+  face.mouthLine = addMesh(head, new THREE.CapsuleGeometry(0.0012, 0.011, 4, 8), ink, [0, 0.034, 0.0355], [0, 0, Math.PI / 2]);
+  face.smile = addMesh(head, new THREE.TorusGeometry(0.0085, 0.0014, 8, 24, Math.PI), ink, [0, 0.0375, 0.0352], [0, 0, Math.PI]);
+  face.ooh = addMesh(head, new THREE.TorusGeometry(0.0035, 0.0013, 8, 20), ink, [0, 0.033, 0.0358]);
+  face.cheeks = [-1, 1].map(sx => { const c = addMesh(head, new THREE.SphereGeometry(0.006, 16, 12), blush, [sx * 0.024, 0.042, 0.03]); c.scale.set(1, 0.6, 0.4); return c; });
+}
+let expr = 'neutral', blinkT = 2.5;
+function setExpr(e) {                                    // neutral · soft(살짝 미소) · happy(활짝) · curious(갸웃)
+  expr = e;
+  face.eyes.forEach(o => o.visible = e !== 'happy'); face.happyEyes.forEach(o => o.visible = e === 'happy');
+  face.mouthLine.visible = e === 'neutral'; face.smile.visible = e === 'happy' || e === 'soft'; face.ooh.visible = e === 'curious';
+  face.smile.scale.setScalar(e === 'happy' ? 1 : 0.7); face.cheeks.forEach(o => o.visible = e === 'happy');
+  face.brows.forEach(b => { b.position.y = e === 'curious' && b.userData.sx > 0 ? 0.0705 : e === 'happy' ? 0.068 : 0.0665;
+    b.rotation.z = Math.PI / 2 + (e === 'curious' ? b.userData.sx * -0.25 : 0); });
+}
+setExpr('soft');
+const smile = new THREE.Object3D();
+const guestPickList = () => { const a = []; guest.traverse(o => o.isMesh && a.push(o)); return a; };
+
+// ---------- 태그 ----------
+const tag = new THREE.Group(); scene.add(tag);
+let cover = null, coverBaseZ = 0, tagMeshes = [], strap = null, strapMat = null, strapOld = null;
+// 끈 중심선 (태그 기준 좌표, m): 끝(-z) → 앞면 위로 넘어 구멍 통과 → 뒷면 아래로 → 다시 끝
+const SX = 0.00624, SW = 0.003, ST = 0.0006, SN = 200;
+const STRAP_PTS = [[-0.1165,0.0166],[-0.090,0.0167],[-0.066,0.0177],[-0.052,0.0212],[-0.0445,0.0282],[-0.0418,0.0295],
+  [-0.0385,0.0295],[-0.0362,0.0283],[-0.0360,0.0250],[-0.0362,0.0218],[-0.0385,0.0211],[-0.0418,0.0211],
+  [-0.0455,0.0199],[-0.056,0.0178],[-0.076,0.0162],[-0.100,0.0160],[-0.1178,0.0161],[-0.1199,0.0164]];
+const strapGeo = new THREE.BufferGeometry();
+{
+  strapGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(SN * 4 * 3), 3));
+  const idx = [];
+  for (let i = 0; i < SN; i++) { const j = (i + 1) % SN;
+    for (let c = 0; c < 4; c++) { const a = i * 4 + c, b = i * 4 + (c + 1) % 4, a2 = j * 4 + c, b2 = j * 4 + (c + 1) % 4;
+      idx.push(a, a2, b, b, a2, b2); } }
+  strapGeo.setIndex(idx);
+}
+let sway = 0, swayV = 0; const SBEND = 0.009;
+const _p = new THREE.Vector3(), _t = new THREE.Vector3(), _sd = new THREE.Vector3(), _n = new THREE.Vector3(), XA = new THREE.Vector3(1, 0, 0);
+function updateStrap() {
+  const pts = STRAP_PTS.map(([z, y]) => {
+    const s = THREE.MathUtils.clamp((-0.043 - z) / (0.1199 - 0.043), 0, 1);   // 0: 태그 쪽, 1: 끈 끝
+    return new THREE.Vector3(SX + SBEND * Math.sin(Math.PI * s) * (1 - 0.35 * s) + sway * Math.sin(Math.PI * s), y, z);
+  });
+  const curve = new THREE.CatmullRomCurve3(pts, true, 'centripetal');
+  const pos = strapGeo.attributes.position.array;
+  for (let i = 0; i < SN; i++) {
+    const u = i / SN; curve.getPointAt(u, _p); curve.getTangentAt(u, _t);
+    _sd.copy(XA).addScaledVector(_t, -_t.dot(XA)).normalize(); _n.crossVectors(_t, _sd).normalize();
+    const c = [[1, 1], [-1, 1], [-1, -1], [1, -1]];
+    for (let k = 0; k < 4; k++) {
+      const o = (i * 4 + k) * 3;
+      pos[o]     = _p.x + _sd.x * SW / 2 * c[k][0] + _n.x * ST / 2 * c[k][1];
+      pos[o + 1] = _p.y + _sd.y * SW / 2 * c[k][0] + _n.y * ST / 2 * c[k][1];
+      pos[o + 2] = _p.z + _sd.z * SW / 2 * c[k][0] + _n.z * ST / 2 * c[k][1];
+    }
+  }
+  strapGeo.attributes.position.needsUpdate = true; strapGeo.computeVertexNormals(); strapGeo.computeBoundingSphere();
+}
+const strapTip = new THREE.Vector3(0.00624, 0.0163, -0.1185), screenC = new THREE.Vector3(); let screenR = 0.0185;
+const dispCv = document.createElement('canvas'); dispCv.width = dispCv.height = 512;
+const dispTex = new THREE.CanvasTexture(dispCv); dispTex.colorSpace = THREE.SRGBColorSpace;
+const dispMat = new THREE.MeshBasicMaterial({map:dispTex, transparent:true, toneMapped:false});
+let disp = null;
+const glowLight = new THREE.PointLight(0xff2a1a, 0, 0.12, 2);
+
+// 화면 한 장면(레이어)을 투명도 a로 그림
+function drawLayer(g, s, a, t) {
+  if (s === 'off' || a <= 0) return;
+  g.save(); g.globalAlpha = a; g.textAlign = 'center'; g.textBaseline = 'middle';
+  if (s === 'scan') {
+    const gr = g.createRadialGradient(256, 256, 20, 256, 256, 256);
+    gr.addColorStop(0, '#ff3b2a'); gr.addColorStop(1, '#b80904');
+    g.fillStyle = gr; g.fillRect(0, 0, 512, 512);
+    g.fillStyle = '#fff3ee'; g.font = '600 44px "PretendardLocal", sans-serif';
+    const word = 'RECOGNIZING', w = g.measureText(word).width, dw = g.measureText('...').width;
+    const x0 = 256 - (w + dw) / 2;
+    g.textAlign = 'left'; g.fillText(word, x0, 256);
+    const n = 1 + Math.floor(Math.max(0, t - 0.25) / 0.3) % 3;          // . → .. → ... 반복
+    g.fillText('.'.repeat(n), x0 + w, 256);
+  } else if (s === 'noitem') {
+    g.fillStyle = '#080808'; g.fillRect(0, 0, 512, 512);
+    g.fillStyle = '#ff4a3a'; g.font = '600 40px "PretendardLocal", sans-serif';
+    g.fillText('ATTACH TO', 256, 232); g.fillText('AN ITEM', 256, 284);
+  } else if (s === 'price') {
+    g.fillStyle = '#050505'; g.fillRect(0, 0, 512, 512);
+    g.fillStyle = '#ffbf86'; g.font = '600 80px "PretendardLocal", sans-serif';
+    g.fillText($('fPrice').value, 256, 256, 440);
+  } else if (s === 'detail') {
+    g.fillStyle = '#fff6ea'; g.fillRect(0, 0, 512, 512);
+    g.fillStyle = '#2a1a10'; g.font = '600 44px "PretendardLocal", sans-serif';
+    g.fillText($('fName').value, 256, 186, 420);
+    g.font = '500 34px "PretendardLocal", sans-serif'; g.fillStyle = '#4a3526';
+    g.fillText($('fYear').value, 256, 252, 380);
+    const n = +$('fDots').value;
+    for (let i = 0; i < 5; i++) { g.beginPath(); g.arc(256 + (i - 2) * 46, 330, 14, 0, 7);
+      g.fillStyle = i < n ? '#2a1a10' : '#c9bcaf'; g.fill(); }
+  } else if (s === 'white') {
+    g.fillStyle = '#ffffff'; g.fillRect(0, 0, 512, 512);
+  }
+  g.restore();
+}
+// 화면 전환: 이전 장면이 서서히 사라지고 새 장면이 서서히 나타남
+const view = {from:'off', to:'off', t:1, dur:0.5};
+function fadeTo(s, dur = 0.5) {
+  if (view.to === s) return;
+  view.from = view.t >= 1 ? view.to : (view.t < 0.5 ? view.from : view.to);
+  view.to = s; view.t = 0; view.dur = dur;
+}
+const GLOW = {off:[0, 0, 0xff2a1a], scan:[1.45, 0.0007, 0xff2a1a], noitem:[1.15, 0.00025, 0xff2a1a],
+  price:[1.25, 0.00008, 0xffb070], detail:[1.0, 0.00025, 0xfff1dd], white:[1.7, 0.0004, 0xffffff]};
+function renderDisplay(dt) {
+  view.t = Math.min(1, view.t + dt / view.dur);
+  const e = ease(view.t), g = dispCv.getContext('2d');
+  g.clearRect(0, 0, 512, 512); g.save(); g.beginPath(); g.arc(256, 256, 256, 0, 7); g.clip();
+  drawLayer(g, view.from, 1 - e, stateT); drawLayer(g, view.to, e, stateT);
+  g.restore(); dispTex.needsUpdate = true;
+  if (disp) disp.visible = !(view.to === 'off' && view.t >= 1);
+  const a = GLOW[view.from], b = GLOW[view.to];
+  const pulse = state === 'scan' ? 1 + 0.18 * Math.sin(stateT * 5) : 1;
+  const k = Math.max(lerp(a[0] || 1, b[0] || 1, e), 1) * pulse;
+  dispMat.color.setScalar(k);
+  glowLight.intensity = lerp(a[1], b[1], e) * pulse;
+  glowLight.color.setHex(e < 0.5 ? a[2] : b[2]);
+}
+
+// ---------- 모델 불러오기 ----------
+const loader = new GLTFLoader();
+const onLoaded = gltf => {
+  const drop = ['Render_Floor', 'Render_ReflectCard', 'Render_GlossStrip', 'Render_Target'];
+  for (const o of [...gltf.scene.children]) if (!drop.some(n => o.name.startsWith(n))) tag.add(o);
+  tag.traverse(o => {
+    if (!o.isMesh) return;
+    o.castShadow = o.receiveShadow = true; tagMeshes.push(o);
+    const n = o.material?.name || '', box = new THREE.Box3().setFromObject(o);
+    if (n.includes('Cap')) cover = o;
+    if (n.includes('Screen')) { box.getCenter(screenC); screenC.y = box.max.y; screenR = (box.max.x - box.min.x) / 2; }
+    if (n.includes('Strap')) { strapMat = o.material; o.visible = false; strapOld = o; }
+  });
+  coverBaseZ = cover.position.z;
+  tagMeshes = tagMeshes.filter(m => m !== strapOld);
+  strapMat.side = THREE.DoubleSide;
+  strap = new THREE.Mesh(strapGeo, strapMat); strap.castShadow = strap.receiveShadow = true; tag.add(strap);
+  tagMeshes.push(strap); updateStrap();
+  disp = new THREE.Mesh(new THREE.CircleGeometry(screenR, 96), dispMat);
+  disp.rotation.x = -Math.PI / 2; disp.position.copy(screenC); disp.position.y += 0.00006;
+  disp.visible = false; tag.add(disp);
+  glowLight.position.copy(screenC); glowLight.position.y += 0.006; tag.add(glowLight);
+  buildGhost(); $('load').remove(); setState('off');
+};
+const loadFail = () => { $('load').textContent = '모델을 불러오지 못했어요. 새로고침해 주세요.'; };
+const waitModel = () => new Promise(r => { const t = setInterval(() => { if (window.TAG_GLB_B64) { clearInterval(t); r(); } }, 50); });
+(async () => {
+  try {
+    await waitModel();
+    const raw = atob(window.TAG_GLB_B64);
+    const u8 = new Uint8Array(raw.length); for (let i = 0; i < raw.length; i++) u8[i] = raw.charCodeAt(i);
+    loader.parse(u8.buffer, '', onLoaded, loadFail);
+  } catch (err) { console.error(err); loadFail(); }
+})();
+
+// ---------- 상태 ----------
+// scan: 빨간 빛이 0.5초 동안 서서히 켜짐 → 점 애니메이션 2번 → 빛이 서서히 꺼짐 → 가격이 서서히 나타남
+const SCAN_IN = 0.5, SCAN_HOLD = 1.8, SCAN_OUT = 0.5;
+let state = 'off', stateT = 0, attached = false, coverOpen = false, coverTarget = 0, shown = false, scanOut = false, pendingReset = false;
+const STATUS = {off:['대기','#9aa19e'], scan:['인식 중','#e3261b'], noitem:['물건에 먼저 걸어주세요','#e3261b'],
+  price:['가치 표시','#d9893f'], detail:['상세 정보','#e9dcc4'], reset:['리셋','#ffffff']};
+function setState(s) {
+  state = s; stateT = 0; scanOut = false;
+  if (!nod && (s === 'off' || s === 'scan')) setExpr('soft');
+  if (s === 'scan') fadeTo('scan', SCAN_IN);
+  else if (s === 'noitem') fadeTo('noitem', 0.4);
+  else if (s === 'price') { fadeTo('price', 0.7); shown = false; }
+  else if (s === 'detail') fadeTo('detail', 0.7);
+  else if (s === 'reset') fadeTo('white', 0.18);
+  else fadeTo('off', 0.6);
+  $('status').textContent = STATUS[s][0]; $('dot').style.background = STATUS[s][1];
+  updateSteps();
+}
+function tickState() {
+  if (state === 'scan') {
+    if (!scanOut && stateT > SCAN_IN + SCAN_HOLD) { fadeTo('off', SCAN_OUT); scanOut = true; }
+    if (stateT > SCAN_IN + SCAN_HOLD + SCAN_OUT + 0.1) setState('price');
+  } else if (state === 'noitem') {
+    if (!scanOut && stateT > 1.8) { fadeTo('off', 0.5); scanOut = true; }
+    if (stateT > 2.4) setState('off');
+  } else if (state === 'reset') {
+    if (!scanOut && stateT > 0.25) { fadeTo('off', 0.7); scanOut = true; }
+    if (stateT > 1.0) setState('off');
+  }
+}
+function updateSteps() {
+  const now = !attached ? 1 : state === 'price' ? (shown ? 4 : 3) : state === 'detail' ? 5 : 2;
+  document.querySelectorAll('#rail button').forEach(b => {
+    const s = +b.dataset.s; b.classList.toggle('now', s === now); b.classList.toggle('done', s < now);
+  });
+  $('hint').textContent = !attached ? '태그를 끌어서 끈 끝을 시계 고리에 가져다 대보세요'
+    : state === 'scan' ? 'MCU AI가 물건을 인식하고 있어요'
+    : state === 'price' ? (shown ? '이제 커버를 위로 닫아 상세 정보를 보세요' : '손님을 눌러 가격을 보여주세요')
+    : state === 'detail' ? (pendingReset ? '커버를 다시 닫으면 리셋돼요' : '손님에게 다시 보여주거나, 커버를 내렸다 닫아 리셋해요')
+    : coverOpen ? '커버를 닫았다가 다시 내리면 새로 인식해요' : '초록 커버를 아래로 끌어내려 보세요';
+}
+function onCover(open) {
+  if (open) {
+    if (state === 'detail') pendingReset = true;                 // 내리기만 하면 아직 리셋 아님
+    else if (state === 'off') setState(attached ? 'scan' : 'noitem');
+  } else {
+    if (pendingReset) { pendingReset = false; setState('reset'); } // 내렸다가 다시 닫으면 리셋
+    else if (state === 'price') setState('detail');
+    else if (state === 'scan' || state === 'noitem') setState('off');
+  }
+  updateSteps();
+}
+
+// ---------- 손님에게 보여주기 ----------
+const LINES = {price:'오, 생각보다 괜찮은 가격이네요!', detail:'1960년대 거라니, 이걸로 할게요!',
+  scan:'뭐가 나오려나…', off:'이거 얼마예요?', noitem:'이거 얼마예요?', reset:'다음 건 뭐예요?'};
+let show = null, nod = null, bubbleT = 0, bubbleDelay = 0, bubbleLen = 0, camShot = null;
+const SHOW_T = 4.4, BUB_END = 3.0, smooth = (a, b, x) => { const t = THREE.MathUtils.clamp((x - a) / (b - a), 0, 1); return t * t * (3 - 2 * t); };
+function showGuest() {
+  const happy = state === 'price' || state === 'detail';
+  $('bubble').textContent = LINES[state] || LINES.off;
+  nod = {t:0, happy, set:false}; bubbleT = happy ? BUB_END : 2.6; bubbleDelay = happy ? 1.6 : 0.2; bubbleLen = bubbleT;
+  if (happy) {
+    // 카메라: 손님 쪽으로 이동 → 잠시 머묾 → 원래 자리로
+    const headW = new THREE.Vector3(0, 0.26, 0).applyMatrix4(guest.matrixWorld);
+    const tgt = tag.position.clone().add(new THREE.Vector3(0, 0.05, 0)).lerp(headW, 0.55);
+    const dir = new THREE.Vector3().subVectors(tag.position, guest.position).setY(0).normalize();
+    const side = new THREE.Vector3(dir.z, 0, -dir.x);
+    camShot = {t:0, p0:camera.position.clone(), t0:controls.target.clone(),
+      p1:tag.position.clone().addScaledVector(dir, 0.30).addScaledVector(side, 0.12).add(new THREE.Vector3(0, 0.13, 0)), t1:tgt};
+    controls.enabled = false;
+    const d = guest.position.clone().sub(tag.position); d.y = 0; d.normalize();
+    show = {t:0, yaw:tag.rotation.y, axis:new THREE.Vector3(0, 1, 0).cross(d).normalize()};
+    if (attached) { tag.updateMatrixWorld(true); tag.attach(watch); }   // 태그에 걸린 시계도 같이
+    if (state === 'price' && !shown) { shown = true; updateSteps(); }
+  }
+}
+
+// ---------- 끌기 ----------
+const ray = new THREE.Raycaster(), ptr = new THREE.Vector2();
+const plane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0), hit = new THREE.Vector3();
+let drag = null, snapAnim = null, lastHover = 0;
+function setPtr(e) {
+  const r = renderer.domElement.getBoundingClientRect();
+  ptr.set((e.clientX - r.left) / r.width * 2 - 1, -(e.clientY - r.top) / r.height * 2 + 1);
+  ray.setFromCamera(ptr, camera);
+}
+function planeHit(y) { plane.constant = -y; return ray.ray.intersectPlane(plane, hit) ? hit.clone() : null; }
+function pick() {
+  const gm = guestPickList();
+  const h = ray.intersectObjects(gm.concat(tagMeshes, disp ? [disp] : []), false)[0];
+  if (!h) return null;
+  return gm.includes(h.object) ? 'guest' : h.object === cover ? 'cover' : 'tag';
+}
+renderer.domElement.addEventListener('pointerdown', e => {
+  if (!cover || show || camShot || auto) return;
+  setPtr(e);
+  const what = pick(); if (!what) return;
+  if (what === 'guest') { showGuest(); return; }
+  controls.enabled = false; renderer.domElement.setPointerCapture(e.pointerId);
+  if (what === 'cover') {
+    const p = planeHit(0.0303); if (!p) return;
+    drag = {kind:'cover', z0:tag.worldToLocal(p).z, open0:cover.position.z - coverBaseZ};
+  } else {
+    const p = planeHit(0.03); if (!p) return;
+    drag = {kind:'tag', off:tag.position.clone().sub(p), tx:tag.position.x, tz:tag.position.z};
+    if (attached) { attached = false; updateSteps(); }
+  }
+  stage.style.cursor = 'grabbing';
+});
+renderer.domElement.addEventListener('pointermove', e => {
+  setPtr(e);
+  if (!drag) {
+    const now = performance.now();
+    if (cover && now - lastHover > 90) { lastHover = now; const w = pick();
+      stage.style.cursor = w === 'guest' ? 'pointer' : w ? 'grab' : ''; }
+    return;
+  }
+  if (drag.kind === 'cover') {
+    const p = planeHit(0.0303); if (!p) return;
+    drag.want = THREE.MathUtils.clamp(drag.open0 + tag.worldToLocal(p).z - drag.z0, 0, OPEN);
+  } else {
+    const p = planeHit(0.03); if (!p) return;
+    p.add(drag.off);
+    drag.tx = THREE.MathUtils.clamp(p.x, -0.6, 0.6); drag.tz = THREE.MathUtils.clamp(p.z, -0.6, 0.6);
+  }
+});
+function endDrag() {
+  if (!drag) return;
+  if (drag.kind === 'cover') {
+    const open = cover.position.z - coverBaseZ > OPEN / 2;
+    coverTarget = open ? OPEN : 0;
+    if (open !== coverOpen) { coverOpen = open; onCover(open); }
+  } else {
+    const tip = strapTip.clone().applyMatrix4(tag.matrixWorld);
+    const p0 = tag.position.clone(), r0 = tag.rotation.y;
+    if (Math.hypot(tip.x - BOW.x, tip.z - BOW.z) < 0.06) {
+      const rot = -Math.PI / 2, s = strapTip.clone().applyAxisAngle(new THREE.Vector3(0, 1, 0), rot);
+      snapAnim = {t:0, p0, r0, p1:new THREE.Vector3(BOW.x - s.x, 0, BOW.z - s.z), r1:rot};
+    } else snapAnim = {t:0, p0, r0, p1:new THREE.Vector3(p0.x, 0, p0.z), r1:r0, free:true};
+  }
+  drag = null; controls.enabled = true; stage.style.cursor = '';
+}
+renderer.domElement.addEventListener('pointerup', endDrag);
+renderer.domElement.addEventListener('pointercancel', endDrag);
+
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.target.copy(TGT0); controls.enableDamping = true; controls.dampingFactor = 0.08;
+controls.minDistance = 0.12; controls.maxDistance = 1.2; controls.maxPolarAngle = Math.PI * 0.47;
+controls.minAzimuthAngle = -0.7; controls.maxAzimuthAngle = 1.1;
+controls.update();
+
+$('bCam').onclick = () => { camera.position.copy(CAM0); controls.target.copy(TGT0); controls.update(); };
+$('bReset').onclick = () => {
+  attached = false; coverOpen = false; coverTarget = 0; snapAnim = null; show = null; shown = false; pendingReset = false;
+  if (watch.parent !== scene) scene.attach(watch);
+  tag.position.set(0, 0, 0); tag.rotation.set(0, 0, 0); if (cover) cover.position.z = coverBaseZ;
+  setState('off'); $('bCam').onclick();
+};
+
+// ---------- 사용 순서 레일: 올리면 설명 + 가이드, 누르면 자동 실행 ----------
+const STEPS = [
+  ['태그 끈을 시계에 걸기', '태그를 마우스로 꾹 눌러 끌고 가서, 끈 끝을 시계 고리에 대요. 고리가 빛날 때 놓으면 걸려요.', 'drag', '끈 걸기'],
+  ['커버 내리기', '초록 커버를 꾹 누른 채 아래로 끌어내려요. 빨간 빛과 함께 인식이 시작돼요.', 'drag', '커버 내리기'],
+  ['손님에게 보여주기', '가격이 뜬 상태에서 가판대 너머의 손님을 한 번 클릭해요. 태그가 손님 쪽으로 기울어 가격을 보여줘요.', 'tap', '손님 클릭'],
+  ['커버 닫기', '초록 커버를 꾹 누른 채 위로 밀어 닫아요. 제품명·연도·가치가 나와요.', 'drag', '커버 닫기'],
+  ['리셋', '커버를 아래로 내렸다가 다시 위로 닫아요. 화면이 꺼지고 처음 상태로 돌아가요.', 'downup', '리셋'],
+];
+let auto = false, guideStep = 0, guideT = 0;
+const rail = $('rail'), tip = $('tip');
+rail.innerHTML = STEPS.map((st, i) => `<button data-s="${i + 1}" aria-label="${i + 1}단계 ${st[0]}"><span class="n">${i + 1}</span><span class="lb">${st[3]}</span></button>`).join('');
+rail.querySelectorAll('button').forEach(b => {
+  const i = +b.dataset.s;
+  const on = () => { if (auto || camShot) return; guideStep = i; guideT = 0; startHover(i);
+    const kind = {drag:'드래그', tap:'클릭', downup:'내렸다 올리기'}[STEPS[i - 1][2]];
+    tip.innerHTML = `<div class="tip-top"><span class="tip-n">0${i}</span><span class="tip-of">/ 0${STEPS.length}</span><span class="tip-kind">${kind}</span></div>`
+      + `<b>${STEPS[i - 1][0]}</b><span class="desc">${STEPS[i - 1][1]}</span>`
+      + `<div class="tip-act"><i>번호 클릭</i>이 단계를 자동으로 보여줘요</div>`;
+    tip.style.top = (b.offsetTop + b.offsetHeight / 2 + rail.offsetTop - rail.offsetHeight / 2) + 'px';
+    tip.style.left = (rail.offsetLeft + b.offsetWidth + 12) + 'px'; tip.classList.add('on'); };
+  const off = () => { guideStep = 0; tip.classList.remove('on'); endHover(); };
+  b.addEventListener('pointerenter', on); b.addEventListener('focus', on);
+  b.addEventListener('pointerleave', off); b.addEventListener('blur', off);
+  b.addEventListener('click', () => runStep(i));
+});
+const wait = ms => new Promise(r => setTimeout(r, ms));
+const waitUntil = (fn, max = 8000) => new Promise(r => { const t0 = performance.now();
+  const id = setInterval(() => { if (fn() || performance.now() - t0 > max) { clearInterval(id); r(); } }, 50); });
+async function ensureAttached() {
+  if (attached) return;
+  const rot = -Math.PI / 2, sv = strapTip.clone().applyAxisAngle(new THREE.Vector3(0, 1, 0), rot);
+  snapAnim = {t:0, p0:tag.position.clone(), r0:tag.rotation.y, p1:new THREE.Vector3(BOW.x - sv.x, 0, BOW.z - sv.z), r1:rot};
+  await waitUntil(() => !snapAnim); await wait(250);
+}
+async function autoCover(open) {
+  coverTarget = open ? OPEN : 0; await wait(420);
+  if (coverOpen !== open) { coverOpen = open; onCover(open); }
+}
+async function freshStart() {
+  if (state === 'off' && !coverOpen) return;
+  coverTarget = 0; coverOpen = false; pendingReset = false; setState('off'); await wait(650);
+}
+async function ensurePrice() {
+  if (state === 'price') return;
+  await ensureAttached(); await freshStart(); await autoCover(true);
+  await waitUntil(() => state === 'price'); await wait(500);
+}
+async function runStep(i) {
+  if (auto || !cover || show || camShot || drag) return;
+  auto = true; guideStep = 0; tip.classList.remove('on'); endHover();
+  await waitUntil(() => !hoverCam, 2000);
+  rail.querySelectorAll('button').forEach(b => b.disabled = true);
+  try {
+    if (i === 1) await ensureAttached();
+    if (i === 2) { await ensureAttached(); await freshStart(); await autoCover(true); }
+    if (i === 3) { await ensurePrice(); showGuest(); await waitUntil(() => !show && !camShot); }
+    if (i === 4) { await ensurePrice(); await autoCover(false); }
+    if (i === 5) { if (state !== 'detail') { await ensurePrice(); await autoCover(false); await wait(1100); }
+      await autoCover(true); await wait(700); await autoCover(false); }
+  } finally { auto = false; rail.querySelectorAll('button').forEach(b => b.disabled = false); }
+}
+// ---------- 가이드 애니메이션: 해당 부분으로 클로즈업 + 반투명 실루엣이 동작을 시범 ----------
+const ghostMat = new THREE.MeshBasicMaterial({color:0xfffaf0, transparent:true, opacity:0, depthWrite:false, depthTest:false});
+const ghostCoverMat = new THREE.MeshBasicMaterial({color:0x9fe0c4, transparent:true, opacity:0, depthWrite:false, depthTest:false});
+const ghostScrMat = new THREE.MeshBasicMaterial({color:0xff3b2a, transparent:true, opacity:0, depthWrite:false, depthTest:false, toneMapped:false});
+let ghost = null, ghostCover = null, ghostParts = [];
+function buildGhost() {
+  ghost = new THREE.Group();
+  for (const ch of tag.children) {
+    if (ch === disp || ch === glowLight || !ch.isMesh || !ch.visible) continue;
+    const c = new THREE.Mesh(ch.geometry, ch === cover ? ghostCoverMat : ghostMat);
+    c.position.copy(ch.position); c.quaternion.copy(ch.quaternion); c.scale.copy(ch.scale); c.renderOrder = ch === cover ? 7 : 5;
+    if (ch === cover) ghostCover = c; else ghostParts.push(c);
+    ghost.add(c);
+  }
+  const gs = new THREE.Mesh(new THREE.CircleGeometry(screenR, 64), ghostScrMat);
+  gs.rotation.x = -Math.PI / 2; gs.position.copy(screenC); gs.position.y += 0.0003; gs.renderOrder = 8; ghost.add(gs);
+  ghost.visible = false; scene.add(ghost);
+}
+let hoverCam = null;                                     // {on, p0, t0, p1, t1}
+function closeup(i) {
+  const tipW = tag.localToWorld(strapTip.clone());
+  const coverW = tag.localToWorld(new THREE.Vector3(screenC.x, 0.03, coverBaseZ + 0.05));
+  if (i === 1) { const t = tipW.clone().lerp(BOW, 0.5); return [t.clone().add(new THREE.Vector3(0.06, 0.15, 0.17)), t]; }
+  if (i === 3) {
+    const headW = new THREE.Vector3(0, 0.26, 0).applyMatrix4(guest.matrixWorld);
+    const t = tag.position.clone().add(new THREE.Vector3(0, 0.05, 0)).lerp(headW, 0.55);
+    const dir = new THREE.Vector3().subVectors(tag.position, guest.position).setY(0).normalize();
+    return [tag.position.clone().addScaledVector(dir, 0.32).add(new THREE.Vector3(0.1, 0.15, 0)), t];
+  }
+  return [coverW.clone().add(new THREE.Vector3(0.09, 0.13, 0.13)), coverW];
+}
+function startHover(i) {
+  if (auto || camShot || drag || !cover) return;
+  const [p1, t1] = closeup(i);
+  if (!hoverCam) hoverCam = {p0:camera.position.clone(), t0:controls.target.clone()};
+  Object.assign(hoverCam, {on:true, p1, t1}); controls.enabled = false;
+}
+function endHover() { if (hoverCam) hoverCam.on = false; }
+const gCur = $('gCursor'), gRip = $('gRipple');
+function placeAt(el, w) { const q = w.clone().project(camera);
+  el.style.left = (q.x + 1) / 2 * stage.clientWidth + 'px'; el.style.top = (1 - q.y) / 2 * stage.clientHeight + 'px'; }
+function guideCursor(g) {                                 // 마우스 커서가 실제로 누르고 끄는 모습
+  if (!guideStep) { gCur.style.opacity = 0; gRip.style.opacity = 0; return; }
+  let w, press = 0;
+  if (guideStep === 3) {
+    const chest = new THREE.Vector3(0.02, 0.13, 0.04).applyMatrix4(guest.matrixWorld);
+    const from = chest.clone().add(new THREE.Vector3(0.09, -0.06, 0.08));
+    w = from.lerp(chest, ease(THREE.MathUtils.clamp((g - 0.2) / 0.5, 0, 1)));
+    press = g > 0.75 && g < 1.25 ? (g - 0.75) / 0.5 : 0;
+  } else if (guideStep === 1) {
+    w = ghost.localToWorld(new THREE.Vector3(screenC.x + 0.01, 0.03, screenC.z + 0.01)); press = g > 0.3 && g < 1.7 ? 0.5 : 0;
+  } else {
+    w = ghost.localToWorld(new THREE.Vector3(screenC.x + 0.006, 0.031, ghostCover.position.z + 0.044)); press = g > 0.25 && g < 2.2 ? 0.5 : 0;
+  }
+  placeAt(gCur, w); placeAt(gRip, w);
+  const vis = smooth(0, 0.2, g) * (1 - smooth(2.4, 2.7, g));
+  gCur.style.opacity = vis; gCur.style.transform = `scale(${press ? 0.86 : 1})`;
+  const rp = guideStep === 3 ? press : (press ? (g * 1.6) % 1 : 0);
+  gRip.style.opacity = rp ? (1 - rp) * vis : 0; gRip.style.transform = `scale(${0.4 + rp * 0.9})`;
+}
+function animGhost(dt) {
+  if (!ghost) return;
+  if (!guideStep) { ghost.visible = false; guideCursor(0); return; }
+  guideT = (guideT + dt) % 2.8; const g = guideT;
+  const a = smooth(0, 0.35, g) * (1 - smooth(2.3, 2.75, g));            // 서서히 나타났다 사라짐
+  const mv = ease(THREE.MathUtils.clamp((g - 0.4) / 1.2, 0, 1));         // 동작 진행도
+  ghost.visible = true;
+  ghost.position.copy(tag.position); ghost.quaternion.copy(tag.quaternion);
+  ghostCover.position.z = cover.position.z; ghostScrMat.opacity = 0;
+  const allParts = guideStep === 1 || guideStep === 3;
+  ghostParts.forEach(m => m.visible = allParts);
+  ghostMat.opacity = 0.5 * a; ghostCoverMat.opacity = 0.85 * a;
+  if (guideStep === 1) {                                   // 실루엣이 끈 끝을 시계 고리로 가져가 거는 모습
+    const rot = -Math.PI / 2, sv = strapTip.clone().applyAxisAngle(new THREE.Vector3(0, 1, 0), rot);
+    const p1 = new THREE.Vector3(BOW.x - sv.x, 0, BOW.z - sv.z);
+    const p0 = attached ? p1.clone().add(new THREE.Vector3(-0.07, 0, 0.05)) : tag.position.clone();
+    const r0 = attached ? rot + 0.5 : tag.rotation.y;
+    ghost.position.lerpVectors(p0, p1, mv); ghost.position.y = 0.012 * Math.sin(Math.PI * mv);
+    ghost.quaternion.setFromAxisAngle(Y, lerp(r0, rot, mv));
+  } else if (guideStep === 3) {                            // 실루엣이 태그를 들어 손님 쪽으로 기울임
+    const d = guest.position.clone().sub(tag.position).setY(0).normalize(), ax = new THREE.Vector3(0, 1, 0).cross(d).normalize();
+    const k = smooth(1.0, 1.6, g) * (1 - smooth(2.1, 2.5, g));
+    ghost.quaternion.setFromAxisAngle(Y, tag.rotation.y).premultiply(new THREE.Quaternion().setFromAxisAngle(ax, 0.55 * k));
+    ghost.position.y = 0.035 * k;
+    if (!nod) head.rotation.x = g > 1.6 && g < 2.3 ? 0.3 * Math.sin((g - 1.6) / 0.35 * Math.PI) ** 2 : head.rotation.x * 0.85;   // 손님이 끄덕이는 미리보기
+  } else {                                                 // 커버 실루엣이 레일을 따라 내려가고 / 올라감
+    const base = coverBaseZ;
+    let open = guideStep === 2 ? OPEN * mv : guideStep === 4 ? OPEN * (1 - mv)
+      : OPEN * (g < 1.2 ? ease(THREE.MathUtils.clamp((g - 0.3) / 0.8, 0, 1)) : 1 - ease(THREE.MathUtils.clamp((g - 1.3) / 0.8, 0, 1)));
+    ghostCover.position.z = base + open;
+    if (guideStep === 2) { ghostScrMat.color.setHex(0xff3b2a); ghostScrMat.opacity = 0.75 * a * smooth(1.2, 1.6, g); }
+    if (guideStep === 4) { ghostScrMat.color.setHex(0xfff6ea); ghostScrMat.opacity = 0.85 * a * smooth(1.2, 1.6, g); }
+    if (guideStep === 5) { ghostScrMat.color.setHex(0xffffff); ghostScrMat.opacity = a * Math.max(0, 1 - Math.abs(g - 2.15) / 0.2); }
+  }
+  ghost.updateMatrixWorld(true); guideCursor(g);
+}
+
+// ---------- 크기 · 매 프레임 ----------
+function resize() {
+  const w = stage.clientWidth, h = stage.clientHeight;
+  renderer.setSize(w, h, false); composer.setSize(w, h); bloom.resolution.set(w, h);
+  camera.aspect = w / h; camera.updateProjectionMatrix();
+}
+new ResizeObserver(resize).observe(stage); resize();
+
+const clock = new THREE.Clock(), v = new THREE.Vector3(), Y = new THREE.Vector3(0, 1, 0), prevPos = new THREE.Vector3();
+renderer.setAnimationLoop(() => {
+  const dt = Math.min(clock.getDelta(), 0.05); stateT += dt;
+  const f = k => 1 - Math.exp(-k * dt);                 // 프레임과 상관없이 부드럽게 따라가기
+  if (cover) {
+    const want = drag?.kind === 'cover' ? (drag.want ?? cover.position.z - coverBaseZ) : coverTarget;
+    cover.position.z += (coverBaseZ + want - cover.position.z) * f(drag ? 22 : 10);
+  }
+  if (drag?.kind === 'tag') {
+    tag.position.x += (drag.tx - tag.position.x) * f(18);
+    tag.position.z += (drag.tz - tag.position.z) * f(18);
+    tag.position.y += (0.006 - tag.position.y) * f(12);
+  }
+  if (snapAnim) {
+    snapAnim.t = Math.min(1, snapAnim.t + dt / 0.55); const k = ease(snapAnim.t);
+    tag.position.lerpVectors(snapAnim.p0, snapAnim.p1, k);
+    tag.rotation.y = lerp(snapAnim.r0, snapAnim.r1, k);
+    if (snapAnim.t >= 1) { if (!snapAnim.free) { attached = true; updateSteps(); } snapAnim = null; }
+  }
+  if (show) {                                            // 태그를 들어 손님 쪽으로 기울였다 내려놓기
+    show.t = Math.min(SHOW_T, show.t + dt);
+    const k = smooth(0.4, 1.3, show.t) * (1 - smooth(3.1, 3.9, show.t));   // 들어서 기울이고 → 잠시 유지 → 내려놓기
+    tag.quaternion.setFromAxisAngle(Y, show.yaw).premultiply(new THREE.Quaternion().setFromAxisAngle(show.axis, 0.55 * k));
+    tag.position.y = 0.035 * k;
+    if (show.t >= SHOW_T) { tag.rotation.set(0, show.yaw, 0); tag.position.y = 0; show = null;
+      if (watch.parent !== scene) { tag.updateMatrixWorld(true); scene.attach(watch); } }
+  }
+  blinkT -= dt;                                          // 가끔 눈 깜빡임
+  const bl = blinkT < 0 ? Math.max(0.12, Math.abs(blinkT + 0.07) / 0.07) : 1;
+  face.eyes.forEach(o => o.scale.y = 1.2 * Math.min(1, bl)); if (blinkT < -0.14) blinkT = 2.5 + Math.random() * 3;
+  guest.rotation.y += (THREE.MathUtils.clamp(Math.atan2(camera.position.x - guest.position.x, camera.position.z - guest.position.z), -0.5, 0.5) - guest.rotation.y) * f(4);
+  if (nod) {                                             // 손님: 만족이면 두 번 끄덕, 아니면 갸웃
+    nod.t += dt; const t = nod.t - (nod.happy ? 1.5 : 0.1);
+    if (!nod.set && t > -0.2) { setExpr(nod.happy ? 'happy' : 'curious'); nod.set = true; }
+    head.rotation.x = nod.happy && t > 0 && t < 1.2 ? 0.38 * Math.sin(t * Math.PI * 2 / 0.6) ** 2 : head.rotation.x * (1 - f(8));
+    head.position.y = 0.212 - head.rotation.x * 0.012;
+    head.rotation.z = !nod.happy && t > 0 && t < 1.4 ? 0.16 * Math.sin(Math.min(1, t / 1.4) * Math.PI) : head.rotation.z * (1 - f(8));
+    guest.position.y = GROUND + (nod.happy && t > 0 && t < 1.2 ? 0.004 * Math.abs(Math.sin(t * Math.PI * 2 / 0.6)) : 0);
+    if (nod.t > 4) { nod = null; setExpr('soft'); }
+  }
+  // 끈: 태그가 움직이면 가운데가 뒤따라 휘었다가 천천히 제자리로
+  if (strap) {
+    const vel = tag.position.clone().sub(prevPos).divideScalar(Math.max(dt, 1e-4)); prevPos.copy(tag.position);
+    const lx = vel.dot(XA.clone().applyQuaternion(tag.quaternion));
+    const target = THREE.MathUtils.clamp(-lx * 0.06, -0.012, 0.012);
+    swayV += ((target - sway) * 160 - swayV * 9) * dt; sway += swayV * dt;
+    updateStrap();
+  }
+  const b = $('bubble');
+  if (bubbleT > 0) {
+    bubbleT -= dt;
+    b.classList.toggle('on', bubbleT > 0.35 && bubbleLen - bubbleT > bubbleDelay);
+    v.set(0.06, 0.27, 0).applyMatrix4(guest.matrixWorld).project(camera);
+    b.style.left = (v.x + 1) / 2 * stage.clientWidth + 'px'; b.style.top = (1 - v.y) / 2 * stage.clientHeight + 'px';
+  } else b.classList.remove('on');
+  if (camShot) {                                         // 카메라: 0.9초 이동 → 2.1초 머묾 → 1초 복귀
+    camShot.t += dt; const t = camShot.t;
+    const k = t < 0.9 ? ease(t / 0.9) : t < 3.0 ? 1 : 1 - ease(Math.min(1, (t - 3.0) / 1.0));
+    camera.position.lerpVectors(camShot.p0, camShot.p1, k);
+    controls.target.lerpVectors(camShot.t0, camShot.t1, k);
+    camera.lookAt(controls.target);
+    if (t >= 4.0) { camera.position.copy(camShot.p0); controls.target.copy(camShot.t0); camShot = null; controls.enabled = true; }
+  }
+  // 끌고 있는 동안 끈 끝이 고리에 가까우면 고리가 빛남
+  let near = 0;
+  if (drag?.kind === 'tag') { const tip = strapTip.clone().applyMatrix4(tag.matrixWorld);
+    near = Math.hypot(tip.x - BOW.x, tip.z - BOW.z) < 0.06 ? 1 : 0; }
+  bowMat.emissive.setHex(0xffc65a); bowMat.emissiveIntensity += (near * (0.6 + 0.3 * Math.sin(stateT * 8)) - bowMat.emissiveIntensity) * f(10);
+  tickState(); renderDisplay(dt); animGhost(dt);
+  if (hoverCam) {                                          // 번호에 올리면 클로즈업, 떼면 원래 시점으로
+    const P = hoverCam.on ? hoverCam.p1 : hoverCam.p0, T = hoverCam.on ? hoverCam.t1 : hoverCam.t0;
+    camera.position.lerp(P, f(5)); controls.target.lerp(T, f(5)); camera.lookAt(controls.target);
+    if (!hoverCam.on && camera.position.distanceTo(P) < 0.002) {
+      camera.position.copy(P); controls.target.copy(T); hoverCam = null; controls.enabled = true; }
+  }
+  if (!camShot && !hoverCam) controls.update();
+  composer.render();
+});
+}
+</script>
+</body>
+</html>
