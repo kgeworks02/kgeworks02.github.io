@@ -1,0 +1,1863 @@
+<!DOCTYPE html>
+<html lang="ko" data-product="4">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>/* 모바일·태블릿에서도 노트북(1280px) 화면 그대로 보이게 */(function(){try{var s=screen,t=("ontouchstart" in window)||navigator.maxTouchPoints>0;if(t&&Math.max(s.width,s.height)<1280){var m=document.querySelector('meta[name="viewport"]');if(m)m.setAttribute("content","width=1280");document.documentElement.classList.add("pc-view");}}catch(e){}})();</script><style>html{-webkit-text-size-adjust:100%;text-size-adjust:100%}</style>
+<title>PRODUCT 4 · AI 빈티지 디스커버리 태그</title>
+<style>
+/* 글꼴: ① 컴퓨터에 설치된 Pretendard → ② 조 폴더의 assets/fonts/ 파일 (인터넷 없이 동작) */
+@font-face{font-family:'PretendardLocal';font-weight:100;font-display:swap;src:local('Pretendard Thin'),local('Pretendard-Thin'),url('../assets/fonts/Pretendard-Thin.woff2') format('woff2');}
+@font-face{font-family:'PretendardLocal';font-weight:200;font-display:swap;src:local('Pretendard ExtraLight'),local('Pretendard-ExtraLight'),url('../assets/fonts/Pretendard-ExtraLight.woff2') format('woff2');}
+@font-face{font-family:'PretendardLocal';font-weight:300;font-display:swap;src:local('Pretendard Light'),local('Pretendard-Light'),url('../assets/fonts/Pretendard-Light.woff2') format('woff2');}
+@font-face{font-family:'PretendardLocal';font-weight:400;font-display:swap;src:local('Pretendard Regular'),local('Pretendard-Regular'),url('../assets/fonts/Pretendard-Regular.woff2') format('woff2');}
+@font-face{font-family:'PretendardLocal';font-weight:500;font-display:swap;src:local('Pretendard Medium'),local('Pretendard-Medium'),url('../assets/fonts/Pretendard-Medium.woff2') format('woff2');}
+@font-face{font-family:'PretendardLocal';font-weight:600;font-display:swap;src:local('Pretendard SemiBold'),local('Pretendard-SemiBold'),url('../assets/fonts/Pretendard-SemiBold.woff2') format('woff2');}
+
+/* =========================================================
+   DESIGN TOKENS — 웜 미니멀리즘 · 네추럴 · 뮤트 (디자인 가이드)
+   ========================================================= */
+:root{
+  --bg:#FFFFFF;          /* 전체 배경: 화이트 */
+  --section-bg:#F7EDE1;  /* 서브 컬러(구분용) */
+  --text:#3D2E21;        /* 텍스트 */
+  --accent:#A2BA75;      /* 포인트 */
+  --nav:#667DAD;         /* 내비게이션 폰트 */
+  --sub:#7D6B5C; --line:#E6DCD0; --img:#F0E8DF;
+
+  --container:1440px; --margin:80px; --gutter:24px;
+  --section:96px; --title-gap:48px;
+  --ease:cubic-bezier(.22,.61,.36,1); --fast:.3s; --slow:.8s;
+  --header:80px;
+}
+@media (max-width:768px){
+  :root{--margin:20px;--gutter:16px;--section:56px;--title-gap:32px;--header:56px}
+}
+
+/* =========================================================
+   BASE + TYPOGRAPHY
+   타이틀 48 SemiBold / 서브 타이틀 32 Light / 설명1 16 ExtraLight / 설명2 14 Thin
+   ========================================================= */
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:"PretendardLocal","PretendardEmbed","Pretendard","Pretendard Variable",-apple-system,BlinkMacSystemFont,sans-serif;
+  font-weight:100;font-size:14px;line-height:1.8;color:var(--text);background:var(--bg);
+  padding-top:var(--header);-webkit-font-smoothing:antialiased;
+}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit}
+.h1{font-size:48px;font-weight:600;line-height:1.3;letter-spacing:-0.01em}
+.h2{font-size:32px;font-weight:300;line-height:1.45}
+.h3{font-size:16px;font-weight:200;line-height:1.5}
+.body{font-size:14px;font-weight:100}
+.sub{color:var(--sub)}
+.eyebrow{font-size:14px;font-weight:100;letter-spacing:.1em;text-transform:uppercase;color:var(--sub)}
+@media (max-width:768px){.h1{font-size:32px}.h2{font-size:24px}}
+
+/* GRID */
+.container{max-width:var(--container);margin:0 auto;padding:0 var(--margin)}
+.grid{display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--gutter);row-gap:48px}
+@media (max-width:768px){.grid{grid-template-columns:repeat(4,1fr);row-gap:32px}}
+section.block{padding:var(--section) 0 0;scroll-margin-top:var(--header)}
+
+/* 섹션 제목: 번호 + 영문 타이틀 + 한글 설명 + 하단 선 */
+.s-head{display:grid;grid-template-columns:64px 1fr;align-items:baseline;padding-bottom:20px;border-bottom:1px solid var(--line);margin-bottom:var(--title-gap)}
+.s-head .no{font-size:14px;font-weight:100;letter-spacing:.1em;color:var(--sub)}
+.s-head .h2{text-transform:uppercase;letter-spacing:.02em}
+.s-head .desc{grid-column:2;font-size:16px;font-weight:200;color:var(--sub);margin-top:4px}
+@media (max-width:768px){.s-head{grid-template-columns:40px 1fr}}
+
+/* 이미지 자리 (실제 이미지는 style="background-image:url(...)" 로 교체) */
+.ph{position:relative;width:100%;background:var(--img) center/cover no-repeat;overflow:hidden}
+.ph::after{content:attr(data-label);position:absolute;left:12px;bottom:12px;font-size:14px;font-weight:100;letter-spacing:.1em;color:var(--text);opacity:.5}
+.ph[style*="url("]::after,.ph.has-img::after{content:none}
+.r1-1{aspect-ratio:1/1}.r4-3{aspect-ratio:4/3}.r3-2{aspect-ratio:3/2}.r16-9{aspect-ratio:16/9}
+
+/* 버튼: 텍스트 + 하단의 얇은 선/도형 요소 */
+.btn{position:relative;display:inline-flex;align-items:center;gap:12px;padding:0 0 10px;border:0;border-radius:0;
+  font-size:16px;font-weight:200;letter-spacing:.1em;cursor:pointer;background:none;color:var(--text)}
+.btn::before{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:currentColor}
+.btn::after{content:"";position:absolute;left:0;bottom:-2px;width:5px;height:5px;background:var(--accent);transition:left var(--fast) var(--ease)}
+.btn:hover::after{left:calc(100% - 5px)}
+.btn .arrow{display:inline-block;transition:transform var(--fast) var(--ease)}
+.btn:hover .arrow{transform:translate(3px,-3px)}
+a:focus-visible,button:focus-visible{outline:2px solid var(--nav);outline-offset:3px}
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+.header{position:fixed;top:0;left:0;right:0;z-index:50;height:var(--header);background:var(--bg);border-bottom:1px solid var(--line);transition:transform var(--fast) var(--ease)}
+.header.hide{transform:translateY(-100%)}
+.header .container{height:100%;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.logo{font-size:20px;font-weight:600;letter-spacing:.06em;white-space:nowrap}
+/* ---------- 상단 왼쪽: 전체 프로젝트(홈) · 조 로고 · 제품 번호 ---------- */
+.brand{display:flex;align-items:center;gap:20px;min-width:0}
+.home-link{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:200;letter-spacing:.04em;color:var(--nav);white-space:nowrap;
+  padding-right:20px;border-right:1px solid var(--line);transition:opacity var(--fast) var(--ease)}
+.home-link .icon{width:18px;height:18px;stroke:var(--nav)}
+.home-link:hover,.team-logo:hover{opacity:.7}
+.team-logo{display:inline-flex;align-items:center;transition:opacity var(--fast) var(--ease)}
+.team-logo img{display:block;height:24px;width:auto}
+.brand .logo{padding-left:20px;border-left:1px solid var(--line)}
+@media (max-width:1400px){.home-link span{display:none}.nav{gap:40px!important}}
+@media (max-width:900px){
+  .brand{gap:12px}.home-link{padding-right:12px}.brand .logo{padding-left:12px;font-size:16px}
+  .team-logo img{height:18px}
+}
+/* 아주 좁은 화면: 홈 아이콘은 메뉴(≡) 안의 '← 전체 프로젝트'로 이동 */
+@media (max-width:480px){.brand .home-link{display:none}.brand .logo{font-size:15px}.team-logo img{height:16px}}
+.nav{display:flex;gap:64px;list-style:none}
+.nav a{font-size:16px;font-weight:200;letter-spacing:.06em;color:var(--nav);padding:4px 0;border-bottom:1px solid transparent;transition:border-color var(--fast) var(--ease)}
+.nav a:hover,.nav a.active{border-color:currentColor}
+.icon{width:20px;height:20px;stroke:var(--text);stroke-width:1.3;fill:none;display:block}
+.icon-btn{position:relative;background:none;border:0;cursor:pointer;padding:4px}
+.cart-count{position:absolute;right:-6px;top:-4px;min-width:16px;height:16px;padding:0 4px;background:var(--accent);color:var(--text);
+  font-size:11px;font-weight:400;line-height:16px;text-align:center;transform:scale(0);transition:transform var(--fast) var(--ease)}
+.cart-count.show{transform:scale(1)}
+.cart-count.bump{animation:bump .5s var(--ease)}
+@keyframes bump{40%{transform:scale(1.4)}}
+.m-only{display:none}
+@media (max-width:900px){
+  .nav{display:none}
+  .m-only{display:block}
+}
+/* 메뉴 클릭 시 부드럽게 열리는 내비게이션 (모바일) */
+.m-menu{position:fixed;inset:0;z-index:60;background:var(--bg);opacity:0;visibility:hidden;transition:opacity .4s var(--ease),visibility .4s;padding:0 20px}
+.m-menu.open{opacity:1;visibility:visible}
+.m-menu-top{height:var(--header);display:flex;align-items:center;justify-content:space-between}
+.m-menu ul{list-style:none;margin-top:16px}
+.m-menu li{opacity:0;transform:translateY(-8px);transition:opacity .4s var(--ease),transform .4s var(--ease)}
+.m-menu.open li{opacity:1;transform:none}
+.m-menu li a{height:56px;display:flex;align-items:center;border-bottom:1px solid var(--line);font-size:16px;font-weight:200;letter-spacing:.06em;color:var(--nav)}
+
+/* =========================================================
+   01 HERO — 메인 제품 사용 이미지 위에 텍스트
+   ========================================================= */
+.hero{position:relative;height:min(52vw,calc(100vh - var(--header)));min-height:520px;overflow:hidden}
+.hero .ph{position:absolute;inset:0;height:100%;animation:heroImg 1.6s var(--ease) both}
+@keyframes heroImg{from{transform:scale(1.05)}to{transform:scale(1)}}
+/* 텍스트 가독성: 왼쪽만 살짝 밝게 덮음 (실제 이미지를 넣었을 때 효과가 남) */
+.hero .veil{position:absolute;inset:0;background:linear-gradient(90deg,rgba(255,255,255,.82) 0%,rgba(255,255,255,.55) 32%,rgba(255,255,255,0) 60%)}
+/* 실제 사진이 들어가면 글자가 묻히지 않게 조금 더 밝게 덮음 */
+.hero .ph[style*="url("] + .veil{background:linear-gradient(90deg,rgba(255,255,255,.9) 0%,rgba(255,255,255,.72) 34%,rgba(255,255,255,0) 64%)}
+.hero .container{position:relative;height:100%;display:flex;flex-direction:column;justify-content:center}
+.hero-copy{max-width:640px;display:flex;flex-direction:column;gap:16px}
+.hero-copy > *{animation:riseIn .8s var(--ease) both}
+.hero-copy > *:nth-child(2){animation-delay:.1s}
+.hero-copy > *:nth-child(3){animation-delay:.2s}
+.hero-copy > *:nth-child(4){animation-delay:.3s}
+.hero-copy > *:nth-child(5){animation-delay:.4s}
+.hero-copy .h3{color:var(--sub);max-width:460px;line-height:1.75}
+.hero-copy{word-break:keep-all}
+.hero-copy .btn{align-self:flex-start;margin-top:24px}
+@keyframes riseIn{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+/* Scroll to Explore */
+.scroll-cue{position:absolute;left:0;right:0;margin:0 auto;width:max-content;bottom:24px;display:flex;flex-direction:column;align-items:center;gap:10px;
+  font-size:14px;font-weight:100;letter-spacing:.1em;animation:riseIn .8s var(--ease) .7s both}
+.scroll-cue .bar{position:relative;width:1px;height:40px;background:var(--line);overflow:hidden}
+.scroll-cue .bar::after{content:"";position:absolute;left:0;top:-40%;width:1px;height:40%;background:var(--text);animation:cue 1.8s var(--ease) infinite}
+@keyframes cue{to{top:100%}}
+@media (max-width:768px){
+  .hero{height:auto;min-height:0;aspect-ratio:auto}
+  .hero .ph{position:relative;inset:auto;aspect-ratio:4/5}
+  .hero .veil{display:none}
+  .hero .container{position:static;padding-top:32px}
+  .scroll-cue{display:none}
+}
+
+/* =========================================================
+   02 PERSONA & PROBLEM
+   ========================================================= */
+.persona{grid-column:1 / span 4}
+.persona .eyebrow{margin-top:20px}
+.persona .h2{font-size:24px;margin:4px 0 6px}
+.pain{grid-column:5 / span 8;background:var(--section-bg);padding:40px 48px}
+.pain .h3{font-size:24px;font-weight:300;margin:8px 0 24px}
+.list{list-style:none;border-top:1px solid rgba(61,46,33,.15)}
+.list li{display:grid;grid-template-columns:48px 1fr;align-items:baseline;padding:20px 0;border-bottom:1px solid rgba(61,46,33,.15)}
+.list .n{font-size:14px;font-weight:100;letter-spacing:.1em;color:var(--sub)}
+.list .t{font-size:16px;font-weight:200}
+@media (max-width:768px){.persona,.pain{grid-column:1 / -1}.pain{padding:28px 20px}}
+
+/* =========================================================
+   카드 (이미지 + 이름 + 간략한 설명, 라운드 없음)
+   Hover: 이미지 확대 + 아이콘
+   ========================================================= */
+.card .thumb{position:relative;overflow:hidden}
+.card .ph{transition:transform .7s var(--ease)}
+.card:hover .ph{transform:scale(1.05)}
+.card .zoom{position:absolute;right:16px;top:16px;width:40px;height:40px;display:flex;align-items:center;justify-content:center;background:var(--bg);
+  opacity:0;transform:translateY(-6px);transition:opacity var(--fast) var(--ease),transform var(--fast) var(--ease)}
+.card .zoom .icon{width:18px;height:18px}
+.card:hover .zoom{opacity:1;transform:none}
+.card .info{margin-top:16px;display:flex;flex-direction:column;gap:4px}
+.card .info .h3{font-size:20px;font-weight:300}
+.c4{grid-column:span 4}.c3{grid-column:span 3}
+@media (max-width:1024px){.c3{grid-column:span 6}}
+@media (max-width:768px){.c4,.c3{grid-column:1 / -1}}
+
+/* =========================================================
+   04 INTERACTION FLOW — 입력 → AI 판단 → 물리적 반응
+   ========================================================= */
+.flow{display:grid;grid-template-columns:1fr 48px 1fr 48px 1fr;align-items:stretch}
+.step{background:var(--section-bg);padding:28px 32px 36px;display:flex;flex-direction:column;gap:8px}
+.step .h3{font-size:24px;font-weight:300}
+.arrow-col{display:flex;align-items:center;justify-content:center}
+.arrow-col svg{width:24px;height:24px;stroke:var(--text);stroke-width:1;fill:none}
+@media (max-width:768px){
+  .flow{grid-template-columns:1fr}
+  .arrow-col{height:40px}.arrow-col svg{transform:rotate(90deg)}
+}
+
+/* =========================================================
+   06 PRODUCT DESIGN — 메인 렌더링 + 디테일 2컷
+   ========================================================= */
+.exp{position:relative;width:100%;aspect-ratio:16/9;max-height:calc(100vh - var(--header) - 40px);min-height:460px;background:#c9c9cc;overflow:hidden}
+.exp iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block}
+.exp-note{margin-top:12px}
+.card.soon{cursor:default}.card.soon:hover .ph{transform:none}
+@media (max-width:768px){.exp{aspect-ratio:4/5;min-height:0}}
+.design .main{grid-column:1 / span 8;grid-row:1}
+.design .main .ph{height:100%;min-height:100%}
+.design .detail{grid-column:9 / span 4}
+.design .detail-wrap{display:flex;flex-direction:column;gap:var(--gutter);height:100%}
+.design figcaption{margin-top:12px}
+@media (max-width:768px){
+  .design .main,.design .detail{grid-column:1 / -1;grid-row:auto}
+  .design .main .ph{aspect-ratio:4/3}
+}
+
+/* =========================================================
+   07 SPECIFICATIONS & MATERIALS
+   ========================================================= */
+.spec{display:grid;grid-template-columns:1fr 1fr;column-gap:48px}
+.spec dl{display:grid;grid-template-columns:160px 1fr;align-items:baseline;padding:24px 0 40px;border-top:1px solid var(--line)}
+.spec dl:nth-child(-n+2){border-top:0;padding-top:0}
+.spec dt{font-size:14px;font-weight:100;letter-spacing:.1em;color:var(--sub);text-transform:uppercase}
+.spec dd{font-size:16px;font-weight:200}
+.spec dd>span{display:block}
+.spec .sp-main{font-size:28px;font-weight:200;letter-spacing:-.01em;margin-bottom:14px}
+.spec .sp-row{display:grid;grid-template-columns:96px 1fr;gap:12px;font-size:15px;line-height:1.7;word-break:keep-all}
+.spec .sp-row+.sp-row{margin-top:4px}
+.spec .sp-row b{font-weight:400;color:var(--sub)}
+.spec .sp-chips{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;font-size:14px;color:var(--sub);margin-bottom:14px}
+.spec .sp-chips i{width:16px;height:16px;border-radius:50%;border:1px solid var(--line);margin-left:6px}
+.spec .sp-chips i:first-child{margin-left:0}
+@media (max-width:768px){.spec .sp-row{grid-template-columns:84px 1fr}}
+.buy{display:flex;align-items:center;justify-content:space-between;gap:24px;margin-top:24px;padding-top:32px;border-top:1px solid var(--line)}
+.buy .h3{font-size:20px;font-weight:300}
+@media (max-width:768px){
+  .spec{grid-template-columns:1fr}
+  .spec dl:nth-child(2){border-top:1px solid var(--line);padding-top:20px}
+  .spec dl{grid-template-columns:120px 1fr;padding:20px 0 28px}
+  .buy{flex-direction:column;align-items:flex-start}
+}
+
+/* Added to cart 피드백 */
+.btn.added{color:var(--sub)}
+.toast{position:fixed;left:50%;bottom:32px;z-index:80;transform:translate(-50%,16px);opacity:0;pointer-events:none;
+  display:flex;align-items:center;gap:12px;padding:14px 24px;background:var(--text);color:#FFFFFF;font-size:14px;font-weight:200;letter-spacing:.06em;
+  transition:opacity var(--fast) var(--ease),transform var(--fast) var(--ease)}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.toast .check{width:16px;height:16px;stroke:var(--accent);stroke-width:2;fill:none}
+
+/* FOOTER */
+.footer{margin-top:var(--section);border-top:1px solid var(--line)}
+.footer .container{display:flex;justify-content:space-between;align-items:center;gap:16px;padding-top:32px;padding-bottom:40px}
+.footer small{font-size:14px;font-weight:100;color:var(--sub)}
+.to-top{font-size:14px;font-weight:100;letter-spacing:.1em;background:none;border:0;cursor:pointer;display:inline-flex;gap:8px;align-items:center}
+.to-top .arrow{transition:transform var(--fast) var(--ease)}
+.back-link:hover .arrow{transform:translateX(-3px)}
+.to-top:hover .arrow{transform:translateY(-3px)}
+
+
+/* =========================================================
+   옆 섹션 번호 (와이어프레임 번호 체계)
+   ========================================================= */
+.side-index{position:fixed;right:10px;top:50%;transform:translateY(-50%);z-index:40;list-style:none;display:flex;flex-direction:column;gap:6px;
+  opacity:0;pointer-events:none;transition:opacity var(--fast) var(--ease)}
+.side-index.show{opacity:1;pointer-events:auto}
+.side-index a{display:flex;align-items:center;justify-content:flex-end;gap:8px;padding:3px 0;font-size:14px;font-weight:100;letter-spacing:.1em;color:var(--sub)}
+.side-index .lab{font-size:14px;font-weight:200;letter-spacing:.04em;color:var(--text);opacity:0;transform:translateX(6px);
+  transition:opacity var(--fast) var(--ease),transform var(--fast) var(--ease);white-space:nowrap;background:var(--bg);padding:0 6px}
+.side-index .ln{display:block;width:12px;height:1px;background:var(--line);transition:width var(--fast) var(--ease),background var(--fast) var(--ease)}
+.side-index a:hover .lab{opacity:1;transform:none}
+.side-index a.on{color:var(--text)}
+.side-index a.on .ln{width:20px;background:var(--accent)}
+@media (max-width:1180px){.side-index{display:none}}
+/* 오른쪽 아래 TOP 버튼이 맨 위로 기능을 맡으므로 바닥글의 BACK TO TOP 글자 버튼은 숨김 */
+.footer .to-top#toTop{display:none}
+
+/* =========================================================
+   맨 위로 버튼
+   ========================================================= */
+.top-btn{position:fixed;right:32px;bottom:32px;z-index:45;width:56px;height:56px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
+  background:var(--bg);border:1px solid var(--line);color:var(--text);cursor:pointer;font-size:12px;font-weight:200;letter-spacing:.1em;
+  box-shadow:0 6px 20px rgba(61,46,33,.08);opacity:0;visibility:hidden;transform:translateY(12px);
+  transition:opacity var(--fast) var(--ease),transform var(--fast) var(--ease),visibility var(--fast),background-color var(--fast) var(--ease)}
+.top-btn.show{opacity:1;visibility:visible;transform:none}
+.top-btn:hover{background:var(--section-bg)}
+.top-btn .icon{width:18px;height:18px;transition:transform var(--fast) var(--ease)}
+.top-btn:hover .icon{transform:translateY(-3px)}
+@media (max-width:768px){.top-btn{right:16px;bottom:16px;width:48px;height:48px}}
+
+/* =========================================================
+   08 다른 제품 보기
+   ========================================================= */
+.more .card .ph{border-radius:20px;overflow:hidden}
+.more .card.current{cursor:default}
+.more .card.current .ph{outline:1px solid var(--accent);outline-offset:-1px}
+.more .badge{display:inline-block;align-self:flex-start;padding:0 8px;font-size:14px;font-weight:100;letter-spacing:.06em;background:var(--section-bg);color:var(--text)}
+.more a.card .go{display:inline-flex;gap:8px;align-self:flex-start;margin-top:6px;font-size:14px;font-weight:100;border-bottom:1px solid currentColor;padding-bottom:2px}
+.more a.card .go .arrow{transition:transform var(--fast) var(--ease)}
+.more a.card:hover .go{color:var(--nav)}
+.more a.card:hover .go .arrow{transform:translateX(4px)}
+
+/* Scroll Effect — 스크롤 시 부드럽게 나타남 */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity var(--slow) var(--ease),transform var(--slow) var(--ease)}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .reveal{opacity:1;transform:none}
+}
+
+/* --- PRODUCT 4 내용 반영 --- */
+.persona .h2 .meta{display:block;font-size:14px;font-weight:200;letter-spacing:.02em;color:var(--sub);margin-top:6px}
+.persona .body{line-height:1.75}
+.list .t{display:flex;flex-direction:column;gap:6px}
+.list .t strong{font-size:18px;font-weight:400;color:var(--text)}
+.list .t .d{font-size:15px;font-weight:200;line-height:1.7;color:var(--sub)}
+.card .info .body{line-height:1.7}
+.step .body{line-height:1.7}
+.card .ph[data-full]{cursor:zoom-in}
+.persona .body,.list .t .d,.card .info .body,.step .body{word-break:keep-all}
+/* 이미지 크게 보기 */
+.lb{position:fixed;inset:0;z-index:300;background:rgba(255,255,255,.96);display:flex;align-items:center;justify-content:center;padding:48px;
+  opacity:0;visibility:hidden;transition:opacity .35s var(--ease),visibility .35s}
+.lb.on{opacity:1;visibility:visible}
+.lb img{max-width:100%;max-height:100%;object-fit:contain;transform:scale(.97);transition:transform .45s var(--ease)}
+.lb.on img{transform:none}
+.lb button{position:absolute;right:24px;top:20px;background:none;border:0;border-bottom:1px solid var(--text);color:var(--text);font:200 14px/1.6 inherit;letter-spacing:.1em;cursor:pointer;padding:2px 0}
+@media (max-width:768px){.lb{padding:16px}}
+
+/* --- 06 메인 3D 뷰어 --- */
+.v3d{min-height:480px}
+.v3d::after{content:none!important}
+.v3d canvas{position:absolute;inset:0;width:100%;height:100%;display:block;opacity:0;transition:opacity .8s var(--ease);cursor:grab;touch-action:pan-y}
+.v3d.grab canvas{cursor:grabbing}
+.v3d.ready{background:radial-gradient(ellipse 70% 60% at 50% 42%,#FAFAFA 0%,#EEEEEF 55%,#E2E2E4 100%)!important}
+.v3d.ready canvas{opacity:1}
+.v3d-tag,.v3d-hint,.v3d-load{position:absolute;font-size:14px;font-weight:100;letter-spacing:.1em;color:var(--text);pointer-events:none}
+.v3d-tag{left:20px;top:18px;opacity:0;transition:opacity .6s}
+.v3d-hint{left:20px;bottom:16px;letter-spacing:.04em;opacity:0;transition:opacity .6s}
+.v3d-load{left:50%;bottom:16px;transform:translateX(-50%);opacity:0;transition:opacity .4s}
+.v3d.loading .v3d-load{opacity:.6}
+.v3d.ready .v3d-tag{opacity:.55}.v3d.ready .v3d-hint{opacity:.6}.v3d.ready.touched .v3d-hint{opacity:0}
+.v3d-reset{position:absolute;right:20px;top:14px;background:none;border:0;border-bottom:1px solid var(--text);padding:2px 0;color:var(--text);
+  font:200 14px/1.6 inherit;letter-spacing:.06em;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .4s}
+.v3d.ready .v3d-reset{opacity:.8;pointer-events:auto}.v3d-reset:hover{opacity:1}
+@media (max-width:768px){.v3d{min-height:0}.design .main .v3d{aspect-ratio:1/1}.v3d-hint{display:none}}
+
+/* 핵심 기능 · 시나리오 · 3D 메인: 마우스 올려도 확대 없음 */
+#function .card:hover .ph,#scenario .card:hover .ph,#design .main.card:hover .ph{transform:none}
+
+/* ===== 01 히어로 : 큰 영문 타이틀 + 1.2초 뒤 매달려 내려오는 3D 태그 (assets/js/hero-tag.js) ===== */
+.hero.hero-tag{height:calc(100vh - var(--header));min-height:560px;overflow:hidden;background:var(--bg);touch-action:pan-y}
+.hero-tag .ht-rope,.hero-tag .ht-gl{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.hero-tag .ht-rope{z-index:2}.hero-tag .ht-gl{z-index:3}
+.hero-tag .container{position:relative;z-index:1}
+.hero-tag .hero-copy{max-width:none;gap:22px}
+.ht-title{margin:6px 0 4px;font-size:clamp(64px,10.4vw,190px);font-weight:700;line-height:.9;letter-spacing:-.035em;color:var(--text);display:flex;flex-direction:column;user-select:none;-webkit-user-select:none}
+.ht-title .w{display:block;white-space:nowrap}
+.ht-title .ch{display:inline-block;will-change:transform;transform-origin:50% 60%}
+.hero-tag .hero-copy > .ht-title{animation:none}
+/* 글자 등장 : 긴 막대가 글자 길이만큼 늘어났다가 줄어들며 글자가 드러남 */
+.ht-title .w{position:relative;width:max-content;--d:.15s}
+.ht-title .w:nth-child(2){--d:.32s}.ht-title .w:nth-child(3){--d:.49s}
+.ht-title .w::after{content:"";position:absolute;left:-.02em;right:-.02em;top:.02em;bottom:-.01em;background:var(--accent);transform:scaleX(0);transform-origin:left center;
+  animation:htBar 1.15s cubic-bezier(.77,0,.18,1) var(--d) both;pointer-events:none}
+@keyframes htBar{0%{transform:scaleX(0);transform-origin:left center}46%{transform:scaleX(1);transform-origin:left center}54%{transform:scaleX(1);transform-origin:right center}100%{transform:scaleX(0);transform-origin:right center}}
+.ht-title .ch>i{display:inline-block;font-style:normal;opacity:0;animation:htShow .01s linear calc(var(--d) + .56s) forwards}
+@keyframes htShow{to{opacity:1}}
+.hero-tag .hero-copy > .ht-name{animation-delay:1.1s}.hero-tag .hero-copy > .btn{animation-delay:1.2s}
+.ht-name{font-size:18px;font-weight:300;color:var(--sub);word-break:keep-all}
+.ht-name span{font-weight:500;color:var(--text)}
+.hero-tag.grab-tag{cursor:grabbing}.hero-tag.over-tag{cursor:grab}
+@media (max-width:768px){.hero.hero-tag{height:auto;min-height:calc(100svh - var(--header));padding:24px 0 120px}.ht-title{font-size:clamp(48px,15vw,96px)}}
+@media (prefers-reduced-motion:reduce){.ht-title .ch>i{animation:none;opacity:1}.ht-title .w::after{display:none}}
+
+/* ===== 02 페르소나 인터뷰 (대화형) ===== */
+.hero.hero-tag + .block, #concept{padding-top:calc(var(--section) + 240px)}
+#function,#flow,#scenario,#design,#spec{padding-top:calc(var(--section) + 240px)}
+.iv{--me:#EFEFED;--q:#667DAD;max-width:1080px;margin:0 auto}
+.iv-tag{display:inline-flex;align-items:center;gap:10px;font-size:13px;font-weight:600;letter-spacing:.18em;color:var(--text);padding:9px 18px 9px 14px;border:1px solid var(--line);border-radius:999px;
+  opacity:0;transform:translateY(10px);transition:opacity .6s var(--ease),transform .6s var(--ease)}
+.iv-tag em{font-style:normal;font-weight:400;letter-spacing:.04em;color:var(--sub)}
+.iv-tag .rec{width:8px;height:8px;border-radius:50%;background:#D86B5B;box-shadow:0 0 0 0 rgba(216,107,91,.5);animation:ivRec 1.6s ease-out infinite}
+@keyframes ivRec{0%{box-shadow:0 0 0 0 rgba(216,107,91,.45)}100%{box-shadow:0 0 0 10px rgba(216,107,91,0)}}
+.iv.on .iv-tag{opacity:1;transform:none}
+.iv-grid{display:grid;grid-template-columns:240px 1fr;gap:56px;margin-top:40px;align-items:start}
+.iv-prof{display:flex;flex-direction:column;align-items:center;text-align:center;
+  opacity:0;transform:translateY(16px) scale(.96);transition:opacity .7s var(--ease) .25s,transform .8s cubic-bezier(.34,1.4,.64,1) .25s}
+.iv.on .iv-prof{opacity:1;transform:none}
+.iv-ava{width:180px;height:180px;border-radius:50%;background-size:cover;background-color:var(--img);box-shadow:0 0 0 6px #fff,0 0 0 7px var(--line),0 14px 34px rgba(61,46,33,.14)}
+.iv-name{margin-top:22px;font-size:22px;font-weight:600}
+.iv-meta{margin-top:6px;font-size:14px;font-weight:300;color:var(--sub)}
+.iv-chat{display:flex;flex-direction:column;gap:22px}
+.ans-group{gap:40px!important;margin-top:56px!important}
+.iv-chat .bub.q{margin-top:72px}
+.bub{position:relative;max-width:min(560px,100%);padding:18px 22px;border-radius:24px;font-size:16px;line-height:1.7;word-break:keep-all;text-align:left;
+  opacity:0;transform:translateY(14px) scale(.9);transition:opacity .45s var(--ease),transform .6s cubic-bezier(.34,1.56,.64,1)}
+.bub.in{opacity:1;transform:none}
+/* 스크롤로 나오는 말풍선 : 자리는 미리 잡아 두고(안 보임), 화면에 오면 입력 중(…) → 말풍선 */
+.bub.wait{visibility:hidden}
+.typing-ghost{position:absolute;z-index:2}
+/* 제목 글자 : 한 자씩 아래에서 위로 */
+.s-head.lt-ready .h2 .lt{display:inline-block;overflow:hidden;vertical-align:bottom;padding-bottom:.08em;margin-bottom:-.08em}
+.s-head.lt-ready .h2 .lt>i{display:inline-block;font-style:normal;transform:translateY(105%);transition:transform 1s cubic-bezier(.22,1,.36,1);transition-delay:calc(var(--i) * 45ms)}
+.s-head.lt-on .h2 .lt>i{transform:none}
+.s-head.lt-ready .desc{opacity:0;transform:translateY(10px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.s-head.lt-on .desc{opacity:1;transform:none;transition-delay:var(--desc-delay,1s)}
+@media (prefers-reduced-motion:reduce){.s-head.lt-ready .h2 .lt>i,.s-head.lt-ready .desc{transition:none}}
+.bub p{margin:0;font-weight:400;color:inherit}
+.bub.me{align-self:flex-start;background:var(--me);color:var(--text);border-bottom-left-radius:6px;transform-origin:left bottom}
+.bub.q{align-self:flex-end;background:var(--q);color:#fff;border-bottom-right-radius:6px;transform-origin:right bottom}
+.bub.typing{padding:16px 20px;display:inline-flex;gap:5px}
+.bub.typing i{width:7px;height:7px;border-radius:50%;background:currentColor;opacity:.45;animation:ivDot 1s ease-in-out infinite}
+.bub.typing i:nth-child(2){animation-delay:.15s}.bub.typing i:nth-child(3){animation-delay:.3s}
+@keyframes ivDot{0%,60%,100%{transform:translateY(0);opacity:.35}30%{transform:translateY(-5px);opacity:.8}}
+.ans-group{display:flex;flex-direction:column;align-items:flex-start;gap:12px;margin-top:4px}
+.bub.ans{border:0;font:inherit;cursor:pointer;width:min(560px,100%);display:block;
+  transition:opacity .45s var(--ease),transform .6s cubic-bezier(.34,1.56,.64,1),filter .35s var(--ease),box-shadow .35s var(--ease)}
+.ans .ah{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.ans .k{font-size:17px;font-weight:500}
+.ans .pm{position:relative;flex:none;width:30px;height:30px;border-radius:50%;background:#fff;transition:transform .5s cubic-bezier(.34,1.56,.64,1),background .3s}
+.ans .pm::before,.ans .pm::after{content:"";position:absolute;left:50%;top:50%;width:12px;height:1.6px;margin:-.8px 0 0 -6px;background:var(--text);transition:transform .4s var(--ease)}
+.ans .pm::after{transform:rotate(90deg)}
+.ans .ad{display:grid;grid-template-rows:0fr;transition:grid-template-rows .5s cubic-bezier(.3,1.08,.6,1)}
+.ans .adi{overflow:hidden;font-size:15px;font-weight:300;color:var(--sub);line-height:1.75}
+.ans .adi b{display:block;margin:14px 0 4px;padding-top:14px;border-top:1px solid rgba(61,46,33,.12);font-size:13px;font-weight:600;letter-spacing:.06em;color:var(--q)}
+.ans.open .ad{grid-template-rows:1fr}
+.ans.open .pm{transform:rotate(45deg);background:var(--q)}
+.ans.open .pm::before,.ans.open .pm::after{background:#fff}
+.ans.boing{animation:ivBoing .5s ease-out}
+@keyframes ivBoing{0%{transform:scale(1)}35%{transform:scale(1.018,1.012)}65%{transform:scale(.996)}100%{transform:scale(1)}}
+/* 고를 때 : 커서를 올린 말풍선은 살짝 커지고, 나머지는 흐릿하게 */
+@media (hover:hover){
+  .ans-group.ready:hover .ans.in{opacity:.42;filter:blur(1.2px)}
+  .ans-group.ready .ans.in:hover{opacity:1;filter:none;transform:scale(1.035);box-shadow:0 12px 30px rgba(61,46,33,.10)}
+}
+@media (max-width:768px){.hero.hero-tag + .block, #concept,#function,#flow,#scenario,#design,#spec{padding-top:calc(var(--section) + 80px)}.iv-grid{grid-template-columns:1fr;gap:28px}.iv-prof{position:static;flex-direction:row;gap:16px;text-align:left}
+  .iv-ava{width:84px;height:84px}.iv-name{margin-top:0}.iv-chat{min-height:0}}
+
+/* 인터뷰 고정 : 세 가지 말풍선이 다 나올 때까지 화면에 멈춰 있음 (데스크톱) */
+@media (min-width:769px){
+  .iv-pin .iv{position:sticky;top:calc(var(--header) + 24px)}
+  .iv-pin .iv-grid{margin-top:28px}
+  .iv-pin .iv-chat{gap:14px}
+  .iv-pin .iv-chat .bub.q{margin-top:22px}
+  .iv-pin .ans-group{gap:12px!important;margin-top:18px!important}
+}
+.bub .tc{opacity:0;transition:opacity .18s ease}.bub .tc.on{opacity:1}
+.iv-hint{margin-top:36px;text-align:center;font-size:13px;font-weight:200;letter-spacing:.12em;color:var(--sub);opacity:0;transform:translateY(6px);transition:opacity 1.2s var(--ease),transform 1.2s var(--ease);pointer-events:none}
+.iv-hint.show{opacity:.5;transform:none}
+.iv-hint .ar{display:block;width:1px;height:22px;margin:10px auto 0;background:linear-gradient(var(--sub),transparent);animation:ivAr 1.6s ease-in-out infinite}
+@keyframes ivAr{0%{transform:scaleY(.3);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}100%{transform:scaleY(.3);transform-origin:bottom;opacity:0}}
+.iv-pin .iv-hint{margin-top:20px}
+
+/* ===== 02 페르소나 & 문제 : 핵심 문장 + 홀로그램 3D (스크롤하면 문제 3개가 차례로) ===== */
+.pz{position:relative;margin-top:8px}
+.pz-stick{display:grid;grid-template-columns:5fr 7fr;gap:56px;align-items:center}
+.pz-who{display:flex;align-items:center;gap:16px}
+.pz-ava{width:64px;height:64px;border-radius:50%;background:var(--img) center 30%/cover no-repeat;box-shadow:0 0 0 4px #fff,0 0 0 5px var(--line)}
+.pz-id{display:flex;flex-direction:column;line-height:1.5}.pz-id b{font-size:18px;font-weight:600}.pz-id em{font-style:normal;font-size:13px;font-weight:300;color:var(--sub)}
+.pz-items{position:relative;margin-top:48px;min-height:330px}
+.pz-item{position:absolute;inset:0 0 auto 0;opacity:0;transform:translateY(26px);transition:opacity .7s var(--ease),transform .7s var(--ease);pointer-events:none}
+.pz-item.on{opacity:1;transform:none;pointer-events:auto}
+.pz-item.out{opacity:0;transform:translateY(-22px)}
+.pz-no{display:flex;align-items:center;gap:12px;font-size:15px;font-weight:500;color:var(--text)}
+.pz-no span{font-size:12px;font-weight:600;letter-spacing:.16em;color:#fff;background:var(--text);padding:4px 10px;border-radius:999px}
+.pz-key{margin-top:22px;font-size:clamp(30px,3.1vw,46px);font-weight:600;line-height:1.32;letter-spacing:-.02em;word-break:keep-all}
+.pz-sum{margin-top:24px;font-size:16px;font-weight:300;line-height:1.75;color:var(--sub);word-break:keep-all}
+.pz-ticks{display:flex;align-items:center;gap:8px;margin-top:12px}
+.pz-ticks i{width:28px;height:3px;border-radius:3px;background:var(--line);transition:background .5s var(--ease),width .5s var(--ease)}
+.pz-ticks i.on{background:var(--text);width:44px}
+.pz-ticks .ct{margin-left:10px;font-size:12px;font-weight:400;letter-spacing:.12em;color:var(--sub)}
+/* 홀로그램 무대 */
+.pz-holo{position:relative;aspect-ratio:7/6;border-radius:28px;overflow:hidden;
+  background:radial-gradient(120% 90% at 50% 100%,#2A2F2E 0%,#191715 55%,#141211 100%);box-shadow:0 30px 70px rgba(30,22,16,.22)}
+.pz-holo::before{content:"";position:absolute;inset:0;z-index:3;pointer-events:none;opacity:.35;
+  background:repeating-linear-gradient(0deg,rgba(160,230,220,.07) 0 1px,transparent 1px 4px);mix-blend-mode:screen;animation:pzScan 6s linear infinite}
+.pz-holo::after{content:"";position:absolute;left:50%;bottom:9%;width:58%;height:70%;transform:translateX(-50%);z-index:1;pointer-events:none;
+  background:linear-gradient(0deg,rgba(150,225,215,.16),rgba(150,225,215,0) 85%);clip-path:polygon(28% 100%,72% 100%,100% 0,0 0);filter:blur(6px)}
+@keyframes pzScan{to{background-position:0 120px}}
+.pz-cv{position:absolute;inset:0;width:100%;height:100%;z-index:2}
+.pz-base{position:absolute;left:50%;bottom:6%;width:46%;height:9%;transform:translateX(-50%);z-index:1;border-radius:50%;
+  background:radial-gradient(closest-side,rgba(165,235,222,.55),rgba(120,200,190,.12) 70%,transparent);box-shadow:0 0 40px rgba(140,220,205,.25)}
+.pz-chips{position:absolute;inset:0;z-index:4;pointer-events:none}
+.pz-chip{position:absolute;left:0;top:0;padding:7px 14px;border-radius:999px;font-size:13px;font-weight:500;letter-spacing:.02em;white-space:nowrap;color:#DFFBF5;
+  background:rgba(120,210,195,.12);border:1px solid rgba(170,240,226,.45);box-shadow:0 0 18px rgba(120,220,205,.18),inset 0 0 12px rgba(120,220,205,.12);
+  backdrop-filter:blur(2px);opacity:0;transition:opacity .5s var(--ease)}
+.pz-chip.on{opacity:1}
+.pz-cap{position:absolute;left:24px;top:20px;z-index:4;font-size:11px;font-weight:500;letter-spacing:.22em;color:rgba(200,245,236,.55)}
+@media (min-width:1025px){
+  .pz{height:calc(300vh)}
+  .pz-stick{position:sticky;top:calc(var(--header) + 4vh);height:calc(100vh - var(--header) - 8vh)}
+  .pz-holo{height:100%;aspect-ratio:auto;max-height:720px}
+}
+@media (max-width:1024px) and (max-height:459px){
+  .pz-stick{grid-template-columns:1fr;gap:32px}
+  .pz-holo{order:-1}
+  .pz-items{min-height:0}
+  .pz-item{position:relative;opacity:1;transform:none;margin-bottom:44px}
+  .pz-item:not(.on){opacity:.35}
+  .pz-ticks{display:none}
+  .pz-chip{font-size:11px;padding:4px 10px}
+  .pz-holo{position:sticky;top:calc(var(--header) + 8px);z-index:5;aspect-ratio:16/10;max-height:46vh;width:100%}
+}
+/* ===== 07 제품 디자인 : 화면 가득 3D + 스크롤 클로즈업 (assets/js/design-tag.js) ===== */
+.dz{position:relative;height:640vh;margin-top:48px}
+.dz-stage{position:sticky;top:var(--header);height:calc(100vh - var(--header));overflow:hidden;
+  background:radial-gradient(90% 80% at 62% 45%,#FBF9F6 0%,#EFEBE5 60%,#E4DED6 100%)}
+.dz-cv,.dz-dims{position:absolute;inset:0;width:100%;height:100%}
+.dz-cv{opacity:0;transition:opacity 1s var(--ease)}.dz.ready .dz-cv{opacity:1}
+.dz-load{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:13px;color:var(--sub);letter-spacing:.1em}.dz.ready .dz-load{display:none}
+.dz-dims{pointer-events:none;overflow:visible}
+.dz-dim{opacity:0;transition:opacity .45s var(--ease)}
+.dz-dim.on{opacity:1}
+.dz-dim .ex{stroke:#667DAD;stroke-width:1;opacity:.7}
+.dz-dim .dl{stroke:#667DAD;stroke-width:1.4;stroke-dasharray:var(--len,300) 2000;stroke-dashoffset:var(--len,300);transition:stroke-dashoffset 1s .15s cubic-bezier(.65,0,.35,1)}
+.dz-dim.on .dl{stroke-dashoffset:0}
+.dz-dim .tk{fill:none;stroke:#667DAD;stroke-width:1.4}
+.dz-dim .tb{fill:#667DAD}
+.dz-dim .tt{fill:#fff;font-size:13px;font-weight:600;letter-spacing:.02em}
+.dz-dim .tb,.dz-dim .tt{opacity:0;transition:opacity .5s .8s var(--ease)}.dz-dim.on .tb,.dz-dim.on .tt{opacity:1}
+.dz-copy{position:absolute;left:max(var(--margin),calc((100vw - var(--container))/2 + var(--margin)));top:50%;transform:translateY(-50%);width:min(400px,34vw);height:340px;pointer-events:none}
+.dz-step{position:absolute;inset:0 0 auto 0;opacity:0;transform:translateY(28px);transition:opacity .6s var(--ease),transform .7s var(--ease)}
+.dz-step.on{opacity:1;transform:none;transition-delay:.15s}
+.dz-step.past{transform:translateY(-24px)}
+.dz-no{font-size:12px;font-weight:600;letter-spacing:.2em;color:var(--nav)}
+.dz-t{margin-top:16px;font-size:clamp(28px,2.8vw,40px);font-weight:600;line-height:1.28;letter-spacing:-.02em;color:var(--text);word-break:keep-all}
+.dz-d{margin-top:18px;font-size:15px;font-weight:300;line-height:1.75;color:var(--sub);word-break:keep-all}
+.dz-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.dz-chips span{display:inline-flex;align-items:center;gap:8px;padding:6px 14px 6px 6px;border-radius:999px;background:rgba(255,255,255,.75);border:1px solid var(--line);font-size:13px;font-weight:400;color:var(--text);
+  opacity:0;transform:translateY(8px);transition:opacity .5s var(--ease),transform .5s var(--ease)}
+.dz-chips i{width:22px;height:22px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.08)}
+.dz-step.on .dz-chips span{opacity:1;transform:none}
+.dz-step.on .dz-chips span:nth-child(1){transition-delay:.55s}.dz-step.on .dz-chips span:nth-child(2){transition-delay:.7s}.dz-step.on .dz-chips span:nth-child(3){transition-delay:.85s}
+.dz-prog{position:absolute;left:50%;bottom:28px;transform:translateX(-50%);display:flex;gap:8px}
+.dz-prog i{width:22px;height:3px;border-radius:3px;background:rgba(61,46,33,.15);transition:background .4s var(--ease),height .4s var(--ease)}
+.dz-prog i.on{background:var(--text)}
+@media (max-width:768px){
+  .dz-copy{left:var(--margin);right:var(--margin);top:auto;bottom:24px;transform:none;width:auto;height:200px}
+  .dz-t{font-size:24px}.dz-d{font-size:14px}
+}
+/* 4면도 */
+.fv{margin-top:96px}
+.fv-grid figure{aspect-ratio:3/4}
+.fv-h{font-size:12px;font-weight:600;letter-spacing:.22em;color:var(--sub)}
+.fv-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--gutter);margin-top:20px}
+.fv-grid figure{position:relative;border-radius:20px;overflow:hidden;background:linear-gradient(#F6F3EF,#ECE7E0);aspect-ratio:3/4}
+.fv-grid img{width:100%;height:100%;object-fit:contain;display:block}
+.fv-grid figcaption{position:absolute;left:16px;bottom:12px;font-size:11px;font-weight:500;letter-spacing:.2em;color:var(--sub)}
+@media (max-width:768px){.fv-grid{grid-template-columns:repeat(2,1fr)}}
+/* 상세 이미지 : 두 장씩 차례로 */
+.dtl{margin-top:72px}
+.dtl-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--gutter);margin-top:20px}
+.dt-cell{position:relative;margin:0;border-radius:16px;overflow:hidden;aspect-ratio:3/2;background:#ECEBEA;opacity:0;transform:translateY(40px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.dt-cell img{width:100%;height:100%;object-fit:cover;display:block}
+.dt-cell figcaption{position:absolute;left:14px;bottom:10px;font-size:11px;font-weight:500;letter-spacing:.2em;color:#6E6A66}
+.dtl.in .dt-cell{opacity:1;transform:none}.dtl.in .dt-cell:nth-child(2){transition-delay:.12s}.dtl.in .dt-cell:nth-child(3){transition-delay:.24s}.dtl.in .dt-cell:nth-child(4){transition-delay:.36s}
+@media (max-width:768px){.dtl-grid{grid-template-columns:1fr 1fr}}
+/* 08 도면 */
+.dwg-wrap{margin-top:40px;border-radius:24px;overflow:hidden;border:1px solid var(--line)}
+.dwg{display:block;width:100%;height:auto}
+.dwg .bgr{fill:#FBF8F4}
+.dwg .ln{fill:none;stroke:#3D2E21;stroke-width:1.6;stroke-linejoin:round}
+.dwg .ln2,.dwg .ln3{fill:none;stroke:#3D2E21;stroke-width:1}
+.dwg .hd{stroke:#3D2E21;stroke-width:.8;stroke-dasharray:6 4;fill:none}
+.dwg .cl{stroke:#B9AC9E;stroke-width:.8;stroke-dasharray:14 4 2 4;fill:none}
+.dwg .ex,.dwg .dl,.dwg .ld{stroke:#667DAD;stroke-width:.9;fill:none}
+.dwg .ar,.dwg .dot{fill:#667DAD}
+.dwg .dt{font-size:15px;fill:#667DAD;font-weight:500}
+.dwg .lt{font-size:13px;fill:#3D2E21;font-weight:400}
+.dwg .vn{font-size:14px;letter-spacing:.2em;fill:#3D2E21;font-weight:600}.dwg .vs{letter-spacing:0;font-weight:400;fill:#7D6B5C}
+.dwg .tb rect{fill:#fff;stroke:#3D2E21;stroke-width:1.2}.dwg .tb path{stroke:#3D2E21;stroke-width:.8;fill:none}
+.dwg .t1{font-size:18px;font-weight:600;fill:#3D2E21;letter-spacing:.04em}.dwg .t2{font-size:14px;fill:#3D2E21;font-weight:400}.dwg .t3{font-size:11px;fill:#7D6B5C;letter-spacing:.14em;font-weight:400}.dwg .t4{font-size:16px;fill:#3D2E21;font-weight:400}
+.dwg .nt text{font-size:13px;fill:#7D6B5C;letter-spacing:.18em;font-weight:400}.dwg .nt .n{letter-spacing:0;font-size:14px;fill:#3D2E21}
+/* 치수선이 그려지며 나타남 */
+.dwg .dm{opacity:0;transition:opacity .6s var(--ease)}
+.dwg.in .dm{opacity:1}
+.dwg .views path:not(.hd):not(.cl){stroke-dasharray:2400;stroke-dashoffset:2400;transition:stroke-dashoffset 2.2s cubic-bezier(.65,0,.35,1)}
+.dwg.in .views path:not(.hd):not(.cl){stroke-dashoffset:0}
+.dwg.in .dm:nth-child(n){transition-delay:1.2s}
+/* 치수 요약 */
+.sum{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--gutter);margin-top:40px}
+.sum div{padding:22px 24px;border-radius:18px;background:#F7F3EE}
+.sum b{display:block;font-size:28px;font-weight:600;letter-spacing:-.01em;color:var(--text)}
+.sum span{display:block;margin-top:4px;font-size:13px;font-weight:300;color:var(--sub)}
+@media (max-width:768px){.sum{grid-template-columns:1fr 1fr}.sum b{font-size:22px}}
+/* ===== 05 시나리오 영상 : 화면 가득 ===== */
+.sv{position:relative;width:100%;height:calc(100vh - var(--header));margin-top:var(--title-gap);background:#14110F;overflow:hidden}
+.sv-v{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.sv-ui{position:absolute;left:0;right:0;bottom:0;display:flex;align-items:center;gap:10px;padding:0 max(var(--margin),calc((100vw - var(--container))/2 + var(--margin))) 26px;
+  background:linear-gradient(0deg,rgba(0,0,0,.35),transparent);padding-top:60px;opacity:.85;transition:opacity .4s}
+.sv:hover .sv-ui{opacity:1}
+.sv-b{width:42px;height:42px;border-radius:50%;border:1px solid rgba(255,255,255,.45);background:rgba(20,16,14,.35);backdrop-filter:blur(6px);cursor:pointer;display:grid;place-items:center}
+.sv-b svg{width:18px;height:18px;fill:none;stroke:#fff;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round}
+.sv-play svg path{fill:#fff;stroke:none}.sv-play .pa{display:none}.sv.playing .sv-play .pl{display:none}.sv.playing .sv-play .pa{display:block}
+.sv-snd .on{display:none}.sv.sound .sv-snd .on{display:block}.sv.sound .sv-snd .off{display:none}
+.sv-bar{flex:1;height:2px;background:rgba(255,255,255,.25);border-radius:2px;overflow:hidden;margin-left:8px}.sv-bar i{display:block;height:100%;width:0;background:#fff}
+.sv + .scn{margin-top:0}
+/* 페르소나 소개 + 문제 : 글이 먼저 읽히도록 홀로그램은 작고 은은하게 */
+.pp{display:grid;grid-template-columns:minmax(220px,340px) 1fr;gap:56px;align-items:center;margin-top:8px}
+.pp-photo{position:relative;aspect-ratio:4/5;border-radius:28px;background:var(--img) center 30%/cover no-repeat;box-shadow:0 24px 50px rgba(61,46,33,.14)}
+.pp-badge{position:absolute;left:16px;top:16px;padding:5px 12px;border-radius:999px;background:rgba(255,255,255,.85);font-size:11px;font-weight:600;letter-spacing:.2em;color:var(--text)}
+.pp-eb{font-size:14px;font-weight:400;color:var(--sub)}
+.pp-name{margin-top:8px;font-size:clamp(34px,3.4vw,48px);font-weight:600;letter-spacing:-.02em;line-height:1.2}
+.pp-name em{font-style:normal;font-size:.5em;font-weight:400;color:var(--sub);margin-left:8px;letter-spacing:0}
+.pp-quote{margin-top:22px;padding-left:18px;border-left:3px solid var(--accent);font-size:clamp(18px,1.6vw,22px);font-weight:400;line-height:1.6;color:var(--text);word-break:keep-all}
+.pp-facts{display:grid;grid-template-columns:1fr 1fr;gap:14px 32px;margin-top:32px}
+.pp-facts div{padding-top:14px;border-top:1px solid var(--line)}
+.pp-facts dt{font-size:12px;font-weight:600;letter-spacing:.12em;color:var(--sub)}
+.pp-facts dd{margin-top:6px;font-size:15px;font-weight:300;line-height:1.6;color:var(--text);word-break:keep-all}
+.pz-lead{margin-top:120px;font-size:15px;font-weight:500;letter-spacing:.04em;color:var(--sub)}
+.pz-stick{grid-template-columns:6fr 5fr;gap:72px}
+.pz-key{font-size:clamp(32px,3.4vw,50px)}
+.pz-sum{font-size:17px;color:var(--text);opacity:.8}
+.pz-holo{background:radial-gradient(120% 90% at 50% 100%,#3A3834 0%,#2A2724 60%,#24211F 100%);box-shadow:0 20px 50px rgba(30,22,16,.12)}
+.pz-holo::before{opacity:.18}.pz-holo::after{opacity:.6}
+.pz-chip{font-size:12px;padding:5px 11px;color:#E8F6F2;background:rgba(120,210,195,.08);border-color:rgba(170,240,226,.3);box-shadow:none}
+@media (min-width:1025px){
+  .pz-stick{height:calc(100vh - var(--header) - 8vh)}
+  .pz-holo{height:min(500px,72%);aspect-ratio:1/1;align-self:center;max-height:none}
+}
+@media (max-width:1024px){.pp{grid-template-columns:1fr;gap:28px}.pp-photo{max-width:320px}.pp-facts{grid-template-columns:1fr}.pz-lead{margin-top:72px}}
+/* ===== v4 : 불편함 3가지 — 사이트 양옆까지 꽉 찬 어두운 홀로그램 무대 + 그 안에 텍스트 ===== */
+body{overflow-x:clip}
+.pz{margin-top:120px}
+.pz-stick{margin-left:calc(50% - 50vw);width:100vw;padding:56px max(var(--margin),calc((100vw - var(--container))/2 + var(--margin)));
+  background:radial-gradient(60% 85% at 70% 62%,#2C302E 0%,#1C1A18 58%,#151311 100%);color:#F3EEE6;grid-template-columns:1fr;gap:40px}
+.pz-lead{margin:0 0 40px;font-size:16px;font-weight:500;letter-spacing:.04em;color:rgba(243,238,230,.6)}
+.pz-no{font-size:clamp(20px,1.7vw,26px);font-weight:500;gap:16px;color:#F3EEE6}
+.pz-no span{font-size:clamp(14px,1.1vw,17px);padding:8px 18px;background:#F3EEE6;color:#1B1917;letter-spacing:.14em}
+.pz-key{margin-top:28px;font-size:clamp(38px,4vw,62px);color:#FFFFFF}
+.pz-sum{margin-top:28px;font-size:clamp(17px,1.3vw,20px);color:rgba(243,238,230,.78);opacity:1}
+.pz-ticks i{background:rgba(243,238,230,.18)}.pz-ticks i.on{background:#F3EEE6}.pz-ticks .ct{color:rgba(243,238,230,.6)}
+.pz-holo{border-radius:20px;background:none;box-shadow:none}
+.pz-holo::before{opacity:.22}
+@media (min-width:1025px){
+  .pz-stick{position:sticky;top:var(--header);height:calc(100vh - var(--header));grid-template-columns:7fr 5fr;align-content:center;padding-top:0;padding-bottom:0;overflow:hidden}
+  .pz-left{position:relative;z-index:5}
+  .pz-holo{position:absolute;inset:0;height:auto;aspect-ratio:auto;border-radius:0;max-height:none;align-self:stretch;justify-self:stretch}
+  .pz-holo::after{left:72%;width:30%;height:62%}
+  .pz-base{left:72%;width:22%;bottom:12%}
+  .pz-cap{left:auto;right:max(var(--margin),calc((100vw - var(--container))/2 + var(--margin)));top:28px}
+  .pz-items{min-height:440px}
+}
+@media (max-width:1024px){.pz{margin-top:72px}}
+/* ===== 04 인터랙션 플로우 : 스크롤하면 빨간 신호가 태그 → MCU AI → 태그 디스플레이로 흐름 (아래 스크립트) ===== */
+.sf{--sig:var(--nav)}
+.sf-tag{--sig:#E0533F}   /* 태그 자체는 실제처럼 빨간 빛 (신호 · AI · 단계 표시는 파란색) */
+.sf-map{display:block;width:100%;height:auto;overflow:visible}
+.sf-base{fill:none;stroke:var(--line);stroke-width:2;stroke-dasharray:2 8;stroke-linecap:round}
+.sf-line{fill:none;stroke:var(--sig);stroke-width:2.5;stroke-linecap:round}
+.sf-dot{fill:var(--sig);opacity:0;transition:opacity .3s}
+.sf.go .sf-dot{opacity:1}
+.sf-node *{transition:fill .5s var(--ease),stroke .5s var(--ease),opacity .5s var(--ease)}
+.sf-body{fill:#F4F1EC;stroke:var(--text);stroke-width:1.5}
+.sf-cap{fill:#6E7C76}
+.sf-strap{stroke:#9A9A9A;stroke-width:3;stroke-linecap:round}
+.sf-hole{fill:#fff;stroke:var(--text);stroke-width:1}
+.sf-scr{fill:#1A1A1A}
+.sf-halo{fill:var(--sig);opacity:0}
+.sf-tag.on .sf-halo{opacity:.14}.sf-tag.on .sf-scr{fill:var(--sig)}
+.sf-pole{stroke:#9C9389;stroke-width:5;stroke-linecap:round}
+.sf-cam{fill:#F4F1EC;stroke:var(--text);stroke-width:1.5}
+.sf-ring{fill:none;stroke:#C9BFB3;stroke-width:4}
+.sf-lens{fill:#2A2420}
+.sf-ai.on .sf-ring{stroke:var(--sig)}
+.sf-wave{fill:none;stroke:var(--sig);stroke-width:2;opacity:0;transform-box:fill-box;transform-origin:center}
+.sf-ai.on .sf-wave{animation:sfWave 1.8s ease-out infinite}.sf-ai.on .sf-wave.w2{animation-delay:.9s}
+@keyframes sfWave{0%{opacity:.55;transform:scale(.6)}100%{opacity:0;transform:scale(2)}}
+.sf-disp{fill:#1A1A1A;stroke:var(--text);stroke-width:1.5}
+.sf-price{fill:#ffbf86;font-size:17px;font-weight:600;text-anchor:middle;dominant-baseline:middle;opacity:0}
+.sf-out .sf-halo{fill:#FFB070}
+.sf-out.on .sf-halo{opacity:.22}.sf-out.on .sf-price{opacity:1}
+.sf-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--gutter);margin-top:28px}
+.sf-step{padding-top:20px;border-top:2px solid var(--line);opacity:.35;transform:translateY(8px);transition:opacity .6s var(--ease),transform .6s var(--ease),border-color .6s var(--ease)}
+.sf-step:nth-child(2){text-align:center}.sf-step:nth-child(3){text-align:right}
+.sf-step .h3{font-size:24px;font-weight:300;margin-top:4px}
+.sf-step .body{margin-top:6px;line-height:1.7;word-break:keep-all}
+.sf-step.on{opacity:1;transform:none}
+@media (max-width:768px){.sf-steps{grid-template-columns:1fr;gap:20px}.sf-step:nth-child(n){text-align:left}}
+@media (prefers-reduced-motion:reduce){.sf-ai.on .sf-wave{animation:none}}
+
+
+
+
+/* 06 TRY IT YOURSELF : 버튼을 눌러야 체험 창이 펼쳐짐 */
+.try-cta{display:flex;flex-direction:column;align-items:center;gap:18px}
+.try-arrow{display:block;width:34px;height:34px;color:var(--accent);animation:tryBob 1.6s ease-in-out infinite}
+.try-arrow svg{width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+@keyframes tryBob{0%,100%{transform:translateY(-4px);opacity:.55}50%{transform:translateY(4px);opacity:1}}
+.try-btn{appearance:none;border:0;cursor:pointer;background:var(--accent);color:#fff;font:inherit;font-size:16px;font-weight:500;letter-spacing:.14em;
+  padding:18px 44px;border-radius:999px;transition:transform .3s var(--ease),box-shadow .3s var(--ease),background .3s var(--ease)}
+.try-btn:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(162,186,117,.35)}
+.try-btn:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+.try-btn[aria-expanded="true"]{background:#8DA562}
+#try.open .try-arrow{animation:none;opacity:0;height:0;transition:opacity .3s,height .3s}
+.try-panel{display:grid;grid-template-rows:0fr;opacity:0;transition:grid-template-rows .8s cubic-bezier(.3,1,.4,1),opacity .6s var(--ease)}
+.try-panel.open{grid-template-rows:1fr;opacity:1}
+.try-in{overflow:hidden}
+.try-in .exp{margin-top:40px}
+@media (prefers-reduced-motion:reduce){.try-arrow{animation:none}}
+
+
+/* ===== 05 시나리오 컷 : 화면 가득 사진 + 설명 · 스크롤하면 다음 컷 ===== */
+.scn{position:relative;height:calc(5 * 115vh + 100vh);margin-top:var(--title-gap)}
+.scn-stick{position:sticky;top:0;height:100vh;width:100%;overflow:hidden;background:#1a1512}
+.scn-cut{position:absolute;inset:0;margin:0;opacity:0;transition:opacity 1s var(--ease);pointer-events:none}
+.scn-cut.on{opacity:1}
+.scn-img{position:absolute;inset:0;background-size:cover;background-repeat:no-repeat;transform:scale(calc(1.08 - var(--k,0) * .08));transition:transform .25s linear;will-change:transform}
+.scn-cut::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(20,14,10,.78) 0%,rgba(20,14,10,.35) 32%,rgba(20,14,10,0) 58%);pointer-events:none}
+.scn-cap{position:absolute;left:max(var(--margin,40px),calc((100vw - 1280px) / 2));bottom:96px;z-index:2;max-width:560px;color:#FBF6EF;
+  opacity:0;transform:translateY(24px);transition:opacity .9s var(--ease) .25s,transform .9s var(--ease) .25s}
+.scn-cut.on .scn-cap{opacity:1;transform:none}
+.scn-no{display:block;font-size:13px;font-weight:300;letter-spacing:.18em;color:rgba(251,246,239,.7)}
+.scn-cap b{display:block;font-size:clamp(26px,2.6vw,38px);font-weight:300;line-height:1.3;margin-top:10px}
+.scn-txt{display:block;font-size:16px;font-weight:200;line-height:1.75;margin-top:14px;color:rgba(251,246,239,.88);word-break:keep-all}
+.scn-bar{position:absolute;left:max(var(--margin,40px),calc((100vw - 1280px) / 2));right:max(var(--margin,40px),calc((100vw - 1280px) / 2));bottom:48px;z-index:3;display:flex;gap:8px}
+.scn-bar i{flex:1;height:2px;background:rgba(251,246,239,.25);position:relative;overflow:hidden}
+.scn-bar i::after{content:"";position:absolute;inset:0;background:#FBF6EF;transform:scaleX(var(--f,0));transform-origin:left center}
+@media (max-width:768px){.scn{height:calc(5 * 100vh + 100vh)}.scn-cap{left:20px;right:20px;bottom:72px}.scn-bar{left:20px;right:20px;bottom:36px}.scn-txt{font-size:14px}}
+@media (prefers-reduced-motion:reduce){.scn-cut,.scn-cap,.scn-img{transition:none}.scn-img{transform:none}}
+
+
+/* ===== 03-2 사용 방법 (HOW TO USE) : 도형 + 반복 애니메이션 ===== */
+.ht{position:relative;margin-top:calc(var(--section) * 2);height:calc(5 * 100vh + 100vh)}
+.ht-stick{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;justify-content:center}
+.ht-head{display:flex;align-items:baseline;gap:16px;padding-bottom:20px;border-bottom:1px solid var(--line);margin-bottom:40px}
+.ht-head .h3{font-size:22px;font-weight:300}
+.ht-list{list-style:none;margin:0;padding:0;position:relative;height:min(62vh,560px)}
+.ht-step{position:absolute;inset:0;display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:64px;align-items:center;opacity:0;pointer-events:none;transition:opacity .7s var(--ease)}
+.ht-step.on{opacity:1;pointer-events:auto}
+.ht-fig{display:block;height:min(62vh,560px);width:auto;max-width:100%;aspect-ratio:1;margin:0 auto;background:#F6F3EE;border-radius:4px;overflow:visible;transform:scale(.96);transition:transform .9s cubic-bezier(.22,1,.36,1)}
+.ht-step.on .ht-fig{transform:none}
+.ht-txt{opacity:0;transform:translateY(18px);transition:opacity .8s var(--ease) .15s,transform .8s var(--ease) .15s}
+.ht-step.on .ht-txt{opacity:1;transform:none}
+.ht-no{font-size:13px;font-weight:300;letter-spacing:.18em;color:var(--sub)}
+.ht-t{margin-top:10px;font-size:clamp(26px,2.4vw,36px);font-weight:300;line-height:1.3}
+.ht-d{margin-top:14px;font-size:17px;font-weight:200;line-height:1.75;color:var(--sub);word-break:keep-all;max-width:440px}
+.ht-bar{display:flex;gap:8px;margin-top:40px}
+.ht-bar i{flex:1;height:2px;background:var(--line);position:relative;overflow:hidden}
+.ht-bar i::after{content:"";position:absolute;inset:0;background:var(--accent);transform:scaleX(var(--f,0));transform-origin:left center}
+@media (max-width:768px){.ht{height:calc(5 * 90vh + 100vh)}.ht-list{height:72vh}.ht-step{grid-template-columns:1fr;gap:20px;align-content:center}.ht-fig{height:auto;width:min(100%,46vh)}.ht-t{font-size:22px}.ht-d{font-size:15px}.ht-head{margin-bottom:20px}.ht-bar{margin-top:20px}}
+/* 도형 */
+.ht-body{fill:#FBFAF7;stroke:var(--text);stroke-width:1.4}
+.ht-hole{fill:#F6F3EE;stroke:var(--text);stroke-width:1}
+.ht-strap{stroke:#A9A6A1;stroke-width:3;stroke-linecap:round}
+.ht-scr{fill:#1F1B18}
+.ht-cover>path:first-child{fill:#6E7C76}
+.ht-grip{stroke:#4F5C57;stroke-width:1.4;stroke-linecap:round;fill:none}
+.ht-obj rect,.ht-obj circle{fill:#E9E3DA;stroke:var(--text);stroke-width:1.3}.ht-obj .ht-lens{fill:#3B342E}
+.ht-ai line{stroke:#9C9389;stroke-width:3;stroke-linecap:round}.ht-ai rect{fill:#FBFAF7;stroke:var(--text);stroke-width:1.2}.ht-ai .ht-ring{fill:none;stroke:#C9BFB3;stroke-width:2.5}
+.ht-sig path{fill:none;stroke:#E0533F;stroke-width:1.6;stroke-dasharray:4 5}.ht-sig circle{fill:#E0533F}
+.ht-sig{opacity:0}
+.ht-price{fill:#FFBF86;font-size:7.2px;font-weight:600;text-anchor:middle;dominant-baseline:middle;opacity:0}
+.ht-glow{fill:#FFB070;opacity:0}
+.ht-det{opacity:0}.ht-det rect,.ht-det circle{fill:#3A2A1E}.ht-det .off{fill:#CDBFAF}
+.ht-flash{fill:#E0533F;opacity:0}
+.ht-rs path{fill:none;stroke:var(--sub);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.ht-rs{transform-box:fill-box;transform-origin:center}
+.ht-a1{transform-box:fill-box;transform-origin:50% 0}
+.ht-a2{transform-box:fill-box;transform-origin:50% 50%}
+/* 애니메이션 (화면에 보일 때만) */
+.ht-step.on .ht-a1{animation:htDrop 3.6s cubic-bezier(.3,1.3,.5,1) infinite}
+@keyframes htDrop{0%{transform:translateY(-26px);opacity:0}18%{transform:none;opacity:1}28%{transform:rotate(7deg)}38%{transform:rotate(-5deg)}48%{transform:rotate(2.5deg)}58%,88%{transform:none;opacity:1}100%{transform:none;opacity:0}}
+.ht-step.on .ht-a2{animation:htLift 4.2s ease-in-out infinite}
+@keyframes htLift{0%,28%{transform:none}48%,86%{transform:translate(14px,-18px) rotate(14deg)}100%{transform:none}}
+.ht-step.on .ht-a2 .ht-cover{animation:htCov2 4.2s ease-in-out infinite}
+@keyframes htCov2{0%,8%{transform:none}20%,90%{transform:translateY(10px)}100%{transform:none}}
+.ht-step.on .ht-a2 .ht-scr{animation:htRed 4.2s ease-in-out infinite}
+@keyframes htRed{0%,18%{fill:#1F1B18}24%,90%{fill:#E0533F}100%{fill:#1F1B18}}
+.ht-step.on .ht-sig{animation:htSig 4.2s ease-in-out infinite}
+@keyframes htSig{0%,50%{opacity:0}58%,84%{opacity:1}92%,100%{opacity:0}}
+.ht-step.on .ht-ai .ht-ring{animation:htRing 4.2s ease-in-out infinite}
+@keyframes htRing{0%,58%{stroke:#C9BFB3}64%,88%{stroke:var(--nav)}100%{stroke:#C9BFB3}}
+.ht-cover.down{transform:translateY(10px)}
+.ht-step.on:nth-child(3) .ht-scr{animation:htScan 3.6s ease-in-out infinite}
+@keyframes htScan{0%,30%{fill:#E0533F}40%,100%{fill:#1F1B18}}
+.ht-step.on .ht-price{animation:htPrice 3.6s ease-out infinite}
+@keyframes htPrice{0%,36%{opacity:0;transform:translateY(3px)}48%,92%{opacity:1;transform:none}100%{opacity:0}}
+.ht-step.on .ht-glow{animation:htGlow 3.6s ease-out infinite}
+@keyframes htGlow{0%,36%{opacity:0}50%{opacity:.35}92%{opacity:.18}100%{opacity:0}}
+.ht-step.on .c4{animation:htCov4 3.8s ease-in-out infinite}
+@keyframes htCov4{0%,12%{transform:translateY(10px)}28%,92%{transform:none}100%{transform:translateY(10px)}}
+.ht-step.on:nth-child(4) .ht-scr{animation:htCream 3.8s ease-in-out infinite}
+@keyframes htCream{0%,26%{fill:#1F1B18}36%,92%{fill:#FFF3E4}100%{fill:#1F1B18}}
+.ht-step.on .ht-det{animation:htDet 3.8s ease-in-out infinite}
+@keyframes htDet{0%,36%{opacity:0}46%,92%{opacity:1}100%{opacity:0}}
+.ht-step.on .c5{animation:htCov5 3.6s ease-in-out infinite}
+@keyframes htCov5{0%,10%{transform:none}22%,34%{transform:translateY(10px)}46%,100%{transform:none}}
+.ht-step:nth-child(5) .ht-scr{fill:#FFF3E4}
+.ht-step.on:nth-child(5) .ht-scr{animation:htOff 3.6s ease-in-out infinite}
+@keyframes htOff{0%,40%{fill:#FFF3E4}52%,92%{fill:#1F1B18}100%{fill:#FFF3E4}}
+.ht-step.on .ht-flash{animation:htFlash 3.6s ease-out infinite}
+@keyframes htFlash{0%,44%{opacity:0}48%{opacity:.85}60%,100%{opacity:0}}
+.ht-step.on .ht-rs{animation:htSpin 3.6s ease-in-out infinite}
+@keyframes htSpin{0%,44%{transform:rotate(0)}70%,100%{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.ht-step.on *{animation:none!important}.ht-step,.ht-txt,.ht-fig{transition:none}}
+/* 인터랙션 플로우 : 섹션에 도착하면 화면에 고정 → 1초 뒤부터 스크롤한 만큼 진행 (데스크톱) */
+.sf-pin{position:relative}
+.sf-pin.on .sf-sticky{position:sticky;top:var(--sf-top,24px)}
+/* 단계 효과 (글자 없이) */
+.sf-pop{transform-box:fill-box;transform-origin:center}
+.sf-node.pop .sf-pop{animation:sfPop .7s cubic-bezier(.34,1.56,.64,1)}
+@keyframes sfPop{0%{transform:scale(1)}35%{transform:scale(1.16)}100%{transform:scale(1)}}
+.sf-node{transition:opacity .5s var(--ease)}
+.sf.go .sf-node:not(.on){opacity:.35}
+.sf-node.cur .sf-halo{animation:sfHalo 1.6s ease-in-out infinite}
+@keyframes sfHalo{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}
+.sf-halo{transform-box:fill-box;transform-origin:center}
+.sf-ping{fill:none;stroke:var(--sig);stroke-width:2;opacity:0;transform-box:fill-box;transform-origin:center}
+.sf-tag.cur .sf-ping{animation:sfWave 1.4s ease-out infinite}.sf-tag.cur .sf-ping.p2{animation-delay:.7s}
+.sf-cap{transition:transform .5s cubic-bezier(.34,1.4,.64,1)}
+.sf-tag.on .sf-cap{transform:translateY(3.5px)}
+.sf-grip{fill:none;stroke:#4E5C57;stroke-width:1.2;stroke-linecap:round}
+.sf-arrow{fill:none;stroke:var(--sig);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;opacity:0}
+.sf-tag.cur .sf-arrow{animation:sfArrow 1.2s ease-in-out infinite}
+@keyframes sfArrow{0%{opacity:0;transform:translateY(-6px)}40%{opacity:1}100%{opacity:0;transform:translateY(8px)}}
+.sf-spin{fill:none;stroke:var(--sig);stroke-width:2;stroke-dasharray:6 10;opacity:0;transform-box:fill-box;transform-origin:center}
+.sf-ai.cur .sf-spin{opacity:.7;animation:sfSpin 3s linear infinite}
+@keyframes sfSpin{to{transform:rotate(360deg)}}
+.sf-beam{fill:url(#sfBeam);opacity:0;transition:opacity .5s var(--ease)}
+.sf.s2 .sf-beam{animation:sfBeam 1.1s ease-in-out infinite}
+@keyframes sfBeam{0%,100%{opacity:.25}50%{opacity:.85}}
+.sf-rays line{stroke:#FFB070;stroke-width:3;stroke-linecap:round;opacity:0}
+.sf-out.cur .sf-rays line{animation:sfRay 1.6s ease-out infinite}
+@keyframes sfRay{0%{opacity:0;stroke-dasharray:0 16}25%{opacity:1;stroke-dasharray:16 0}100%{opacity:0;stroke-dasharray:16 0}}
+.sf-out.cur .sf-rays{animation:sfRays 1.6s ease-out infinite}
+@keyframes sfRays{0%{transform:scale(.92)}100%{transform:scale(1.12)}}
+.sf-rays{transform-box:fill-box;transform-origin:center}
+.sf-out.cur .sf-disp{stroke:#FFB070;stroke-width:3}
+.sf-dot-glow{fill:var(--sig);opacity:0;transition:opacity .3s}
+.sf.go .sf-dot-glow{opacity:.18;animation:sfDot 1s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes sfDot{0%,100%{transform:scale(.8)}50%{transform:scale(1.25)}}
+/* 아래 단계 막대 : 그 단계에 도착하면 빨간 선이 왼쪽부터 차오름 */
+.sf-step{position:relative;border-top-color:var(--line)!important}
+.sf-step::before{content:"";position:absolute;left:0;right:0;top:-2px;height:2px;background:var(--sig);transform:scaleX(0);transform-origin:left center;transition:transform .8s cubic-bezier(.22,1,.36,1)}
+.sf-step.on::before{transform:scaleX(1)}
+.sf-step.cur{transform:translateY(-4px)}
+@media (prefers-reduced-motion:reduce){.sf-node .sf-pop,.sf-ping,.sf-arrow,.sf-spin,.sf-beam,.sf-rays line,.sf-halo,.sf-dot-glow{animation:none!important}}
+/* 시나리오 영상 (16:9) */
+.sv{position:relative;width:100%;aspect-ratio:16/9;background:#F6F2EC;border:1px dashed #CDBFAF;overflow:hidden}
+.sv video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#000}
+.sv-slot{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px}
+.sv-play{width:72px;height:72px;border-radius:50%;border:1px solid #CDBFAF;display:flex;align-items:center;justify-content:center}
+.sv-play svg{width:26px;height:26px;fill:#B9A894;margin-left:3px}
+.sv-lab{font-size:14px;font-weight:200;letter-spacing:.1em;color:var(--sub)}
+/* 시나리오 : 이미지 들어갈 자리 표시 */
+#scenario .ph.slot{background:#F6F2EC;border:1px dashed #CDBFAF}
+#scenario .ph.slot::after{content:attr(data-label);left:50%;top:50%;bottom:auto;transform:translate(-50%,-50%);white-space:nowrap;opacity:.7}
+#scenario .card{cursor:default}
+
+/* ===== 03 핵심 기능 : 왼쪽 카드가 차례로 켜지고, 오른쪽 3D 태그가 그 기능대로 움직임 (assets/js/feature-tag.js) ===== */
+.kf{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:56px;align-items:stretch}
+.kf-stage{order:-1}
+.kf-list{display:flex;flex-direction:column;justify-content:center;border-top:1px solid var(--line)}
+.kf-card{position:relative;padding:26px 4px 26px 0;border-bottom:1px solid var(--line);cursor:pointer!important;outline:none;transition:opacity .5s var(--ease)}
+.kf-card:focus-visible{box-shadow:inset 0 0 0 2px var(--nav)}
+.kf-head{display:grid;grid-template-columns:56px 1fr;align-items:start}
+.kf-no{font-size:28px;font-weight:200;line-height:1.1;color:var(--sub);transition:color .5s var(--ease)}
+.kf-card .eyebrow{font-size:13px}
+.kf-card .h3{font-size:22px;font-weight:300;margin-top:2px;transition:color .5s var(--ease)}
+.kf-card:not(.on){opacity:.5}.kf-card:not(.on):hover{opacity:.85}
+.kf-card.on .kf-no{color:var(--accent)}
+.kf-more{display:grid;grid-template-rows:0fr;transition:grid-template-rows .7s cubic-bezier(.3,1,.4,1)}
+.kf-card.on .kf-more{grid-template-rows:1fr}
+.kf-in{overflow:hidden;padding-left:56px}
+.kf-in .body{margin-top:12px;margin-bottom:4px;line-height:1.75;word-break:keep-all}
+.kf-bar{position:absolute;left:0;right:0;bottom:-1px;height:2px;overflow:hidden}
+.kf-bar i{display:block;height:100%;background:var(--accent);transform:scaleX(0);transform-origin:left center}
+.kf-card.on .kf-bar i{animation:kfBar var(--kf-dur,6s) linear forwards}
+.kf.paused .kf-card.on .kf-bar i{animation-play-state:paused}
+@keyframes kfBar{to{transform:scaleX(1)}}
+.kf-stage{position:relative;min-height:640px;overflow:visible;background:none center/cover no-repeat}
+.kf-stage.no3d{background-color:#E6E4E0}
+.kf-stage canvas{position:absolute;left:0;top:0;width:100%;height:100%;display:block;opacity:0;transition:opacity .6s;pointer-events:none;z-index:2}
+.kf-stage.ready canvas{opacity:1}
+.kf-cap{position:absolute;left:24px;bottom:20px;display:flex;gap:12px;align-items:baseline;font-size:14px;color:var(--text);pointer-events:none;transition:opacity .4s}
+.kf-cap b{font-weight:500;letter-spacing:.12em}.kf-cap em{font-style:normal;font-weight:200;color:var(--sub)}
+.kf-cap.swap{opacity:0}
+.kf-load{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:14px;font-weight:100;letter-spacing:.08em;color:var(--sub);opacity:0;transition:opacity .4s;pointer-events:none}
+.kf-stage.loading .kf-load{opacity:.8}
+.kf-stage.no3d canvas,.kf-stage.no3d .kf-load{display:none}
+@media (max-width:1024px){.kf{gap:32px}.kf-stage{min-height:520px}}
+@media (max-width:768px){.kf{grid-template-columns:1fr;gap:20px}.kf-stage{order:-1;min-height:0;aspect-ratio:4/5}.kf-card .h3{font-size:18px}.kf-head{grid-template-columns:44px 1fr}.kf-in{padding-left:44px}.kf-no{font-size:22px}}
+.sf-line{stroke-width:3.5}.sf-base{stroke-width:2.5}
+.sf-step .h3{font-size:clamp(26px,2.3vw,32px)}.sf-step .body{font-size:17px}.sf-step .eyebrow{font-size:14px}
+.sf-steps{margin-top:36px}
+
+/* ================= 모바일·태블릿 세로 : PC와 같은 고정 연출 ================= */
+@media (max-width:1024px) and (min-height:460px){
+  .pz{height:300vh}
+  .pz-stick{position:sticky;top:var(--header);height:calc(100svh - var(--header));grid-template-columns:1fr;grid-template-rows:minmax(0,1fr) auto;gap:8px;align-content:stretch;padding:16px var(--margin) 22px;overflow:hidden}
+  .pz-holo{position:relative;order:-1;height:100%;width:100%;aspect-ratio:auto;max-height:none;border-radius:16px;background:none}
+  .pz-holo::after{width:62%;height:74%}
+  .pz-left{position:relative;z-index:5}
+  .pz-lead{margin:0 0 12px;font-size:13px}
+  .pz-items{min-height:218px;margin-top:0}
+  .pz-no{font-size:15px;gap:10px}.pz-no span{font-size:11px;padding:5px 11px}
+  .pz-key{margin-top:14px;font-size:clamp(24px,6.6vw,34px);line-height:1.3}
+  .pz-sum{margin-top:12px;font-size:14px;line-height:1.65}
+  .pz-ticks{display:flex;margin-top:6px}
+  .pz-chip{font-size:11px;padding:4px 10px}
+  .pz-cap{left:16px;top:14px}
+}
+@media (max-width:768px){
+  .sf-pin.on .sf-sticky{padding-top:var(--header)}
+  .sf-pin.on .sf-steps{margin-top:16px;gap:12px}
+  .sf-pin.on .sf-step .h3{font-size:20px}.sf-pin.on .sf-step .body{font-size:14px}
+}
+
+/* 시나리오 영상 : 세로 화면에서는 영상 전체(16:9)가 다 보이도록 · 터치 기기는 재생 버튼 항상 표시 */
+@media (max-width:768px){
+  .sv{height:auto;aspect-ratio:16/9;width:100vw;margin-left:calc(50% - 50vw)}
+  .sv-ui{padding:0 12px 10px}.sv-b{width:36px;height:36px}
+}
+@media (hover:none),(pointer:coarse){.sv-ui{opacity:1}}
+@media (max-width:768px){.kf-stage{aspect-ratio:1/1}}
+</style>
+</head>
+<body>
+
+<!-- ================= HEADER ================= -->
+<header class="header" id="header">
+  <div class="container">
+    <div class="brand">
+      <a href="../../index.html" class="home-link" title="전체 프로젝트 페이지로 이동" aria-label="전체 프로젝트"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h5v-6h4v6h5V10"/></svg><span>전체 프로젝트</span></a>
+      <a href="../index.html" class="team-logo" title="TEAM 06 조 소개 페이지로 이동" aria-label="TEAM 06 · 2030 동묘시장 조 소개 페이지"><img src="../assets/images/logo.png" alt="DONGMYO"></a>
+    </div>
+    <ul class="nav" id="nav">
+      <li><a href="#concept">CONCEPT</a></li>
+      <li><a href="#function">FUNCTION</a></li>
+      <li><a href="#scenario">SCENARIO</a></li>
+      <li><a href="#design">DESIGN</a></li>
+    </ul>
+    <div style="display:flex;gap:16px;align-items:center">
+      <button class="icon-btn" aria-label="장바구니">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>
+        <span class="cart-count" id="cartCount">0</span>
+      </button>
+      <button class="icon-btn m-only" id="openMenu" aria-label="메뉴 열기">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M3 7h18M3 12h18M3 17h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="m-menu" id="mMenu" aria-hidden="true">
+  <div class="m-menu-top">
+    <span class="logo" data-plogo>PRODUCT</span>
+    <button class="icon-btn" id="closeMenu" aria-label="메뉴 닫기"><svg class="icon" viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19"/></svg></button>
+  </div>
+  <ul>
+    <li><a href="#concept">CONCEPT</a></li>
+    <li><a href="#function">FUNCTION</a></li>
+    <li><a href="#scenario">SCENARIO</a></li>
+    <li><a href="#design">DESIGN</a></li>
+    <li><a href="../index.html">← TEAM 06 · 2030 동묘시장</a></li>
+    <li><a href="../../index.html">← 전체 프로젝트</a></li>
+  </ul>
+</div>
+
+<main id="top">
+
+<!-- ================= 01 PRODUCT INTRODUCTION ================= -->
+<section class="hero hero-tag" id="heroTag">
+  <canvas class="ht-rope" aria-hidden="true"></canvas>
+  <canvas class="ht-gl" aria-hidden="true"></canvas>
+  <div class="container">
+    <div class="hero-copy">
+      <p class="eyebrow"><span data-pno-eyebrow></span>01 / Product Introduction</p>
+      <h1 class="ht-title" aria-label="Value Discovery Tag"><span class="w">VALUE</span><span class="w">DISCOVERY</span><span class="w">TAG</span></h1>
+      <p class="ht-name">들어 올리는 순간, 물건의 가치가 보인다.</p>
+      <a href="#concept" class="btn">EXPLORE MORE <span class="arrow">↗</span></a>
+    </div>
+  </div>
+  <div class="scroll-cue" aria-hidden="true"><span>Scroll to Explore</span><span class="bar"></span></div>
+</section>
+
+<!-- ================= 02 PERSONA & PROBLEM ================= -->
+<section class="block" id="concept">
+  <div class="container">
+    <div class="s-head reveal">
+      <span class="no">02</span>
+      <h2 class="h2">Persona &amp; Problem</h2>
+      <p class="desc">페르소나와 해결하고자 하는 문제</p>
+    </div>
+    <!-- 페르소나 소개 -->
+    <div class="pp reveal">
+      <div class="pp-photo" role="img" aria-label="페르소나 박진수" style="background-image:url('assets/images/product-persona.webp')"><span class="pp-badge">PERSONA</span></div>
+      <div class="pp-body">
+        <p class="pp-eb">동묘시장 빈티지 · 골동품 상인</p>
+        <h3 class="pp-name">박진수 <em>68세</em></h3>
+        <p class="pp-quote">“좋은 물건은 많은데, 그 값을 손님에게<br>설명하는 게 늘 제일 어려워요.”</p>
+        <dl class="pp-facts">
+          <div><dt>판매 품목</dt><dd>빈티지 골동품</dd></div>
+          <div><dt>가게</dt><dd>물건이 빼곡한 동묘시장 골목의 작은 노점형 가게</dd></div>
+          <div><dt>하루</dt><dd>새로 들어온 물건의 값을 매기고, 손님과 흥정하며 하루를 보냄</dd></div>
+          <div><dt>바라는 것</dt><dd>복잡한 기계 없이, 손님이 바로 납득하는 가격을 보여주고 싶음</dd></div>
+        </dl>
+      </div>
+    </div>
+    <!-- 페르소나 & 문제 : 왼쪽 핵심 문장(크게) + 한 줄 요약 / 오른쪽 홀로그램 3D (스크롤하면 문제 3개가 차례로) -->
+    <div class="pz" id="persona">
+      <div class="pz-stick">
+        <div class="pz-left">
+          <p class="pz-lead">박진수 씨가 장사하며 겪는 세 가지 불편함</p>
+          <div class="pz-items">
+            <article class="pz-item on" data-i="0">
+              <p class="pz-no"><span>PROBLEM 01</span>가치 판단의 어려움</p>
+              <h3 class="pz-key">“이 물건, 얼마를<br>받아야 할지 모르겠어요.”</h3>
+              <p class="pz-sum">브랜드·연식·희소성·상태마다 값이 달라<br>상인도 정확한 시세를 알기 어렵다.</p>
+            </article>
+            <article class="pz-item" data-i="1">
+              <p class="pz-no"><span>PROBLEM 02</span>불투명한 가격 근거</p>
+              <h3 class="pz-key">“이 가격이 맞다고<br>매번 설명해야 해요.”</h3>
+              <p class="pz-sum">객관적인 근거가 없어 손님은 의심하고,<br>상인은 같은 설명을 반복한다.</p>
+            </article>
+            <article class="pz-item" data-i="2">
+              <p class="pz-no"><span>PROBLEM 03</span>장비 설치의 부담</p>
+              <h3 class="pz-key">“가게가 좁아서<br>큰 기계는 둘 데가 없어요.”</h3>
+              <p class="pz-sum">좁은 매장에 물건이 가득해<br>크고 복잡한 장비는 들일 수 없다.</p>
+            </article>
+          </div>
+          <div class="pz-ticks" aria-hidden="true"><i class="on"></i><i></i><i></i><span class="ct">01 / 03</span></div>
+        </div>
+        <div class="pz-holo" aria-hidden="true">
+          <canvas class="pz-cv"></canvas>
+          <div class="pz-chips"></div>
+          <div class="pz-base"></div>
+          <p class="pz-cap">HOLOGRAM · <span>01</span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 03 KEY FEATURES ================= -->
+<section class="block" id="function">
+  <div class="container">
+    <div class="s-head reveal">
+      <span class="no">03</span>
+      <h2 class="h2">Key Features</h2>
+      <p class="desc">제품의 핵심 기능과 작동 원리</p>
+    </div>
+    <div class="kf reveal" id="kf">
+      <div class="kf-list">
+        <article class="card kf-card" data-i="0" data-cap="토글 내리기 · 인식 요청" tabindex="0" role="button" aria-pressed="false">
+          <div class="kf-head"><span class="kf-no">01</span><div><p class="eyebrow">핵심 기능 01</p><h3 class="h3">토글을 내리면 시작되는 가치 분석</h3></div></div>
+          <div class="kf-more"><div class="kf-in">
+            <p class="body sub">가치가 궁금한 물품에 스트랩으로 태그를 걸고 하단 토글을 한 번 내리면, 시장 곳곳에 있는 MCU AI에 인식을 요청한다. 복잡한 조작 없이 한 번의 동작이면 된다.</p>
+          </div></div>
+          <span class="kf-bar" aria-hidden="true"><i></i></span>
+        </article>
+        <article class="card kf-card" data-i="1" data-cap="빨간 빛 · 예상 가격" tabindex="0" role="button" aria-pressed="false">
+          <div class="kf-head"><span class="kf-no">02</span><div><p class="eyebrow">핵심 기능 02</p><h3 class="h3">빛으로 알리는 인식, 화면에 뜨는 가치</h3></div></div>
+          <div class="kf-more"><div class="kf-in">
+            <p class="body sub">AI가 물품을 인식하는 동안에만 태그가 빨갛게 빛나고, 분석이 끝나면 원형 디스플레이에 예상 가격이 뜬다. 판매자는 태그를 손님에게 보여주며 바로 가격을 전할 수 있다.</p>
+          </div></div>
+          <span class="kf-bar" aria-hidden="true"><i></i></span>
+        </article>
+        <article class="card kf-card" data-i="2" data-cap="토글 닫기 · 상세 정보" tabindex="0" role="button" aria-pressed="false">
+          <div class="kf-head"><span class="kf-no">03</span><div><p class="eyebrow">핵심 기능 03</p><h3 class="h3">토글을 닫으면 보이는 상세 정보</h3></div></div>
+          <div class="kf-more"><div class="kf-in">
+            <p class="body sub">토글을 다시 닫으면 디스플레이에 제품명과 추정 연도, 가치 점 5개가 나타난다. 다른 물품을 확인할 때는 토글을 내렸다 닫아 처음 상태로 되돌린다.</p>
+          </div></div>
+          <span class="kf-bar" aria-hidden="true"><i></i></span>
+        </article>
+      </div>
+      <div class="kf-stage" data-model="assets/models/tag-feature-model.js">
+        <canvas aria-label="핵심 기능을 보여주는 태그 3D 모델"></canvas>
+        <span class="kf-cap"><b>FEATURE 01</b><em>토글 내리기 · 인식 요청</em></span>
+        <span class="kf-load">3D 불러오는 중…</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 04 INTERACTION FLOW ================= -->
+<section class="block" id="flow">
+  <div class="container">
+   <div class="sf-pin" id="sfPin"><div class="sf-sticky">
+    <div class="s-head reveal">
+      <span class="no">04</span>
+      <h2 class="h2">Interaction Flow</h2>
+      <p class="desc">입력 정보 → AI 판단 → 물리적 반응</p>
+    </div>
+    <div class="sf reveal" id="sf">
+      <svg class="sf-map" viewBox="0 0 1200 430" role="img" aria-label="태그에서 시장 MCU AI로 신호가 갔다가 다시 태그 디스플레이로 돌아오는 흐름">
+        <defs>
+          <linearGradient id="sfBeam" x1="594" y1="141" x2="150" y2="300" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#667DAD" stop-opacity=".5"/><stop offset="1" stop-color="#667DAD" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <!-- 2단계 : AI가 물품(태그)을 비추며 분석하는 빛 -->
+        <polygon class="sf-beam" points="594,141 120,215 180,400"/>
+        <path class="sf-base" d="M225,300 C360,300 420,150 520,150 L700,150 C800,150 840,300 955,300"/>
+        <path class="sf-line" d="M225,300 C360,300 420,150 520,150 L700,150 C800,150 840,300 955,300"/>
+        <!-- 1단계 : 태그 -->
+        <g class="sf-node sf-tag" transform="translate(150,300) scale(1.6)"><g class="sf-pop">
+          <circle class="sf-halo" r="62"/>
+          <circle class="sf-ping" r="40"/><circle class="sf-ping p2" r="40"/>
+          <line class="sf-strap" x1="0" y1="-44" x2="0" y2="-80"/>
+          <rect class="sf-body" x="-26" y="-46" width="52" height="92" rx="26"/>
+          <circle class="sf-hole" cx="0" cy="-34.2" r="3"/>
+          <circle class="sf-scr" cy="-9.9" r="15.9"/>
+          <g class="sf-cap"><path d="M-26,19 H-17 V22.5 H17 V19 H26 V20 A26,26 0 0 1 -26,20 Z"/><path class="sf-grip" d="M-6,29.5 H6 M-6,32.5 H6 M-6,35.5 H6"/></g>
+          <path class="sf-arrow" d="M0,56 V72 M-6,66 L0,72 L6,66"/>
+        </g></g>
+        <!-- 2단계 : MCU AI (거리 기둥의 CCTV형 장치) -->
+        <g class="sf-node sf-ai" transform="translate(600,150) scale(1.5)"><g class="sf-pop">
+          <circle class="sf-wave" r="40"/><circle class="sf-wave w2" r="40"/>
+          <circle class="sf-spin" r="58"/>
+          <line class="sf-pole" x1="74" y1="-6" x2="74" y2="-88"/>
+          <line class="sf-pole" x1="36" y1="-6" x2="74" y2="-6"/>
+          <rect class="sf-cam" x="-44" y="-30" width="80" height="48" rx="14"/>
+          <circle class="sf-ring" cx="-4" cy="-6" r="15"/>
+          <circle class="sf-lens" cx="-4" cy="-6" r="7"/>
+        </g></g>
+        <!-- 3단계 : 태그 디스플레이 -->
+        <g class="sf-node sf-out" transform="translate(1050,300) scale(1.6)"><g class="sf-pop">
+          <circle class="sf-halo" r="62"/>
+          <g class="sf-rays"><line x1="0" y1="-58" x2="0" y2="-74"/><line x1="0" y1="-58" x2="0" y2="-74" transform="rotate(45)"/><line x1="0" y1="-58" x2="0" y2="-74" transform="rotate(90)"/><line x1="0" y1="-58" x2="0" y2="-74" transform="rotate(135)"/><line x1="0" y1="-58" x2="0" y2="-74" transform="rotate(180)"/><line x1="0" y1="-58" x2="0" y2="-74" transform="rotate(225)"/><line x1="0" y1="-58" x2="0" y2="-74" transform="rotate(270)"/><line x1="0" y1="-58" x2="0" y2="-74" transform="rotate(315)"/></g>
+          <circle class="sf-disp" r="44"/>
+          <text class="sf-price" y="2">₩150,000</text>
+        </g></g>
+        <circle class="sf-dot" r="9" cx="225" cy="300"/>
+        <circle class="sf-dot-glow" r="20" cx="225" cy="300"/>
+      </svg>
+      <div class="sf-steps">
+        <div class="sf-step"><p class="eyebrow">01 / Input</p><h3 class="h3">입력 정보</h3><p class="body sub">토글 3mm 내리기 · 태그 동작 감지 · 시장 MCU AI 인식</p></div>
+        <div class="sf-step"><p class="eyebrow">02 / AI Process</p><h3 class="h3">AI 판단</h3><p class="body sub">물품 식별 · 연식·희소성·상태 분석 · 시세 비교</p></div>
+        <div class="sf-step"><p class="eyebrow">03 / Output</p><h3 class="h3">물리적 반응</h3><p class="body sub">화면 빨간 빛 · 예상 가치 표시 · 토글로 상세 정보 보기</p></div>
+      </div>
+    </div>
+   </div></div>
+  </div>
+</section>
+
+<!-- ================= 05 USE SCENARIO ================= -->
+<section class="block" id="scenario">
+  <div class="container">
+    <div class="s-head reveal">
+      <span class="no">05</span>
+      <h2 class="h2">Use Scenario</h2>
+      <p class="desc">제품을 사용하는 상황과 경험의 흐름</p>
+    </div>
+  </div>
+  <!-- 시나리오 영상 : 화면 가득 · 화면에 들어오면 자동 재생 (소리는 버튼으로) -->
+  <div class="sv" id="sv">
+    <video class="sv-v" src="assets/videos/scenario.mp4" poster="assets/videos/scenario-poster.jpg" muted playsinline loop preload="metadata" aria-label="AI 빈티지 디스커버리 태그 사용 시나리오 영상"></video>
+  </div>
+</section>
+
+<!-- ================= 06 TRY IT YOURSELF (3D 체험) ================= -->
+<section class="block" id="try">
+  <div class="container">
+    <div class="try-cta reveal">
+      <span class="try-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 5l6 6 6-6M6 12l6 6 6-6"/></svg></span>
+      <button type="button" class="try-btn" id="tryBtn" aria-expanded="false" aria-controls="tryPanel">TRY IT YOURSELF</button>
+    </div>
+    <!-- 버튼을 눌러야만 체험 창이 펼쳐지고, 그때 처음으로 체험(experience.html)을 불러옴 -->
+    <div class="try-panel" id="tryPanel" hidden>
+      <div class="try-in">
+        <div class="exp"></div>
+        <p class="exp-note body sub">왼쪽 번호에 마우스를 올리면 방법을 보여주고, 누르면 그 단계가 자동으로 실행돼요. 3D 체험은 인터넷에 연결되어 있을 때 동작해요.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 07 PRODUCT DESIGN ================= -->
+<section class="block" id="design">
+  <div class="container">
+    <div class="s-head reveal">
+      <span class="no">07</span>
+      <h2 class="h2">Product Design</h2>
+      <p class="desc">제품 디자인 · 색상 · 치수</p>
+    </div>
+  </div>
+  <!-- 메인 3D : 화면 가득, 멈춘 채 스크롤하면 부위별로 다가가며 색상 · 치수가 나타남 (assets/js/design-tag.js) -->
+  <div class="dz" id="dz">
+    <div class="dz-stage">
+      <canvas class="dz-cv" aria-label="제품 3D — 스크롤하면 부위별로 확대돼요"></canvas>
+      <svg class="dz-dims" aria-hidden="true"></svg>
+      <div class="dz-copy">
+        <article class="dz-step on"><p class="dz-no">01 · OVERVIEW</p><h3 class="dz-t">손바닥보다 작은<br>알약형 태그</h3><p class="dz-d">웜 화이트 본체와 그린 그레이 슬라이드 커버, 둥근 디스플레이 하나로 단순하게.</p></article>
+        <article class="dz-step"><p class="dz-no">02 · SIZE</p><h3 class="dz-t">51 × 107 × 8.5 mm</h3><p class="dz-d">어떤 물건에 걸어도 가리지 않는 크기. 한 손에 쥐고 엄지로 토글을 내릴 수 있어요.</p></article>
+        <article class="dz-step"><p class="dz-no">03 · DISPLAY</p><h3 class="dz-t">Ø 37 원형 디스플레이</h3><p class="dz-d">가격은 검은 화면에 웜 오렌지 숫자로, 상세 정보는 밝은 화면에 제품명 · 연도 · 가치 점으로.</p>
+          <p class="dz-chips"><span><i style="background:#141414"></i>Glass Black</span><span><i style="background:#FF9A45"></i>Price Amber</span><span><i style="background:#FFF1DE"></i>Detail Cream</span></p></article>
+        <article class="dz-step"><p class="dz-no">04 · TOGGLE</p><h3 class="dz-t">3 mm 내리면<br>빨간 빛으로 인식</h3><p class="dz-d">그립 홈 3줄이 있는 슬라이드 커버. 내리면 흰 띠와 파팅라인이 드러나고 화면이 빨갛게 빛나요.</p>
+          <p class="dz-chips"><span><i style="background:#495651"></i>Green Grey · PC/ABS</span><span><i style="background:#E8202A"></i>Scan Red</span></p></article>
+        <article class="dz-step"><p class="dz-no">05 · BODY</p><h3 class="dz-t">8.5 mm 얇은 두 겹 구조</h3><p class="dz-d">무광 웜 화이트 본체에 클리어 코트를 더해 손때가 덜 타고, 옆선은 둥글게 마감했어요.</p>
+          <p class="dz-chips"><span><i style="background:#E6E3DE"></i>Warm White · PC</span></p></article>
+        <article class="dz-step"><p class="dz-no">06 · STRAP</p><h3 class="dz-t">Ø 6.9 구멍 · 실리콘 스트랩</h3><p class="dz-d">납작한 실리콘 스트랩을 구멍에 꿰어 물건 손잡이 · 끈 · 고리 어디에나 걸 수 있어요.</p>
+          <p class="dz-chips"><span><i style="background:#828482"></i>Strap Grey · Silicone</span></p></article>
+      </div>
+      <div class="dz-prog" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i><i></i><i></i></div>
+      <span class="dz-load">3D 불러오는 중…</span>
+    </div>
+  </div>
+  <div class="container">
+    <!-- 4면도 렌더 (3D 모델로 만든 이미지) -->
+    <div class="fv reveal">
+      <p class="fv-h">4 VIEW</p>
+      <div class="fv-grid">
+        <figure><img src="assets/images/view-front.webp" alt="정면" loading="lazy"><figcaption>FRONT</figcaption></figure>
+        <figure><img src="assets/images/view-side.webp" alt="측면" loading="lazy"><figcaption>SIDE</figcaption></figure>
+        <figure><img src="assets/images/view-back.webp" alt="후면" loading="lazy"><figcaption>BACK</figcaption></figure>
+        <figure><img src="assets/images/view-top.webp" alt="윗면" loading="lazy"><figcaption>TOP</figcaption></figure>
+      </div>
+    </div>
+    <!-- 상세 이미지 : 두 장씩 차례로 나타남 (이미지 받으면 data-label 칸에 넣기) -->
+    <div class="dtl">
+      <p class="fv-h">DETAIL</p>
+      <div class="dtl-grid">
+        <figure class="dt-cell"><img src="assets/images/detail/detail-01.webp" alt="디테일 1 — 끈 고리" loading="lazy"><figcaption>STRAP</figcaption></figure>
+        <figure class="dt-cell"><img src="assets/images/detail/detail-02.webp" alt="디테일 2 — 토글 · 스캔" loading="lazy"><figcaption>TOGGLE</figcaption></figure>
+        <figure class="dt-cell"><img src="assets/images/detail/detail-03.webp" alt="디테일 3 — 상세 정보" loading="lazy"><figcaption>DETAIL</figcaption></figure>
+        <figure class="dt-cell"><img src="assets/images/detail/detail-04.webp" alt="디테일 4 — 예상 가격" loading="lazy"><figcaption>PRICE</figcaption></figure>
+      </div>
+    </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 08 SPECIFICATIONS & MATERIALS ================= -->
+<section class="block" id="spec">
+  <div class="container">
+    <div class="s-head reveal">
+      <span class="no">08</span>
+      <h2 class="h2">Specifications &amp; Materials</h2>
+      <p class="desc">주요 사양 및 소재</p>
+    </div>
+    <div class="sum reveal"><div><b>51 mm</b><span>폭</span></div><div><b>107 mm</b><span>높이</span></div><div><b>8.5 mm</b><span>두께</span></div><div><b>Ø 37 mm</b><span>원형 디스플레이</span></div></div>
+    <div class="dwg-wrap reveal"><svg class="dwg" viewBox="0 0 1240 760" role="img" aria-label="AI 빈티지 디스커버리 태그 3면도 — 51 × 107 × 8.5 mm"><rect class="bgr" x="0" y="0" width="1240" height="760" rx="0"/><g class="views"><path class="cl" d="M320.0 668.0 V203.6"/><path class="cl" d="M218.0 389.8 H422.0"/><path class="cl" d="M640.0 668.0 V203.6"/><path class="ln" d="M324.8 650.0 L314.8 650.0 L314.6 649.8 L311.2 649.8 L311.0 649.6 L310.0 649.6 L309.8 649.4 L307.4 649.4 L307.2 649.2 L304.8 649.0 L304.6 648.8 L303.6 648.8 L303.4 648.6 L302.0 648.6 L301.0 648.2 L299.8 648.2 L298.4 647.6 L297.4 647.6 L296.6 647.2 L293.4 646.6 L291.4 645.8 L290.0 645.6 L288.6 645.0 L287.0 644.6 L286.4 644.2 L286.0 644.2 L284.8 643.6 L282.8 643.0 L281.4 642.2 L280.4 642.0 L279.6 641.4 L279.2 641.4 L278.2 640.8 L277.8 640.8 L277.4 640.4 L277.0 640.4 L276.2 639.8 L275.8 639.8 L274.6 639.0 L274.2 639.0 L273.4 638.4 L273.0 638.4 L270.6 636.8 L269.8 636.6 L268.2 635.4 L267.6 635.2 L264.2 633.0 L263.6 632.4 L263.2 632.4 L260.0 629.8 L259.6 629.8 L254.2 625.2 L254.0 625.2 L252.0 623.2 L251.8 623.2 L247.3 618.7 L247.1 618.3 L245.9 617.3 L244.7 615.7 L242.5 613.5 L242.5 613.3 L239.5 609.7 L239.1 608.9 L238.3 608.1 L236.7 605.5 L234.9 603.1 L234.5 602.1 L233.9 601.5 L233.7 600.9 L232.1 598.5 L227.9 590.5 L227.9 590.1 L226.9 588.3 L226.9 587.9 L226.5 587.3 L226.1 585.9 L225.1 583.9 L224.3 581.3 L223.7 580.3 L223.7 579.9 L222.9 577.9 L222.9 577.3 L222.5 576.5 L222.5 575.9 L221.9 574.5 L221.9 573.9 L221.5 573.1 L220.9 570.1 L220.5 569.1 L220.3 567.1 L219.9 566.3 L219.9 565.3 L219.5 564.3 L219.5 563.5 L219.3 563.3 L219.3 561.9 L219.1 561.7 L219.1 560.9 L218.9 560.7 L218.7 557.9 L218.5 557.7 L218.5 556.1 L218.3 555.9 L218.1 551.5 L217.9 551.3 L217.9 525.5 L218.4 524.8 L219.0 524.4 L219.6 524.4 L219.9 524.1 L219.9 317.7 L220.1 317.5 L220.1 315.5 L220.3 315.3 L220.5 311.7 L220.7 311.5 L220.7 310.5 L220.9 310.3 L220.9 308.9 L221.1 308.7 L221.1 307.7 L221.3 307.5 L221.3 306.7 L221.5 306.5 L221.7 304.3 L221.9 304.1 L221.9 303.3 L222.3 302.3 L222.3 301.5 L222.9 299.9 L223.1 298.1 L223.7 296.7 L223.9 295.3 L224.3 294.5 L224.5 293.3 L224.9 292.7 L225.1 291.5 L225.5 290.9 L225.5 290.3 L226.1 289.1 L226.7 286.9 L227.3 285.9 L227.3 285.5 L228.3 283.5 L228.3 283.1 L229.3 281.3 L229.5 280.3 L233.9 271.9 L235.3 269.9 L236.1 268.3 L237.3 266.7 L237.5 266.1 L238.1 265.5 L238.5 264.7 L239.1 264.1 L239.3 263.5 L239.9 262.9 L241.5 260.5 L243.3 258.5 L244.9 256.3 L254.2 246.8 L254.4 246.8 L257.2 244.2 L257.4 244.2 L259.8 242.2 L260.6 241.8 L263.8 239.2 L268.6 236.0 L269.6 235.6 L272.0 234.0 L272.4 234.0 L273.0 233.4 L273.4 233.4 L274.2 232.8 L274.6 232.8 L275.2 232.2 L275.6 232.2 L276.4 231.6 L276.8 231.6 L277.6 231.0 L278.0 231.0 L282.0 229.0 L282.6 229.0 L283.2 228.6 L284.6 228.2 L285.0 227.8 L286.6 227.4 L287.2 227.0 L287.8 227.0 L288.4 226.6 L289.6 226.4 L290.2 226.0 L291.4 225.8 L292.0 225.4 L293.2 225.2 L294.6 224.6 L296.4 224.4 L297.0 224.0 L297.8 224.0 L298.0 223.8 L299.6 223.6 L300.6 223.2 L301.6 223.2 L301.8 223.0 L302.8 223.0 L303.0 222.8 L306.4 222.4 L306.6 222.2 L308.6 222.2 L308.8 222.0 L310.0 222.0 L310.2 221.8 L312.6 221.8 L312.8 221.6 L326.4 221.6 L326.6 221.8 L329.6 221.8 L329.8 222.0 L331.2 222.0 L331.4 222.2 L333.2 222.2 L333.4 222.4 L334.4 222.4 L334.6 222.6 L335.8 222.6 L336.0 222.8 L337.0 222.8 L337.2 223.0 L338.2 223.0 L339.2 223.4 L340.2 223.4 L340.4 223.6 L341.8 223.8 L342.6 224.2 L343.6 224.2 L345.6 225.0 L346.4 225.0 L346.6 225.2 L347.0 225.2 L347.8 225.6 L348.4 225.6 L350.4 226.4 L351.0 226.4 L351.4 226.8 L352.0 226.8 L353.2 227.4 L353.8 227.4 L355.8 228.4 L356.4 228.4 L357.8 229.2 L358.2 229.2 L359.6 230.0 L360.0 230.0 L361.8 231.0 L362.2 231.0 L362.6 231.4 L363.8 231.8 L364.0 232.2 L364.6 232.2 L365.0 232.6 L366.0 233.0 L366.2 233.4 L367.2 233.6 L367.4 234.0 L367.8 234.0 L368.6 234.6 L369.6 235.0 L370.2 235.6 L371.2 236.0 L372.4 237.0 L374.0 237.8 L375.2 238.8 L376.4 239.4 L377.2 240.2 L378.0 240.6 L379.8 242.2 L380.6 242.6 L381.4 243.4 L383.6 245.0 L383.8 245.4 L384.0 245.4 L385.4 246.8 L385.6 246.8 L389.4 250.6 L389.6 250.6 L395.7 257.3 L396.3 258.3 L398.3 260.5 L398.7 261.3 L400.1 262.9 L401.1 264.3 L401.3 264.9 L402.3 266.1 L402.5 266.7 L403.7 268.3 L404.5 269.9 L405.7 271.5 L406.5 273.3 L406.9 273.7 L407.5 275.1 L407.9 275.5 L409.7 279.1 L409.7 279.5 L411.5 283.1 L411.5 283.5 L412.1 284.5 L412.1 284.9 L412.9 286.5 L412.9 286.9 L413.7 288.5 L413.7 288.9 L413.9 289.1 L414.7 291.9 L415.7 294.5 L415.9 296.1 L416.7 298.1 L417.1 300.3 L417.3 300.5 L417.3 301.3 L417.7 302.3 L417.7 303.3 L417.9 303.5 L417.9 304.3 L418.3 305.3 L418.3 306.3 L418.5 306.5 L418.5 307.5 L418.7 307.7 L418.7 308.7 L418.9 308.9 L418.9 310.3 L419.1 310.5 L419.1 311.5 L419.3 311.7 L419.5 315.7 L419.7 315.9 L419.7 318.3 L419.9 318.5 L419.9 323.9 L420.1 324.1 L420.1 524.3 L420.8 524.4 L421.5 524.9 L421.9 525.5 L421.9 526.1 L422.1 526.3 L422.1 545.5 L421.9 545.7 L421.9 551.3 L421.7 551.5 L421.7 553.7 L421.5 553.9 L421.5 556.1 L421.3 556.3 L421.3 557.7 L421.1 557.9 L421.1 559.3 L420.9 559.5 L420.7 562.1 L420.5 562.3 L420.5 563.3 L420.3 563.5 L420.3 564.3 L419.9 565.3 L419.9 566.3 L419.7 566.5 L419.5 568.1 L419.3 568.3 L419.3 569.1 L418.7 570.7 L418.7 571.5 L418.5 571.7 L418.3 573.1 L417.9 573.9 L417.9 574.5 L417.3 575.9 L417.3 576.5 L416.9 577.3 L416.9 577.9 L416.7 578.1 L416.1 580.3 L415.5 581.3 L414.7 584.1 L414.1 585.1 L414.1 585.5 L413.5 586.5 L413.5 586.9 L412.9 587.9 L412.9 588.3 L411.7 590.5 L411.7 590.9 L409.9 594.5 L409.5 594.9 L407.7 598.5 L406.7 599.9 L406.3 600.9 L405.1 602.5 L404.9 603.1 L399.7 610.5 L395.7 615.1 L395.7 615.3 L394.3 616.7 L394.3 616.9 L393.2 617.8 L392.5 618.5 L392.5 618.7 L387.8 623.4 L387.6 623.4 L385.6 625.4 L384.2 626.4 L383.0 627.6 L382.8 627.6 L380.2 629.8 L379.8 629.8 L376.6 632.4 L376.2 632.4 L375.4 633.2 L373.6 634.2 L372.6 635.0 L372.0 635.2 L371.0 636.0 L370.4 636.2 L370.0 636.6 L369.2 636.8 L367.2 638.2 L366.4 638.4 L366.0 638.8 L365.2 639.0 L362.8 640.4 L362.4 640.4 L362.0 640.8 L361.6 640.8 L359.4 642.0 L358.4 642.2 L356.0 643.4 L355.0 643.6 L354.4 644.0 L353.4 644.2 L352.8 644.6 L352.4 644.6 L349.8 645.6 L348.4 645.8 L346.4 646.6 L345.0 646.8 L344.8 647.0 L343.2 647.2 L342.4 647.6 L341.4 647.6 L340.0 648.2 L338.8 648.2 L337.8 648.6 L335.4 648.8 L335.2 649.0 L333.8 649.0 L333.6 649.2 L332.6 649.2 L332.4 649.4 L330.0 649.4 L329.8 649.6 L328.8 649.6 L328.6 649.8 L325.0 649.8 L324.8 650.0 Z"/><path class="ln" d="M321.3 290.7 L323.2 290.4 L323.4 290.2 L324.6 290.0 L325.2 289.6 L325.6 289.6 L326.0 289.2 L326.6 289.2 L328.6 287.8 L330.9 285.5 L332.7 282.5 L332.7 282.1 L333.3 280.7 L333.3 280.1 L333.5 279.9 L333.5 279.1 L333.7 278.9 L333.7 277.3 L333.9 277.1 L333.9 276.7 L333.7 276.5 L333.7 274.7 L333.5 274.5 L333.5 273.9 L333.3 273.7 L333.3 273.1 L333.1 272.9 L332.7 271.3 L330.7 268.1 L328.6 266.0 L327.2 265.0 L326.4 264.8 L326.0 264.4 L323.8 263.6 L323.2 263.6 L322.4 263.2 L319.0 263.0 L318.8 263.2 L317.4 263.2 L315.8 263.8 L315.2 263.8 L313.4 264.8 L313.0 264.8 L311.0 266.2 L308.9 268.3 L307.3 270.9 L307.3 271.3 L306.9 271.9 L306.9 272.3 L306.3 273.7 L306.3 274.7 L306.1 274.9 L306.1 278.9 L306.3 279.1 L306.3 279.9 L306.5 280.1 L306.7 281.7 L307.5 283.3 L309.1 285.7 L311.2 287.8 L312.4 288.6 L313.8 289.2 L314.2 289.6 L314.6 289.6 L316.0 290.2 L316.6 290.2 L317.4 290.6 L318.6 290.6 L318.8 290.8 L321.3 290.7 Z"/><path class="ln2" d="M324.8 650.0 L314.8 650.0 L314.6 649.8 L311.2 649.8 L311.0 649.6 L310.0 649.6 L309.8 649.4 L307.4 649.4 L307.2 649.2 L306.2 649.2 L306.0 649.0 L302.0 648.6 L301.0 648.2 L299.8 648.2 L298.4 647.6 L297.4 647.6 L296.6 647.2 L293.4 646.6 L292.0 646.0 L291.2 646.0 L290.4 645.6 L287.0 644.6 L284.8 643.6 L283.8 643.4 L281.4 642.2 L280.4 642.0 L279.6 641.4 L279.2 641.4 L278.2 640.8 L277.8 640.8 L277.4 640.4 L277.0 640.4 L276.2 639.8 L275.4 639.6 L275.0 639.2 L274.2 639.0 L273.4 638.4 L273.0 638.4 L270.6 636.8 L269.8 636.6 L268.2 635.4 L267.6 635.2 L264.2 633.0 L263.6 632.4 L263.2 632.4 L260.0 629.8 L259.6 629.8 L254.2 625.2 L254.0 625.2 L252.0 623.2 L251.8 623.2 L247.3 618.7 L247.3 618.5 L245.9 617.3 L244.7 615.7 L242.5 613.5 L242.5 613.3 L239.5 609.7 L239.1 608.9 L238.3 608.1 L236.7 605.5 L234.9 603.1 L234.5 602.1 L233.9 601.5 L233.7 600.9 L232.1 598.5 L231.5 597.1 L231.1 596.7 L230.3 594.9 L229.9 594.5 L227.9 590.5 L227.9 590.1 L226.9 588.3 L226.9 587.9 L226.1 586.3 L226.1 585.9 L225.3 584.5 L224.9 582.9 L224.5 582.3 L224.3 581.3 L223.7 580.3 L223.7 579.9 L222.9 577.9 L222.5 575.9 L222.3 575.7 L222.3 575.3 L221.9 574.5 L221.9 573.9 L221.5 573.1 L221.1 570.9 L220.7 569.9 L220.7 569.3 L220.5 569.1 L220.3 567.3 L219.9 566.3 L219.9 565.3 L219.5 564.3 L219.5 563.5 L219.3 563.3 L219.3 561.9 L219.1 561.7 L219.1 560.9 L218.9 560.7 L218.7 557.9 L218.5 557.7 L218.5 556.1 L218.3 555.9 L218.1 551.5 L217.9 551.3 L217.9 525.5 L218.4 524.8 L219.0 524.4 L241.0 524.4 L241.1 537.5 L241.8 539.0 L242.8 540.0 L244.2 540.6 L395.6 540.6 L397.0 540.0 L398.1 538.9 L398.7 537.5 L398.8 524.4 L420.8 524.4 L421.5 524.9 L421.9 525.5 L421.9 526.3 L422.1 526.5 L422.1 545.5 L421.9 545.7 L421.9 551.3 L421.7 551.5 L421.5 556.1 L421.3 556.3 L421.3 557.7 L421.1 557.9 L421.1 559.3 L420.9 559.5 L420.7 562.1 L420.5 562.3 L420.5 563.3 L420.3 563.5 L420.1 565.1 L419.9 565.3 L419.9 566.3 L419.5 567.3 L419.3 569.1 L418.7 570.7 L418.7 571.5 L418.5 571.7 L418.3 573.1 L418.1 573.3 L417.9 574.5 L417.3 575.9 L417.1 577.3 L416.9 577.5 L416.1 580.3 L415.5 581.3 L414.7 584.1 L414.1 585.1 L414.1 585.5 L413.5 586.5 L413.5 586.9 L412.9 587.9 L412.9 588.3 L411.7 590.5 L411.7 590.9 L409.9 594.5 L409.5 594.9 L408.7 596.7 L408.3 597.1 L407.7 598.5 L406.7 599.9 L406.3 600.9 L405.1 602.5 L404.9 603.1 L403.7 604.9 L403.1 605.5 L401.5 608.1 L400.7 608.9 L399.7 610.5 L395.7 615.1 L395.7 615.3 L394.3 616.7 L394.3 616.9 L393.6 617.6 L393.4 617.6 L387.8 623.4 L387.6 623.4 L385.8 625.2 L385.6 625.2 L385.4 625.6 L384.2 626.4 L381.0 629.2 L380.2 629.8 L379.8 629.8 L376.6 632.4 L376.2 632.4 L375.4 633.2 L374.2 634.0 L373.6 634.2 L370.0 636.6 L369.2 636.8 L367.2 638.2 L366.4 638.4 L366.0 638.8 L365.2 639.0 L364.4 639.6 L363.6 639.8 L363.2 640.2 L362.4 640.4 L362.0 640.8 L361.6 640.8 L359.4 642.0 L358.4 642.2 L357.0 643.0 L355.0 643.6 L353.4 644.4 L353.0 644.4 L348.6 646.0 L347.8 646.0 L346.4 646.6 L343.2 647.2 L342.4 647.6 L341.4 647.6 L340.0 648.2 L338.8 648.2 L337.8 648.6 L335.4 648.8 L335.2 649.0 L333.8 649.0 L333.6 649.2 L332.6 649.2 L332.4 649.4 L330.0 649.4 L329.8 649.6 L328.8 649.6 L328.6 649.8 L325.0 649.8 L324.8 650.0 Z"/><path class="ln2" d="M323.2 463.9 L316.8 463.9 L316.4 463.5 L312.0 463.5 L311.6 463.1 L310.4 463.1 L310.2 462.9 L307.8 462.7 L307.6 462.5 L305.8 462.5 L305.4 462.1 L303.8 461.9 L303.6 461.7 L303.0 461.7 L302.8 461.5 L302.2 461.5 L301.2 461.1 L300.4 461.1 L300.2 460.9 L299.2 460.9 L298.8 460.5 L298.4 460.5 L298.2 460.3 L297.6 460.3 L297.4 460.1 L295.8 459.7 L294.4 459.1 L293.8 459.1 L293.0 458.7 L292.4 458.7 L292.0 458.3 L289.2 456.9 L288.8 456.9 L286.2 455.5 L285.8 455.5 L285.2 454.9 L284.2 454.5 L283.8 454.1 L280.0 452.1 L277.6 450.3 L276.8 449.9 L276.2 449.3 L274.8 448.5 L274.2 447.9 L273.4 447.5 L268.1 442.6 L262.1 436.2 L259.7 432.6 L257.7 430.0 L256.5 427.6 L255.5 426.2 L255.1 425.2 L254.7 424.8 L250.9 417.2 L250.9 416.8 L250.3 415.4 L250.3 414.8 L249.3 412.2 L249.3 411.6 L248.7 410.2 L248.7 409.6 L248.5 409.4 L248.1 407.2 L247.9 407.0 L247.9 406.2 L247.7 406.0 L247.7 405.4 L247.3 404.4 L247.3 403.8 L247.1 403.6 L246.9 401.2 L246.7 401.0 L246.7 399.8 L246.5 399.6 L246.5 398.6 L246.3 398.4 L246.3 397.2 L246.1 397.0 L245.9 389.0 L246.1 382.4 L246.3 382.2 L246.5 379.8 L246.7 379.6 L246.7 378.4 L246.9 378.2 L247.1 375.8 L247.3 375.6 L247.7 373.4 L247.9 373.2 L247.9 372.4 L248.3 371.4 L248.7 369.2 L249.3 367.8 L249.3 367.2 L250.3 364.6 L250.3 364.0 L250.5 363.8 L250.9 362.2 L254.7 354.6 L255.1 354.2 L255.5 353.2 L256.5 351.8 L257.7 349.4 L259.7 346.8 L262.1 343.2 L266.3 338.8 L266.4 338.5 L273.4 331.9 L274.2 331.5 L274.8 330.9 L276.2 330.1 L276.8 329.5 L277.6 329.1 L280.0 327.3 L281.0 326.9 L281.4 326.5 L285.2 324.5 L285.8 323.9 L286.2 323.9 L288.8 322.5 L289.2 322.5 L292.0 321.1 L292.4 320.7 L294.4 320.3 L297.6 319.1 L298.2 319.1 L298.4 318.9 L298.8 318.9 L299.2 318.5 L300.2 318.5 L300.4 318.3 L301.2 318.3 L302.2 317.9 L303.6 317.7 L303.8 317.5 L304.6 317.5 L304.8 317.3 L305.4 317.3 L305.8 316.9 L307.6 316.9 L307.8 316.7 L310.2 316.5 L310.4 316.3 L311.6 316.3 L312.0 315.9 L313.2 315.9 L313.4 315.7 L326.4 315.7 L326.6 315.9 L327.8 315.9 L328.2 316.3 L329.4 316.3 L329.6 316.5 L332.0 316.7 L332.2 316.9 L334.0 316.9 L334.4 317.3 L335.0 317.3 L335.2 317.5 L336.0 317.5 L336.2 317.7 L336.8 317.7 L337.0 317.9 L338.4 318.1 L338.6 318.3 L339.4 318.3 L339.6 318.5 L340.6 318.5 L341.0 318.9 L341.4 318.9 L341.6 319.1 L342.2 319.1 L345.4 320.3 L346.6 320.5 L346.8 320.7 L347.4 320.7 L347.8 321.1 L350.6 322.5 L351.0 322.5 L353.6 323.9 L354.0 323.9 L354.6 324.5 L355.6 324.9 L357.4 326.1 L358.4 326.5 L358.8 326.9 L359.8 327.3 L361.6 328.5 L362.2 329.1 L363.0 329.5 L363.6 330.1 L365.0 330.9 L365.6 331.5 L366.4 331.9 L371.6 336.7 L377.7 343.2 L380.1 346.8 L382.1 349.4 L383.3 351.8 L383.7 352.2 L384.7 354.2 L385.1 354.6 L388.9 362.2 L389.1 363.2 L389.5 364.0 L389.5 364.6 L390.5 367.2 L390.5 367.8 L391.1 369.2 L391.3 370.6 L391.5 370.8 L391.7 372.2 L391.9 372.4 L391.9 373.2 L392.3 374.2 L392.5 375.6 L392.7 375.8 L392.9 378.2 L393.1 378.4 L393.1 379.6 L393.3 379.8 L393.5 382.2 L393.7 382.4 L393.7 384.6 L393.9 384.8 L394.1 391.2 L393.9 391.4 L393.7 397.0 L393.5 397.2 L393.5 398.4 L393.3 398.6 L393.3 399.6 L393.1 399.8 L392.9 402.4 L392.7 402.6 L392.7 403.6 L392.5 403.8 L392.5 404.4 L392.3 404.6 L392.3 405.2 L391.9 406.2 L391.9 407.0 L391.7 407.2 L391.1 410.2 L390.5 411.6 L390.5 412.2 L389.5 414.8 L389.5 415.4 L389.3 415.6 L388.9 417.2 L385.1 424.8 L384.7 425.2 L384.3 426.2 L383.3 427.6 L382.1 430.0 L380.1 432.6 L378.3 435.4 L376.1 437.8 L376.1 438.0 L371.0 443.3 L370.8 443.3 L366.4 447.5 L365.6 447.9 L365.0 448.5 L363.6 449.3 L363.0 449.9 L362.2 450.3 L361.6 450.9 L359.8 452.1 L358.8 452.5 L358.4 452.9 L354.6 454.9 L354.0 455.5 L353.6 455.5 L351.0 456.9 L350.6 456.9 L347.8 458.3 L347.4 458.7 L346.8 458.7 L346.6 458.9 L345.4 459.1 L342.2 460.3 L341.6 460.3 L341.4 460.5 L341.0 460.5 L340.6 460.9 L339.6 460.9 L339.4 461.1 L338.6 461.1 L338.4 461.3 L337.8 461.3 L337.6 461.5 L337.0 461.5 L336.0 461.9 L335.2 461.9 L335.0 462.1 L334.4 462.1 L334.0 462.5 L332.2 462.5 L332.0 462.7 L330.8 462.7 L330.6 462.9 L329.6 462.9 L329.4 463.1 L328.2 463.1 L327.8 463.5 L323.4 463.5 L323.2 463.9 Z"/><path class="ln3" d="M292.0 579.6 H348.0"/><path class="ln3" d="M292.0 569.2 H348.0"/><path class="ln3" d="M292.0 558.8 H348.0"/><path class="ln" d="M628.6 650.0 L653.6 650.0 L654.8 649.4 L655.7 648.3 L655.7 647.9 L656.4 647.6 L657.1 646.5 L657.1 222.9 L656.9 222.5 L655.8 221.6 L638.0 221.6 L637.6 221.8 L637.2 222.4 L637.0 222.4 L636.7 221.9 L636.2 221.6 L630.4 221.6 L629.3 222.5 L629.1 223.5 L628.9 223.7 L628.9 524.3 L628.2 524.4 L627.6 524.8 L627.1 525.5 L627.1 555.5 L624.2 555.8 L623.6 556.2 L623.1 556.9 L623.1 559.5 L623.6 560.2 L624.2 560.6 L627.1 560.7 L627.1 567.5 L624.2 567.8 L623.5 568.3 L623.1 568.9 L623.1 571.5 L623.6 572.2 L624.2 572.6 L627.1 572.7 L627.1 579.5 L625.0 579.6 L624.8 579.8 L624.2 579.8 L623.6 580.2 L623.1 580.9 L623.1 583.5 L623.5 584.1 L624.2 584.6 L627.1 584.7 L627.1 648.7 L627.8 649.6 L628.6 650.0 Z"/><path class="ln2" d="M628.6 650.0 L653.6 650.0 L655.0 649.2 L655.5 648.7 L655.5 544.5 L655.1 544.3 L655.0 524.4 L628.2 524.4 L627.3 525.1 L626.9 526.1 L626.9 555.5 L624.2 555.8 L623.3 556.5 L622.9 557.5 L622.9 558.9 L623.3 559.9 L623.8 560.4 L624.2 560.6 L626.9 560.7 L626.9 567.5 L624.2 567.8 L623.3 568.5 L622.9 569.5 L622.9 570.9 L623.3 571.9 L623.8 572.4 L624.2 572.6 L626.9 572.7 L626.9 579.5 L625.0 579.6 L624.8 579.8 L623.8 580.0 L623.3 580.5 L622.9 581.5 L622.9 582.9 L623.3 583.9 L624.2 584.6 L626.9 584.7 L626.9 648.1 L627.1 648.3 L627.1 648.9 L627.4 649.0 L627.8 649.6 L628.6 650.0 Z"/><path class="ln" d="M418.8 114.7 L221.0 114.7 L220.3 115.2 L219.8 116.1 L219.2 116.3 L218.7 116.8 L217.9 117.8 L217.9 143.6 L218.4 144.3 L219.0 144.7 L294.2 144.7 L294.3 147.6 L294.7 148.2 L295.4 148.7 L344.4 148.7 L344.8 148.5 L345.5 147.6 L345.6 144.7 L420.8 144.7 L421.4 144.3 L421.9 143.6 L421.9 142.8 L422.1 142.6 L422.1 118.6 L421.9 118.4 L421.9 117.8 L421.5 117.2 L420.6 116.3 L420.0 116.1 L419.5 115.2 L418.8 114.7 Z"/><path class="hd" d="M218.0 142.6 H422.0"/></g><g class="dims"><g class="dm"><path class="ex" d="M218.0 656.0 V700.0 M422.0 656.0 V700.0"/><path class="dl" d="M218.0 696.0 H422.0"/><path class="ar" d="M218.0 696.0 l7 -3 v6 Z M422.0 696.0 l-7 -3 v6 Z"/><text class="dt" x="320.0" y="689.0" text-anchor="middle">51</text></g><g class="dm"><path class="ex" d="M212.0 650.0 H168.0 M212.0 221.6 H168.0"/><path class="dl" d="M172.0 650.0 V221.6"/><path class="ar" d="M172.0 650.0 l-3 -7 h6 Z M172.0 221.6 l-3 7 h6 Z"/><text class="dt" x="163.0" y="435.8" text-anchor="middle" transform="rotate(-90 163.0 435.8)">107</text></g><g class="dm"><path class="ex" d="M428.0 650.0 H460.0 M428.0 524.4 H460.0"/><path class="dl" d="M456.0 650.0 V524.4"/><path class="ar" d="M456.0 650.0 l-3 -7 h6 Z M456.0 524.4 l-3 7 h6 Z"/><text class="dt" x="465.0" y="587.2" text-anchor="middle" transform="rotate(-90 465.0 587.2)">31.4</text></g><g class="dm"><path class="ex" d="M400.0 650.0 H500.0 M428.0 389.8 H500.0"/><path class="dl" d="M496.0 650.0 V389.8"/><path class="ar" d="M496.0 650.0 l-3 -7 h6 Z M496.0 389.8 l-3 7 h6 Z"/><text class="dt" x="505.0" y="519.9" text-anchor="middle" transform="rotate(-90 505.0 519.9)">65</text></g><g class="dm"><path class="ld" d="M268.0 338.0 L176.0 306.0 H26.0"/><circle class="dot" cx="268.0" cy="338.0" r="2.6"/><text class="lt" x="28.0" y="299.0" text-anchor="start">Ø37 원형 디스플레이</text></g><g class="dm"><path class="ld" d="M329.6 268.0 L456.0 246.0 H606.0"/><circle class="dot" cx="329.6" cy="268.0" r="2.6"/><text class="lt" x="604.0" y="239.0" text-anchor="end">Ø6.9 스트랩 구멍</text></g><g class="dm"><path class="ld" d="M272.0 602.0 L176.0 570.0 H26.0"/><circle class="dot" cx="272.0" cy="602.0" r="2.6"/><text class="lt" x="28.0" y="563.0" text-anchor="start">슬라이드 커버 · 이동 3</text></g><g class="dm"><path class="ex" d="M622.9 656.0 V700.0 M656.9 656.0 V700.0"/><path class="dl" d="M622.9 696.0 H656.9"/><path class="ar" d="M622.9 696.0 l7 -3 v6 Z M656.9 696.0 l-7 -3 v6 Z"/><text class="dt" x="639.9" y="689.0" text-anchor="middle">8.5</text></g><g class="dm"><path class="ex" d="M663.1 650.0 H701.1 M663.1 221.6 H701.1"/><path class="dl" d="M697.1 650.0 V221.6"/><path class="ar" d="M697.1 650.0 l-3 -7 h6 Z M697.1 221.6 l-3 7 h6 Z"/><text class="dt" x="706.1" y="435.8" text-anchor="middle" transform="rotate(-90 706.1 435.8)">107</text></g><g class="dm"><path class="ex" d="M218.0 110.4 V80.4 M422.0 110.4 V80.4"/><path class="dl" d="M218.0 84.4 H422.0"/><path class="ar" d="M218.0 84.4 l7 -3 v6 Z M422.0 84.4 l-7 -3 v6 Z"/><text class="dt" x="320.0" y="77.4" text-anchor="middle">51</text></g><g class="dm"><path class="ex" d="M428.0 114.6 H460.0 M428.0 148.6 H460.0"/><path class="dl" d="M456.0 114.6 V148.6"/><path class="ar" d="M456.0 114.6 l-3 -7 h6 Z M456.0 148.6 l-3 7 h6 Z"/><text class="dt" x="465.0" y="131.6" text-anchor="middle" transform="rotate(-90 465.0 131.6)">8.5</text></g></g><text class="vn" x="320.0" y="746.0" text-anchor="middle">FRONT<tspan class="vs"> 정면도</tspan></text><text class="vn" x="640.0" y="746.0" text-anchor="middle">RIGHT<tspan class="vs"> 우측면도</tspan></text><text class="vn" x="98.0" y="137.6" text-anchor="middle">TOP<tspan class="vs"> 평면도</tspan></text><g class="tb"><rect x="830" y="520" width="370" height="200" rx="14"/><path d="M830 572 H1200 M830 640 H1200 M1015 640 V720"/><text class="t1" x="852" y="556">AI VINTAGE DISCOVERY TAG</text><text class="t2" x="852" y="600">TEAM 06 · PRODUCT 04</text><text class="t3" x="852" y="624">3면도 (3rd angle) · 단위 mm</text><text class="t3" x="852" y="668">SCALE</text><text class="t4" x="852" y="698">NTS</text><text class="t3" x="1037" y="668">MATERIAL</text><text class="t4" x="1037" y="698">PC · PC/ABS</text></g><g class="nt"><text x="830" y="96">NOTES</text><text class="n" x="830" y="126">1. 본체 : PC, 웜 화이트 무광 + 클리어 코트</text><text class="n" x="830" y="152">2. 커버 : PC/ABS, 그린 그레이 · 그립 홈 3줄</text><text class="n" x="830" y="178">3. 커버는 레일을 따라 아래로 3 mm 이동 (토글)</text><text class="n" x="830" y="204">4. 디스플레이 : Ø37 원형 · 강화유리 커버</text><text class="n" x="830" y="230">5. 스트랩 : 실리콘 납작 스트랩 · 구멍 Ø6.9</text><text class="n" x="830" y="256">6. 별도 표기 없는 모서리 R 0.5</text></g></svg></div>
+    <div class="spec reveal">
+      <dl><dt>Dimensions</dt><dd>
+        <span class="sp-main">51 × 107 × 8.5 mm</span>
+        <span class="sp-row"><b>원형 디스플레이</b>Ø 37 mm</span>
+        <span class="sp-row"><b>토글 이동 거리</b>3 mm (전면 2줄 레일)</span>
+        <span class="sp-row"><b>스트랩 구멍</b>Ø 6.9 mm</span>
+        <span class="sp-row"><b>형태</b>세로형 알약형 두 겹 구조</span>
+      </dd></dl>
+      <dl><dt>Material</dt><dd>
+        <span class="sp-row"><b>본체</b>PC (폴리카보네이트) · 무광 마감</span>
+        <span class="sp-row"><b>토글 커버</b>PC/ABS · 소프트 터치 코팅</span>
+        <span class="sp-row"><b>디스플레이</b>원형 디스플레이 + 강화유리 커버</span>
+        <span class="sp-row"><b>스트랩</b>신축성 실리콘 납작 스트랩</span>
+      </dd></dl>
+      <dl><dt>Color / CMF</dt><dd>
+        <span class="sp-chips"><i style="background:#E6E3DE"></i>Warm White<i style="background:#495651"></i>Green Grey<i style="background:#828482"></i>Strap Grey</span>
+        <span class="sp-row"><b>본체</b>웜 화이트 · 무광 + 클리어 코트</span>
+        <span class="sp-row"><b>토글</b>그린 그레이 · 그립 홈 3줄</span>
+        <span class="sp-row"><b>빛</b>인식 중 레드 · 가격 표시 웜 오렌지</span>
+      </dd></dl>
+      <dl><dt>Technology</dt><dd>
+        <span class="sp-row"><b>AI 연동</b>시장 MCU AI와 무선 통신으로 물품 인식 · 가치 분석</span>
+        <span class="sp-row"><b>토글 감지</b>토글을 내리면 인식 요청, 닫으면 상세 정보, 내렸다 닫으면 초기화</span>
+        <span class="sp-row"><b>라이트</b>인식하는 동안에만 켜지는 레드 LED</span>
+        <span class="sp-row"><b>표시 정보</b>예상 가격 / 제품명 · 추정 연도 · 가치 점 5개</span>
+      </dd></dl>
+    </div>
+    <div class="buy reveal">
+      <div><p class="eyebrow">Product<span data-pno-sp></span></p><h3 class="h3" data-pname>제품명</h3></div>
+      <button class="btn" id="addCart">ADD TO CART <span class="arrow">+</span></button>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 09 MORE FROM TEAM 06 ================= -->
+<section class="block more" id="more">
+  <div class="container">
+    <div class="s-head reveal">
+      <span class="no">09</span>
+      <h2 class="h2">More from Team 06</h2>
+      <p class="desc">같은 조의 다른 제품 보기</p>
+    </div>
+    <div class="grid" id="moreGrid" data-stagger></div>
+  </div>
+</section>
+</main>
+
+<nav aria-label="섹션 바로가기"><ol class="side-index" id="sideIndex"></ol></nav>
+<button class="top-btn" id="topBtn" aria-label="맨 위로 이동"><svg class="icon" viewBox="0 0 24 24"><path d="M12 19V5M6 11l6-6 6 6"/></svg>TOP</button>
+
+<footer class="footer">
+  <div class="container">
+    <a href="../index.html#products" class="to-top back-link"><span class="arrow">←</span> TEAM 06 · 2030 동묘시장으로 돌아가기</a>
+    <button class="to-top" id="toTop">BACK TO TOP <span class="arrow">↑</span></button>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite">
+  <svg class="check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>Added to cart</span>
+</div>
+
+<script>
+/* =========================================================
+   어떤 제품 페이지인지 표시 — 맨 위 <html data-product="번호"> 를 읽어요
+   (PRODUCT01~04 폴더마다 번호가 정해져 있음)
+   제품명은 아래 NAMES에서 바꾸면 돼요
+   ========================================================= */
+const NAMES={1:'스마트 AI 스크린 거울',2:'TALKTIDE (톡타이드)',3:'DONGMYO MARKET 2031',4:'AI 빈티지 디스커버리 태그'};
+// 08 다른 제품 카드 이미지 (contain: 제품 전체가 보이게)
+const THUMBS={1:"#EDEAE6 url('../PRODUCT01/assets/images/product-detail-01.webp') 48% 45%/cover no-repeat",2:"#E5D6CE url('../PRODUCT02/assets/images/product-rendering-main.webp') center/contain no-repeat",3:"#E6DDD5 url('../PRODUCT03/assets/images/product-thumbnail.webp') center/cover no-repeat",4:"#D2D2D4 url('assets/images/product-rendering-main.webp') center/contain no-repeat"};
+function readProduct(){
+  const n=+document.documentElement.dataset.product;
+  return NAMES[n]?n:0;
+}
+function applyProduct(){
+  const n=readProduct(); if(!n)return;
+  document.querySelectorAll('[data-plogo]').forEach(el=>el.textContent=`PRODUCT ${n}`);
+  document.querySelectorAll('[data-pno-eyebrow]').forEach(el=>el.textContent=`Product ${n} · `);
+  document.querySelectorAll('[data-pno-sp]').forEach(el=>el.textContent=` ${n}`);
+  document.querySelectorAll('[data-pname]').forEach(el=>el.textContent=NAMES[n]);
+  document.title=`PRODUCT ${n} · ${NAMES[n]}`;
+}
+applyProduct();
+
+/* ---------- 08 다른 제품 보기 (현재 제품은 표시만) ---------- */
+(()=>{
+  const cur=readProduct(), g=document.getElementById('moreGrid');
+  for(let n=1;n<=4;n++){
+    // PRODUCT 1·2·3·4 개인 페이지 연결 (나머지는 '준비 중' 표시만)
+    const LINKED=[1,2,3,4], isCur=n===cur, on=!isCur&&LINKED.includes(n), tag=on?'a':'div', href=on?` href="../PRODUCT0${n}/index.html"`:'';
+    g.insertAdjacentHTML('beforeend',`
+      <${tag} class="card c3 reveal${isCur?' current':''}${!isCur&&!on?' soon':''}"${href}>
+        <div class="thumb"><div class="ph r3-2${THUMBS[n]?' has-img':''}" data-label="PRODUCT ${n}"${THUMBS[n]?` style="background:${THUMBS[n]}"`:''}></div></div>
+        <div class="info">
+          <p class="eyebrow">Product ${n}</p>
+          <h3 class="h3">${NAMES[n]}</h3>
+          ${isCur?'<span class="badge">지금 보는 제품</span>':on?'<span class="go">이 제품 보기 <span class="arrow">→</span></span>':'<span class="badge">페이지 준비 중</span>'}
+        </div>
+      </${tag}>`);
+  }
+})();
+
+/* ---------- 스크롤 등장 (순서대로 살짝씩 늦게) ---------- */
+document.querySelectorAll('[data-stagger]').forEach(g=>{
+  [...g.querySelectorAll(':scope > .reveal')].forEach((el,i)=>el.style.transitionDelay=(i*0.1)+'s');
+});
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.15,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* ---------- 메뉴 클릭: 해당 영역이 한 화면에 들어오도록 스크롤 ---------- */
+// 메뉴 → 보여줄 영역 (FUNCTION은 핵심 기능 + 인터랙션 플로우, DESIGN은 디자인 + 사양)
+const TARGETS={concept:['concept'],function:['function','flow'],scenario:['scenario'],design:['design','spec']};
+const headerEl=document.getElementById('header');
+const absTop=el=>el.getBoundingClientRect().top+scrollY;
+function areaOf(key){
+  const ids=TARGETS[key]||[key];
+  const first=document.querySelector('#'+ids[0]+' .container'), last=document.querySelector('#'+ids[ids.length-1]+' .container');
+  return {top:absTop(first), bottom:absTop(last)+last.offsetHeight};
+}
+function targetY(key){
+  let {top,bottom}=areaOf(key);
+  // 함께 보여줄 영역이 화면보다 길면 첫 섹션만 기준으로
+  if(bottom-top+48>innerHeight){const f=document.querySelector('#'+TARGETS[key][0]+' .container');bottom=top+f.offsetHeight;}
+  const h=bottom-top;
+  const goingDown=top>scrollY+headerEl.offsetHeight;
+  const hdr=goingDown?0:headerEl.offsetHeight; // 아래로 내려가면 헤더가 숨겨짐
+  const avail=innerHeight-hdr;
+  return h+48>=avail ? top-hdr-24 : top-hdr-(avail-h)/2;
+}
+document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{
+  window.__navJump=Date.now();
+  const key=a.getAttribute('href').slice(1);
+  if(key==='top'){e.preventDefault();scrollTo({top:0,behavior:'smooth'});return;}
+  if(!TARGETS[key])return;
+  e.preventDefault();
+  TARGETS[key].forEach(id=>document.querySelectorAll('#'+id+' .reveal').forEach(el=>el.classList.add('in')));
+  setTimeout(()=>scrollTo({top:Math.max(0,targetY(key)),behavior:'smooth'}),a.closest('.m-menu')?350:0);
+}));
+
+/* ---------- 현재 보고 있는 섹션을 메뉴에 표시 ---------- */
+const navLinks=[...document.querySelectorAll('#nav a')];
+const owner={concept:'concept',function:'function',flow:'function',scenario:'scenario',try:'scenario',design:'design',spec:'design',more:'design'};
+const so=new IntersectionObserver(es=>es.forEach(e=>{
+  if(e.isIntersecting){const k=owner[e.target.id];navLinks.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+k));}
+}),{rootMargin:'-45% 0px -50% 0px'});
+Object.keys(owner).forEach(id=>so.observe(document.getElementById(id)));
+addEventListener('scroll',()=>{if(scrollY<200)navLinks.forEach(a=>a.classList.remove('active'));},{passive:true});
+
+/* ---------- 헤더: 아래로 스크롤하면 숨김, 위로 올리면 표시 ---------- */
+let lastY=0;
+addEventListener('scroll',()=>{const y=scrollY;headerEl.classList.toggle('hide',y>lastY&&y>160);lastY=y;},{passive:true});
+
+/* ---------- 모바일 메뉴 ---------- */
+const menu=document.getElementById('mMenu');
+menu.querySelectorAll('li').forEach((li,i)=>li.style.transitionDelay=(0.1+i*0.05)+'s');
+const closeM=()=>{menu.classList.remove('open');menu.setAttribute('aria-hidden','true')};
+document.getElementById('openMenu').onclick=()=>{menu.classList.add('open');menu.setAttribute('aria-hidden','false')};
+document.getElementById('closeMenu').onclick=closeM;
+menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeM));
+
+/* ---------- Button Interaction: Added to cart ---------- */
+let cart=0,toastT=0;
+const addBtn=document.getElementById('addCart'),countEl=document.getElementById('cartCount'),toast=document.getElementById('toast');
+addBtn.addEventListener('click',()=>{
+  cart++;
+  countEl.textContent=cart;countEl.classList.add('show');
+  countEl.classList.remove('bump');void countEl.offsetWidth;countEl.classList.add('bump');
+  addBtn.classList.add('added');addBtn.firstChild.textContent='ADDED TO CART ';addBtn.querySelector('.arrow').textContent='✓';
+  toast.classList.add('show');
+  clearTimeout(toastT);
+  toastT=setTimeout(()=>{
+    toast.classList.remove('show');
+    addBtn.classList.remove('added');addBtn.firstChild.textContent='ADD TO CART ';addBtn.querySelector('.arrow').textContent='+';
+  },1800);
+});
+
+
+/* ---------- 옆 섹션 번호: 지금 보고 있는 섹션 표시, 누르면 이동 ---------- */
+const SECTIONS=[['concept','02','Persona & Problem'],['function','03','Key Features'],['flow','04','Interaction Flow'],
+  ['scenario','05','Use Scenario'],['try','06','Try It Yourself'],['design','07','Product Design'],['spec','08','Specifications'],['more','09','More Products']];
+const side=document.getElementById('sideIndex');
+side.innerHTML=SECTIONS.map(([id,no,lab])=>`<li><a href="#${id}" data-side="${id}"><span class="lab">${lab}</span>${no}<span class="ln"></span></a></li>`).join('');
+const sideLinks=[...side.querySelectorAll('a')];
+side.addEventListener('click',e=>{
+  const a=e.target.closest('a'); if(!a)return; e.preventDefault(); window.__navJump=Date.now();
+  const el=document.querySelector('#'+a.dataset.side+' .container');
+  el.querySelectorAll('.reveal').forEach(r=>r.classList.add('in'));
+  const t=el.getBoundingClientRect().top+scrollY;
+  scrollTo({top:Math.max(0,t-(t>scrollY?24:headerEl.offsetHeight+24)),behavior:'smooth'});
+});
+const sio=new IntersectionObserver(es=>es.forEach(e=>{
+  if(e.isIntersecting)sideLinks.forEach(a=>a.classList.toggle('on',a.dataset.side===e.target.id));
+}),{rootMargin:'-45% 0px -50% 0px'});
+SECTIONS.forEach(([id])=>sio.observe(document.getElementById(id)));
+
+/* ---------- 맨 위로 버튼 + 옆 섹션 번호: 어느 정도 스크롤하면 나타남 ---------- */
+const topBtn=document.getElementById('topBtn');
+const onScrollUI=()=>{const on=scrollY>innerHeight*0.8;topBtn.classList.toggle('show',on);side.classList.toggle('show',scrollY>innerHeight*0.5);};
+addEventListener('scroll',onScrollUI,{passive:true});onScrollUI();
+topBtn.addEventListener('click',()=>scrollTo({top:0,behavior:'smooth'}));
+
+/* ---------- BACK TO TOP ---------- */
+document.getElementById('toTop').onclick=()=>scrollTo({top:0,behavior:'smooth'});
+</script>
+
+<div class="lb" id="lb" aria-hidden="true"><img alt=""><button type="button">CLOSE ✕</button></div>
+<script>
+(()=>{const lb=document.getElementById('lb'),im=lb.querySelector('img');
+const close=()=>{lb.classList.remove('on');lb.setAttribute('aria-hidden','true')};
+document.querySelectorAll('.ph[data-full]').forEach(ph=>{
+  const card=ph.closest('.card');(card||ph).style.cursor='zoom-in';
+  (card?card.querySelector('.thumb'):ph).addEventListener('click',()=>{im.src=ph.dataset.full;im.alt=(card&&card.querySelector('.h3')?card.querySelector('.h3').textContent:'');lb.classList.add('on');lb.setAttribute('aria-hidden','false')});
+});
+lb.addEventListener('click',close);addEventListener('keydown',e=>{if(e.key==='Escape')close()});})();
+</script>
+<script>
+/* ===== PRODUCT 3D VIEWER (오프라인 · 외부 라이브러리 없음) =====
+   사용: <div class="v3d" data-model="assets/models/tag-model.js"> ... </div>
+   - 드래그: 돌려 보기 / 휠: 확대·축소 / '처음 시점' 버튼
+   - 모델을 못 불러오면 기존 렌더 이미지가 그대로 남음 */
+(function(){
+const box=document.querySelector('.v3d'); if(!box) return;
+const cv=box.querySelector('canvas'), resetBtn=box.querySelector('.v3d-reset');
+let gl=null, M=null, started=false;
+
+/* ---------- 시점 ---------- */
+const HOME={yaw:0.32,pitch:0.10,dist:1};          // 첨부 렌더와 비슷한 정면-우측 시점
+const LEAN=-0.07;                                  // 뒤로 살짝 기대 세움 (rad)
+const cam={yaw:HOME.yaw,pitch:HOME.pitch,dist:HOME.dist};
+const tgt={...cam};box._v={cam,tgt};
+let auto=true, lastT=0, spin=1, idle=null;
+const IDLE_MS=1000, SPIN=0.28;
+
+/* ---------- 행렬 ---------- */
+function persp(f,a,n,fa){const t=1/Math.tan(f/2);return[t/a,0,0,0,0,t,0,0,0,0,(fa+n)/(n-fa),-1,0,0,2*fa*n/(n-fa),0]}
+function mul(a,b){const o=new Array(16);for(let i=0;i<4;i++)for(let j=0;j<4;j++){let s=0;for(let k=0;k<4;k++)s+=a[k*4+j]*b[i*4+k];o[i*4+j]=s}return o}
+function look(e,c,u){let z=[e[0]-c[0],e[1]-c[1],e[2]-c[2]];let l=Math.hypot(...z);z=z.map(v=>v/l);
+  let x=[u[1]*z[2]-u[2]*z[1],u[2]*z[0]-u[0]*z[2],u[0]*z[1]-u[1]*z[0]];l=Math.hypot(...x);x=x.map(v=>v/l);
+  const y=[z[1]*x[2]-z[2]*x[1],z[2]*x[0]-z[0]*x[2],z[0]*x[1]-z[1]*x[0]];
+  return[x[0],y[0],z[0],0,x[1],y[1],z[1],0,x[2],y[2],z[2],0,-(x[0]*e[0]+x[1]*e[1]+x[2]*e[2]),-(y[0]*e[0]+y[1]*e[1]+y[2]*e[2]),-(z[0]*e[0]+z[1]*e[1]+z[2]*e[2]),1]}
+function rotX(a){const c=Math.cos(a),s=Math.sin(a);return[1,0,0,0,0,c,s,0,0,-s,c,0,0,0,0,1]}
+function rotY(a){const c=Math.cos(a),s=Math.sin(a);return[c,0,-s,0,0,1,0,0,s,0,c,0,0,0,0,1]}
+function scl(x,y,z){return[x,0,0,0,0,y,0,0,0,0,z,0,0,0,0,1]}
+
+/* ---------- 셰이더 ---------- */
+const VS=`attribute vec3 p;attribute vec3 n;uniform mat4 VP,Mo;uniform float S,mir;varying vec3 vn,vw;
+void main(){vec4 w=Mo*vec4(p*S,1.);vw=w.xyz;vn=normalize(mat3(Mo)*(n/127.));if(mir>.5){w.y=-w.y;vn.y=-vn.y;}gl_Position=VP*w;}`;
+const FS=`precision highp float;varying vec3 vn,vw;uniform vec3 col,emi,eye;uniform float rough,coat,mir,H;
+vec3 tone(vec3 c){c=c*.95;c=(c*(2.51*c+.03))/(c*(2.43*c+.59)+.14);return pow(clamp(c,0.,1.),vec3(1./2.2));}
+void main(){vec3 N=normalize(vn);vec3 V=normalize(eye-vw);if(dot(N,V)<0.)N=-N;
+ vec3 L1=normalize(vec3(-.55,.75,.65)),L2=normalize(vec3(.8,.25,.35)),L3=normalize(vec3(.1,.5,-1.));
+ float hemi=.5+.5*N.y;vec3 amb=mix(vec3(.26,.26,.27),vec3(.58,.58,.59),hemi);
+ vec3 c=col*(amb+vec3(1.,.97,.93)*1.2*max(dot(N,L1),0.)+vec3(.55,.58,.62)*.55*max(dot(N,L2),0.)+.45*max(dot(N,L3),0.));
+ float sh=2./(rough*rough*rough+.002);
+ float sp=pow(max(dot(N,normalize(L1+V)),0.),sh)*(1.-rough)*.6+pow(max(dot(N,normalize(L2+V)),0.),sh)*(1.-rough)*.25;
+ float fr=pow(1.-max(dot(N,V),0.),5.);
+ c+=vec3(sp)+fr*.10;
+ if(coat>.5){c+=vec3(pow(max(dot(N,normalize(L1+V)),0.),900.)*2.5+pow(max(dot(N,normalize(L2+V)),0.),600.)*.8)+fr*.35;}
+ c+=emi;
+ vec3 o=tone(c);float a=1.;
+ if(mir>.5){a=.07*(1.-smoothstep(0.,H*.22,vw.y));}
+ gl_FragColor=vec4(o*a,a);}`;
+const FVS=`attribute vec2 p;uniform mat4 VP;uniform float R;varying vec2 q;void main(){q=p;gl_Position=VP*vec4(p.x*R,0.,p.y*R,1.);}`;
+const FFS=`precision highp float;varying vec2 q;uniform vec2 sh;uniform float yaw;
+void main(){float r=length(q);float fade=1.-smoothstep(.55,1.,r);
+ vec2 s=vec2(cos(yaw)*q.x-sin(yaw)*q.y,sin(yaw)*q.x+cos(yaw)*q.y);
+ float d=length((s-vec2(0.,-sh.y))/vec2(sh.x,sh.x*.5));float blob=exp(-d*d*3.)*.20;
+ float con=exp(-pow(length(s/vec2(sh.x*.42,sh.x*.16)),2.)*3.)*.32;
+ float a=clamp(blob+con,0.,.6)*fade;gl_FragColor=vec4(vec3(0.)*a,a);}`;
+
+function prog(v,f){const p=gl.createProgram();for(const[t,s]of[[gl.VERTEX_SHADER,v],[gl.FRAGMENT_SHADER,f]]){const h=gl.createShader(t);gl.shaderSource(h,s);gl.compileShader(h);
+  if(!gl.getShaderParameter(h,gl.COMPILE_STATUS))throw gl.getShaderInfoLog(h);gl.attachShader(p,h)}gl.linkProgram(p);if(!gl.getProgramParameter(p,gl.LINK_STATUS))throw gl.getProgramInfoLog(p);return p}
+
+let P,F,parts=[],floorBuf,u={},fu={},H=100,R=60,HT=100;
+
+async function load(){
+  const D=window.TAG_MODEL; if(!D||!('DecompressionStream' in window)) throw 'unsupported';
+  const raw=Uint8Array.from(atob(D.gz),c=>c.charCodeAt(0));
+  const buf=await new Response(new Blob([raw]).stream().pipeThrough(new DecompressionStream('gzip'))).arrayBuffer();
+  gl=cv.getContext('webgl',{antialias:true,alpha:true,premultipliedAlpha:true});if(!gl)throw 'nogl';
+  const uint=gl.getExtension('OES_element_index_uint');
+  P=prog(VS,FS);F=prog(FVS,FFS);
+  for(const k of['VP','Mo','S','mir','col','emi','eye','rough','coat','H'])u[k]=gl.getUniformLocation(P,k);
+  for(const k of['VP','R','sh','yaw'])fu[k]=gl.getUniformLocation(F,k);
+  H=D.bmax[1];HT=D.ytop||H;R=Math.max(D.bmax[0],D.bmax[2],H)*1.6;
+  for(const q of D.parts){
+    if(q.big&&!uint)continue;
+    const mk=(t,a)=>{const b=gl.createBuffer();gl.bindBuffer(t,b);gl.bufferData(t,a,gl.STATIC_DRAW);return b};
+    parts.push({p:mk(gl.ARRAY_BUFFER,new Int16Array(buf,q.pos[0],q.pos[1]/2)),n:mk(gl.ARRAY_BUFFER,new Int8Array(buf,q.nrm[0],q.nrm[1])),
+      i:mk(gl.ELEMENT_ARRAY_BUFFER,q.big?new Uint32Array(buf,q.idx[0],q.idx[1]/4):new Uint16Array(buf,q.idx[0],q.idx[1]/2)),
+      cnt:q.big?q.idx[1]/4:q.idx[1]/2,big:q.big,col:q.color.map(v=>v*1.0),emi:q.emissive.map(v=>v*0.2),rough:q.rough,coat:q.coat?1:0,glow:q.emissive.some(v=>v>0)});
+  }
+  parts.sort((a,b)=>a.glow-b.glow);
+  floorBuf=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,floorBuf);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,1,1]),gl.STATIC_DRAW);
+  M=D;
+}
+
+function frame(t){
+  const dt=Math.min(.05,(t-(lastT||t))/1000);lastT=t;
+  spin+=((auto?1:0)-spin)*Math.min(1,dt*1.5);
+  if(spin>0.001){tgt.yaw+=dt*SPIN*spin;}
+  const k=1-Math.pow(.0009,dt);
+  cam.yaw+=(tgt.yaw-cam.yaw)*k;cam.pitch+=(tgt.pitch-cam.pitch)*k;cam.dist+=(tgt.dist-cam.dist)*k;
+  const dpr=Math.min(2,devicePixelRatio||1),w=cv.clientWidth,h=cv.clientHeight;
+  if(cv.width!==Math.round(w*dpr)||cv.height!==Math.round(h*dpr)){cv.width=Math.round(w*dpr);cv.height=Math.round(h*dpr)}
+  gl.viewport(0,0,cv.width,cv.height);gl.clearColor(0,0,0,0);gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);
+  const fov=0.42,asp=w/h, fit=(HT*0.60)/Math.tan(fov/2)/Math.min(1,asp*0.9);
+  const d=fit*cam.dist, cy=HT*0.46;
+  const eye=[Math.sin(cam.yaw)*Math.cos(cam.pitch)*d,cy+Math.sin(cam.pitch)*d,Math.cos(cam.yaw)*Math.cos(cam.pitch)*d];
+  const VP=mul(persp(fov,asp,d*0.05,d*6),look(eye,[0,cy,0],[0,1,0]));
+  const Mo=rotX(LEAN);
+  gl.enable(gl.BLEND);gl.blendFunc(gl.ONE,gl.ONE_MINUS_SRC_ALPHA);
+  gl.useProgram(P);gl.uniformMatrix4fv(u.VP,false,VP);gl.uniformMatrix4fv(u.Mo,false,Mo);gl.uniform1f(u.S,M.scale);gl.uniform3fv(u.eye,eye);gl.uniform1f(u.H,H);
+  const pa=gl.getAttribLocation(P,'p'),na=gl.getAttribLocation(P,'n');gl.enableVertexAttribArray(pa);gl.enableVertexAttribArray(na);
+  const draw=mir=>{gl.uniform1f(u.mir,mir);for(const q of parts){
+    gl.bindBuffer(gl.ARRAY_BUFFER,q.p);gl.vertexAttribPointer(pa,3,gl.SHORT,false,0,0);
+    gl.bindBuffer(gl.ARRAY_BUFFER,q.n);gl.vertexAttribPointer(na,3,gl.BYTE,false,0,0);
+    gl.uniform3fv(u.col,q.col);gl.uniform3fv(u.emi,q.emi);gl.uniform1f(u.rough,q.rough);gl.uniform1f(u.coat,q.coat);
+    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,q.i);gl.drawElements(gl.TRIANGLES,q.cnt,q.big?gl.UNSIGNED_INT:gl.UNSIGNED_SHORT,0)}};
+  // 1) 바닥 반사 (위에서 볼 때만)
+  if(cam.pitch>0.02){gl.enable(gl.DEPTH_TEST);draw(1);gl.clear(gl.DEPTH_BUFFER_BIT)}
+  // 2) 바닥 그림자
+  gl.disable(gl.DEPTH_TEST);gl.useProgram(F);gl.uniformMatrix4fv(fu.VP,false,VP);gl.uniform1f(fu.R,R);
+  gl.uniform2f(fu.sh,(M.bmax[0]*1.15)/R,(H*0.05)/R);gl.uniform1f(fu.yaw,0);
+  const fa=gl.getAttribLocation(F,'p');gl.bindBuffer(gl.ARRAY_BUFFER,floorBuf);gl.enableVertexAttribArray(fa);gl.vertexAttribPointer(fa,2,gl.FLOAT,false,0,0);
+  gl.drawArrays(gl.TRIANGLE_STRIP,0,4);gl.disableVertexAttribArray(fa);
+  // 3) 제품
+  gl.useProgram(P);gl.enable(gl.DEPTH_TEST);gl.enableVertexAttribArray(pa);gl.enableVertexAttribArray(na);draw(0);
+  requestAnimationFrame(frame);
+}
+
+/* ---------- 조작 ---------- */
+let drag=null;
+const stopAuto=()=>{auto=false;spin=0;tgt.yaw=cam.yaw+(tgt.yaw-cam.yaw);box.classList.add('touched');clearTimeout(idle)};
+const resumeLater=()=>{clearTimeout(idle);idle=setTimeout(()=>{if(!drag)auto=true},IDLE_MS)};
+cv.addEventListener('pointerdown',e=>{if(!M)return;drag={x:e.clientX,y:e.clientY,id:e.pointerId};cv.setPointerCapture(e.pointerId);stopAuto();box.classList.add('grab')});
+cv.addEventListener('pointermove',e=>{if(!drag||e.pointerId!==drag.id)return;const dx=e.clientX-drag.x,dy=e.clientY-drag.y;drag.x=e.clientX;drag.y=e.clientY;
+  tgt.yaw-=dx*0.008;if(e.pointerType!=='touch')tgt.pitch=Math.max(-0.05,Math.min(0.9,tgt.pitch+dy*0.005))});
+const end=e=>{if(!drag)return;drag=null;box.classList.remove('grab');resumeLater()};cv.addEventListener('pointerup',end);cv.addEventListener('pointercancel',end);
+cv.addEventListener('wheel',e=>{if(!M)return;const n=Math.max(0.55,Math.min(1.6,tgt.dist*Math.exp(e.deltaY*0.0012)));
+  if(n===tgt.dist)return; e.preventDefault();tgt.dist=n;stopAuto();resumeLater()},{passive:false});
+resetBtn&&resetBtn.addEventListener('click',()=>{const turns=Math.round((cam.yaw-HOME.yaw)/(2*Math.PI));tgt.yaw=HOME.yaw+turns*2*Math.PI;tgt.pitch=HOME.pitch;tgt.dist=HOME.dist;clearTimeout(idle);auto=true;box.classList.remove('touched')});
+
+/* ---------- 화면 가까이 오면 불러오기 ---------- */
+function start(){if(started)return;started=true;box.classList.add('loading');
+  if(window.TAG_MODEL){load().then(()=>{box.classList.remove('loading');box.classList.add('ready');requestAnimationFrame(frame)}).catch(()=>box.classList.remove('loading'));return;}
+  const s=document.createElement('script');s.src=box.dataset.model;
+  s.onload=()=>load().then(()=>{box.classList.remove('loading');box.classList.add('ready');requestAnimationFrame(frame)}).catch(err=>{console.warn('3D viewer:',err);box.classList.remove('loading')});
+  s.onerror=()=>box.classList.remove('loading');document.body.appendChild(s)}
+if('IntersectionObserver' in window){const io=new IntersectionObserver(es=>{if(es.some(e=>e.isIntersecting)){io.disconnect();start()}},{rootMargin:'600px'});io.observe(box)}else start();
+})();
+
+</script>
+<script src="assets/js/hero-tag.js"></script>
+<script src="assets/js/design-tag.js"></script>
+<script>
+/* 상세 이미지 두 장씩 · 도면 선 그리기 : 화면에 들어오면 */
+(function(){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}})},{threshold:.25});
+document.querySelectorAll('.dtl,.dwg').forEach(function(el){io.observe(el)});
+})();
+</script>
+<script>
+/* 시나리오 영상 : 화면에 절반 이상 보이면 재생, 벗어나면 멈춤 */
+(function(){var w=document.getElementById('sv'); if(!w) return; var v=w.querySelector('video'), on=false, away=true;
+/* 영상이 화면에 (거의) 다 보이면 재생 · 다른 파트로 완전히 벗어났다가 돌아오면 처음부터 */
+new IntersectionObserver(function(es){var r=es[0].intersectionRatio;
+  if(r>=.9){ if(!on){ if(away){try{v.currentTime=0}catch(e){} away=false} v.play().catch(function(){}); on=true } }
+  else { if(on){v.pause(); on=false} if(r===0) away=true }
+},{threshold:[0,.9,1]}).observe(w);})();
+</script>
+<script src="assets/js/feature-tag.js"></script>
+<script>
+/* ===== 사용 방법 : 한 단계씩 크게 · 스크롤을 넉넉히 내리면 다음 단계 (지금 단계만 애니메이션) ===== */
+(function(){
+  var ht=document.getElementById('howto'); if(!ht) return;
+  var steps=[].slice.call(ht.querySelectorAll('.ht-step')), bars=[].slice.call(ht.querySelectorAll('.ht-bar i')), n=steps.length, cur=0;
+  function tick(){
+    var vh=innerHeight, r=ht.getBoundingClientRect(), p=Math.max(0,Math.min(0.9999,-r.top/(r.height-vh)));
+    var f=p*n, i=Math.floor(f), k=f-i;
+    if(i!==cur){ steps[cur].classList.remove('on'); steps[i].classList.add('on'); cur=i; }
+    bars.forEach(function(b,j){ b.style.setProperty('--f', j<i?1:(j===i?k:0)); });
+  }
+  addEventListener('scroll',tick,{passive:true}); addEventListener('resize',tick); tick();
+})();
+</script>
+
+<script>
+/* ===== 05 시나리오 컷 : 스크롤 진행에 따라 컷 전환 (컷마다 넉넉히 머무름) ===== */
+(function(){
+  var box=document.getElementById('scn'); if(!box) return;
+  var cuts=[].slice.call(box.querySelectorAll('.scn-cut')), bars=[].slice.call(box.querySelectorAll('.scn-bar i')), n=cuts.length, cur=0;
+  function tick(){
+    var vh=innerHeight, r=box.getBoundingClientRect(), p=Math.max(0,Math.min(0.9999,-r.top/(r.height-vh)));
+    var f=p*n, i=Math.floor(f), k=f-i;
+    if(i!==cur){ cuts[cur].classList.remove('on'); cuts[i].classList.add('on'); cur=i; }
+    cuts.forEach(function(c,j){ c.querySelector('.scn-img').style.setProperty('--k', j<i?1:(j===i?k:0)); });
+    bars.forEach(function(b,j){ b.style.setProperty('--f', j<i?1:(j===i?k:0)); });
+  }
+  addEventListener('scroll',tick,{passive:true}); addEventListener('resize',tick); tick();
+})();
+</script>
+
+<script>
+/* ===== 모든 파트 제목 : 글자가 한 자씩 아래에서 차례로 올라옴 (Persona & Problem 과 같은 효과) ===== */
+(function(){
+  [].forEach.call(document.querySelectorAll('.s-head'),function(head){
+    var h2=head.querySelector('.h2'); if(!h2) return;
+    var txt=h2.textContent,k=0; h2.textContent=''; h2.setAttribute('aria-label',txt);
+    txt.split('').forEach(function(c){var o=document.createElement('span');o.className='lt';o.setAttribute('aria-hidden','true');
+      var i=document.createElement('i');i.textContent=c===' '?'\u00a0':c;i.style.setProperty('--i',k++);o.appendChild(i);h2.appendChild(o);});
+    head.style.setProperty('--desc-delay',(k*45+500)+'ms');   // 제목이 다 올라온 뒤 설명 줄
+    head.classList.remove('reveal'); head.classList.add('lt-ready');
+    if(!('IntersectionObserver' in window)){head.classList.add('lt-on');return}
+    new IntersectionObserver(function(es,ob){if(es[0].isIntersecting){head.classList.add('lt-on');ob.disconnect()}},{threshold:.4}).observe(head);
+  });
+})();
+</script>
+
+
+<script>
+/* ===== 06 TRY IT YOURSELF : 버튼을 누르면 체험 창이 펼쳐짐 (누르기 전에는 체험을 불러오지도 않음) ===== */
+(function(){
+  var btn=document.getElementById('tryBtn'), panel=document.getElementById('tryPanel'); if(!btn||!panel) return;
+  var sec=document.getElementById('try'), box=panel.querySelector('.exp');
+  btn.addEventListener('click',function(){
+    var open=btn.getAttribute('aria-expanded')!=='true';
+    btn.setAttribute('aria-expanded',open); btn.textContent=open?'CLOSE':'TRY IT YOURSELF'; sec.classList.toggle('open',open);
+    if(open){
+      if(!box.querySelector('iframe')){ var f=document.createElement('iframe'); f.src='experience.html'; f.title='AI 빈티지 디스커버리 태그 3D 체험'; box.appendChild(f); }
+      panel.hidden=false; void panel.offsetHeight; panel.classList.add('open');
+      setTimeout(function(){ window.__navJump=Date.now(); var y=box.getBoundingClientRect().top+scrollY-(innerHeight-box.offsetHeight)/2; scrollTo({top:Math.max(0,y),behavior:'smooth'}); },350);
+    }else{
+      panel.classList.remove('open'); setTimeout(function(){ if(btn.getAttribute('aria-expanded')!=='true') panel.hidden=true; },800);
+    }
+  });
+})();
+</script>
+<script>
+/* ===== 04 인터랙션 플로우 =====
+   · 데스크톱 : 섹션에 도착하면 화면에 고정되고, 1초 동안은 스크롤이 멈춤 → 그다음부터 스크롤한 만큼 신호가 진행
+     (다 진행되면 고정이 풀려 다음 섹션으로)
+   · 휴대폰 : 고정 없이, 화면 가운데쯤 오면 스크롤한 만큼 진행
+   · 단계마다 효과 : 1 태그(토글이 내려가고 빨간 신호가 퍼짐) → 2 MCU AI(태그를 비추는 빛 · 회전 링)
+                    → 3 디스플레이(가격이 튀어 오르며 빛살) */
+(function(){
+  var sf=document.getElementById('sf'), pin=document.getElementById('sfPin'); if(!sf||!pin) return;
+  var sticky=pin.querySelector('.sf-sticky');
+  var line=sf.querySelector('.sf-line'), dot=sf.querySelector('.sf-dot'), glow=sf.querySelector('.sf-dot-glow'), L=line.getTotalLength();
+  var nodes=[sf.querySelector('.sf-tag'),sf.querySelector('.sf-ai'),sf.querySelector('.sf-out')], steps=[].slice.call(sf.querySelectorAll('.sf-step'));
+  var AT=[0.02,0.45,0.97];          // 단계가 켜지는 지점
+  var RANGE=3200, HOLD=1000;        // 고정된 동안 스크롤할 거리(px) · 도착 후 멈춰 있는 시간(ms)
+  var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  line.style.strokeDasharray=L; line.style.strokeDashoffset=L;
+  var shown=0, want=0, raf=0, stage=-1;
+  function setStage(k){
+    if(k===stage) return; var up=k>stage; stage=k;
+    nodes.forEach(function(n,i){ n.classList.toggle('on',i<=k); n.classList.toggle('cur',i===k);
+      if(i===k&&up){ n.classList.remove('pop'); void n.getBoundingClientRect(); n.classList.add('pop'); } });
+    steps.forEach(function(s,i){ s.classList.toggle('on',i<=k); s.classList.toggle('cur',i===k); });
+    sf.classList.toggle('s2',k===1);
+  }
+  function draw(){
+    shown+=(want-shown)*0.1; if(Math.abs(want-shown)<0.001) shown=want;
+    line.style.strokeDashoffset=L*(1-shown);
+    var pt=line.getPointAtLength(L*shown); dot.setAttribute('cx',pt.x); dot.setAttribute('cy',pt.y); glow.setAttribute('cx',pt.x); glow.setAttribute('cy',pt.y);
+    sf.classList.toggle('go',shown>0.005&&shown<0.995);
+    var k=-1; AT.forEach(function(a,i){ if(shown>=a) k=i; }); setStage(k);
+    raf=shown!==want?requestAnimationFrame(draw):0;
+  }
+  function kick(){ if(!raf) raf=requestAnimationFrame(draw); }
+  // 스크롤 → 진행 : 단계마다 잠시 머무는 구간이 있음 (태그 · AI · 디스플레이)
+  var KEYS=[[0,0],[0.06,0.03],[0.2,0.03],[0.48,0.45],[0.64,0.45],[0.9,1],[1,1]];
+  function ease(u){ for(var i=1;i<KEYS.length;i++){ if(u<=KEYS[i][0]){ var a=KEYS[i-1],b=KEYS[i],t=(u-a[0])/(b[0]-a[0]||1); t=t*t*(3-2*t); return a[1]+(b[1]-a[1])*t; } } return 1; }
+
+  var desk=!reduce;  /* 모바일도 PC처럼 화면 고정 후 신호 흐름 */
+  var touch=matchMedia('(hover: none), (pointer: coarse)').matches;  /* 터치에선 스크롤 잠깐 멈춤(잠금) 없이 바로 진행 */
+  if(innerWidth<=768) RANGE=2200;
+  if(!desk){
+    addEventListener('scroll',function(){ var r=sf.getBoundingClientRect(), vh=innerHeight;
+      want=Math.max(0,Math.min(1,(vh*0.6-r.top)/(vh*0.45))); kick(); },{passive:true});
+    return;
+  }
+
+  /* ----- 데스크톱 : 고정 ----- */
+  pin.classList.add('on');
+  var topPx=24;
+  function size(){
+    var h=sticky.offsetHeight; topPx=Math.max(24,(innerHeight-h)/2); pin.style.setProperty('--sf-top',topPx+'px');
+    pin.style.height=(h+RANGE)+'px';
+  }
+  size(); addEventListener('resize',size); addEventListener('load',size); if(document.fonts) document.fonts.ready.then(size);
+  var state='idle', lockUntil=0, base=0, lockY=0;
+  function locked(){ return state==='hold' && performance.now()<lockUntil; }
+  var keys={32:1,33:1,34:1,35:1,38:1,40:1};
+  addEventListener('wheel',function(e){ if(locked()) e.preventDefault(); },{passive:false});
+  addEventListener('touchmove',function(e){ if(locked()) e.preventDefault(); },{passive:false});
+  addEventListener('keydown',function(e){ if(locked()&&keys[e.keyCode]) e.preventDefault(); });
+  function onScroll(){
+    var into=topPx-pin.getBoundingClientRect().top;        // 고정된 뒤 내려온 거리
+    var jump=Date.now()-(window.__navJump||0)<2500;
+    if(into<-60){ state='idle'; want=0; kick(); return; }  // 섹션 위로 다시 올라가면 처음 상태로
+    if(state==='idle' && into>=0){
+      if(jump||touch||into>RANGE*0.5){ state='run'; base=0; }
+      else { state='hold'; lockY=scrollY-into; lockUntil=performance.now()+HOLD; window.scrollTo({top:lockY,behavior:'instant'});
+        setTimeout(function(){ if(state==='hold'){ state='run'; base=Math.max(0,topPx-pin.getBoundingClientRect().top); } }, HOLD); }
+    }
+    if(state==='hold'){ if(Math.abs(scrollY-lockY)>1) window.scrollTo({top:lockY,behavior:'instant'}); want=0; kick(); return; }
+    if(state==='run'){ want=ease(Math.max(0,Math.min(1,(into-base)/(RANGE*0.9)))); kick(); }
+  }
+  addEventListener('scroll',onScroll,{passive:true}); onScroll();
+})();
+</script>
+
+<script>
+/* ===== 02 페르소나 & 문제 : 홀로그램 3D
+   · 점으로 된 입체 모형이 천천히 돌며 떠 있고, 스크롤하면 다음 문제의 모형으로 흩어졌다 다시 모임
+   · 01 가치를 알 수 없는 골동품 항아리 / 02 반복되는 질문 말풍선 / 03 좁은 매대에 들어가지 않는 큰 기계 ===== */
+(function(){
+  var pz=document.getElementById('persona'); if(!pz) return;
+  var cv=pz.querySelector('.pz-cv'), cx=cv.getContext('2d'), holo=pz.querySelector('.pz-holo'), chipsEl=pz.querySelector('.pz-chips');
+  var items=[].slice.call(pz.querySelectorAll('.pz-item')), ticks=[].slice.call(pz.querySelectorAll('.pz-ticks i')), ct=pz.querySelector('.pz-ticks .ct'), cap=pz.querySelector('.pz-cap span');
+  var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var N=2400;
+  /* ---------- 모형 (선 → 점) ---------- */
+  function polyPts(lines){   // lines: [[x,y,z],...] 묶음 → 길이에 비례해 N개 점
+    var segs=[],tot=0;
+    lines.forEach(function(l){for(var i=0;i<l.length-1;i++){var a=l[i],b=l[i+1],d=Math.hypot(b[0]-a[0],b[1]-a[1],b[2]-a[2]);segs.push([a,b,d,tot]);tot+=d;}});
+    var out=new Float32Array(N*3);
+    for(var k=0;k<N;k++){var t=(k+Math.random()*.5)/N*tot,j=0;while(j<segs.length-1&&segs[j][3]+segs[j][2]<t)j++;var s=segs[j],f=(t-s[3])/(s[2]||1);
+      out[k*3]=s[0][0]+(s[1][0]-s[0][0])*f;out[k*3+1]=s[0][1]+(s[1][1]-s[0][1])*f;out[k*3+2]=s[0][2]+(s[1][2]-s[0][2])*f;}
+    return out;
+  }
+  function ring(cy,r,n,y2){var a=[];for(var i=0;i<=n;i++){var t=i/n*Math.PI*2;a.push([Math.cos(t)*r,cy,Math.sin(t)*r]);}return a;}
+  function rrect(cx0,cy0,z,w,h,r,n){var a=[],c=[[w/2-r,h/2-r,0],[-w/2+r,h/2-r,Math.PI/2],[-w/2+r,-h/2+r,Math.PI],[w/2-r,-h/2+r,Math.PI*1.5]];
+    c.forEach(function(q){for(var i=0;i<=n;i++){var t=q[2]+i/n*Math.PI/2;a.push([cx0+q[0]+Math.cos(t)*r,cy0+q[1]+Math.sin(t)*r,z]);}});a.push(a[0]);return a;}
+  // 01 항아리 : 회전체 + 세로선 + 위에 떠 있는 '?'
+  function vase(){
+    var L=[],prof=function(y){var t=(y+1)/2;return .22+.62*Math.sin(Math.PI*Math.min(1,t*1.15))*(t<.85?1:1-(t-.85)*2.2)+(t>.86?.18*(t-.86)/.14:0);};
+    for(var y=-1;y<=0.95;y+=.12)L.push(ring(y*1.05-.15,prof(y),48));
+    for(var k=0;k<14;k++){var a=k/14*Math.PI*2,l=[];for(var y2=-1;y2<=0.95;y2+=.05)l.push([Math.cos(a)*prof(y2),y2*1.05-.15,Math.sin(a)*prof(y2)]);L.push(l);}
+    var q=[];for(var i=0;i<=24;i++){var t=Math.PI*1.1-i/24*Math.PI*1.45;q.push([Math.cos(t)*.22,1.42+Math.sin(t)*.22,0]);}q.push([0,1.12,0]);L.push(q);L.push([[0,.98,0],[0,.95,0]]);
+    return polyPts(L);
+  }
+  // 02 말풍선 두 개 + 계속 도는 화살표 고리 (같은 설명의 반복)
+  function talk(){
+    var L=[],b1=rrect(-.38,.42,.15,1.15,.62,.16,6),b2=rrect(.42,-.32,-.15,1.15,.62,.16,6);
+    L.push(b1,b2,[[-.62,.11,.15],[-.72,-.08,.15],[-.48,.11,.15]],[[.66,-.63,-.15],[.78,-.82,-.15],[.52,-.63,-.15]]);
+    for(var r=0;r<3;r++){L.push([[-.75,.52-r*.1,.15],[-.75+(r==2?.4:.72),.52-r*.1,.15]]);L.push([[.05,-.22-r*.1,-.15],[.05+(r==2?.35:.7),-.22-r*.1,-.15]]);}
+    var a=[];for(var i=0;i<=60;i++){var t=i/60*Math.PI*1.75;a.push([Math.cos(t)*1.28,Math.sin(t)*.28,Math.sin(t)*1.28]);}L.push(a);
+    var e=a[a.length-1];L.push([[e[0],e[1],e[2]],[e[0]+.14,e[1]+.12,e[2]-.12]],[[e[0],e[1],e[2]],[e[0]+.18,e[1]-.08,e[2]+.05]]);
+    return polyPts(L);
+  }
+  // 03 좁은 매대(낮은 테이블 윤곽) 위에 올라가지 않는 큰 기계
+  function machine(){
+    var L=[],B=function(x0,y0,z0,x1,y1,z1){var v=[[x0,y0,z0],[x1,y0,z0],[x1,y1,z0],[x0,y1,z0],[x0,y0,z1],[x1,y0,z1],[x1,y1,z1],[x0,y1,z1]];
+      [[0,1],[1,2],[2,3],[3,0],[4,5],[5,6],[6,7],[7,4],[0,4],[1,5],[2,6],[3,7]].forEach(function(e){L.push([v[e[0]],v[e[1]]]);});};
+    B(-.62,-.35,-.5,.62,1.3,.5);                                   // 큰 기계
+    L.push(rrect(0,.72,.51,.86,.56,.05,4));                         // 화면
+    for(var i=0;i<4;i++)L.push([[-.4,.2-i*.1,.51],[.4,.2-i*.1,.51]]);
+    B(-.48,-.98,-.3,.48,-.86,.3);                                   // 작은 매대 상판
+    [[-.44,-.26],[.44,-.26],[-.44,.26],[.44,.26]].forEach(function(p){L.push([[p[0],-1.32,p[1]],[p[0],-.98,p[1]]]);});
+    L.push([[-1.0,-.62,0],[-.7,-.62,0]],[[.7,-.62,0],[1.0,-.62,0]],[[-1.0,-.68,0],[-1.0,-.56,0]],[[1.0,-.68,0],[1.0,-.56,0]]);   // 폭 비교 표시
+    L.push([[-.9,1.55,0],[-.62,1.3,0]],[[.9,1.55,0],[.62,1.3,0]]);
+    return polyPts(L);
+  }
+  var SH=[vase(),talk(),machine()];
+  for(var m=0;m<N*3;m++){SH[2][m]*=.86;if(m%3===1)SH[2][m]+=.08;}
+  var CHIPS=[[['₩ ???',-.95,.55],['연식 ?',.95,.25],['희소성 ?',-.9,-.55],['보존 상태 ?',.85,-.75]],
+             [['“왜 이 가격이에요?”',-.15,1.05],['“다른 데는 더 싸던데…”',.55,-1.0],['같은 설명 × 12',-1.0,-.35]],
+             [['설치 공간 부족',-.95,1.0],['조작이 복잡해요',.9,.6],['매대 폭 120cm',0,-1.5]]];
+  var chipEls=CHIPS.map(function(set){return set.map(function(c){var e=document.createElement('span');e.className='pz-chip';e.textContent=c[0];chipsEl.appendChild(e);return {el:e,x:c[1],y:c[2]};});});
+  var JIT=new Float32Array(N*3);for(var j=0;j<N*3;j++)JIT[j]=(Math.random()-.5)*2;
+  /* ---------- 스크롤 → 단계 ---------- */
+  var stage=0,target=0,cur=-1,W=1,H=1,DPR=1;
+  function size(){var r=holo.getBoundingClientRect();W=r.width;H=r.height;DPR=Math.min(2,devicePixelRatio||1);cv.width=Math.round(W*DPR);cv.height=Math.round(H*DPR);}
+  function setItem(i){if(i===cur)return;var prev=cur;cur=i;items.forEach(function(el,k){el.classList.toggle('on',k===i);el.classList.toggle('out',k<i);});
+    ticks.forEach(function(t,k){t.classList.toggle('on',k===i);});if(ct)ct.textContent='0'+(i+1)+' / 03';if(cap)cap.textContent='0'+(i+1);
+    chipEls.forEach(function(set,k){set.forEach(function(c){c.el.classList.toggle('on',k===i);});});}
+  var desk=matchMedia('(min-height:460px)');  /* 모바일 세로 화면도 PC처럼 고정 후 문제 1→2→3 전환 */
+  function onScroll(){
+    if(desk.matches){var r=pz.getBoundingClientRect(),span=pz.offsetHeight-innerHeight,p=Math.min(1,Math.max(0,-r.top/Math.max(1,span)));target=Math.min(2,p*2.6);}
+    else{var best=0,bd=1e9;items.forEach(function(el,k){var b=el.getBoundingClientRect(),d=Math.abs(b.top+b.height/2-innerHeight*.62);if(d<bd){bd=d;best=k;}});target=best;}
+    setItem(Math.min(2,Math.round(target)));
+  }
+  addEventListener('scroll',onScroll,{passive:true});addEventListener('resize',function(){size();onScroll();});
+  /* ---------- 그리기 ---------- */
+  var yaw=0,last=0,vis=false;
+  function frame(t){
+    requestAnimationFrame(frame); if(!vis) return;
+    var dt=Math.min(.05,(t-(last||t))/1000);last=t;
+    stage+=(target-stage)*(1-Math.pow(.02,dt)); yaw+=dt*(reduce?0:.35);
+    var i0=Math.floor(stage),i1=Math.min(2,i0+1),f=stage-i0,mf=f<.5?0:1,k=Math.min(1,Math.max(0,(f-.2)/.6)),ks=k*k*(3-2*k),scat=Math.sin(Math.PI*ks)*.55;
+    var A=SH[i0],B=SH[i1];
+    cx.setTransform(DPR,0,0,DPR,0,0);cx.clearRect(0,0,W,H);cx.globalCompositeOperation='lighter';
+    var S=Math.min(W,H)*(desk.matches?.25:.27),ox=desk.matches?W*.72:W/2,oy=H*.47,cy=Math.cos(yaw),sy=Math.sin(yaw),tilt=.32,ct2=Math.cos(tilt),st2=Math.sin(tilt),fl=(Math.random()<.04?.75:1),tt=t/1000;
+    for(var n=0;n<N;n++){
+      var a=n*3,x=A[a]+(B[a]-A[a])*ks+JIT[a]*scat,y=A[a+1]+(B[a+1]-A[a+1])*ks+JIT[a+1]*scat+Math.sin(tt*1.4+n*.37)*.006,z=A[a+2]+(B[a+2]-A[a+2])*ks+JIT[a+2]*scat;
+      var xr=x*cy+z*sy,zr=-x*sy+z*cy,yr=y*ct2-zr*st2,zz=y*st2+zr*ct2,p=3.4/(3.4-zz*.6);
+      var px=ox+xr*S*p,py=oy-yr*S*p,dep=(zz+1.4)/2.8,al=(.24+.5*dep)*fl;
+      var band=.5+.5*Math.sin(py*.06-tt*3);
+      cx.fillStyle='rgba('+(130+band*60|0)+',230,'+(210+band*30|0)+','+al.toFixed(3)+')';
+      var r=.9+dep*.9;cx.fillRect(px-r/2,py-r/2,r,r);
+    }
+    cx.globalCompositeOperation='source-over';
+    // 이름표 위치 (모형과 함께 살짝 흔들림)
+    chipEls.forEach(function(set){set.forEach(function(c,k){c.el.style.transform='translate('+(ox+c.x*S-c.el.offsetWidth/2).toFixed(1)+'px,'+(oy-c.y*S+Math.sin(tt*1.2+k)*4-c.el.offsetHeight/2).toFixed(1)+'px)';});});
+  }
+  new IntersectionObserver(function(es){vis=es[0].isIntersecting;},{rootMargin:'200px'}).observe(holo);
+  size();onScroll();setItem(0);requestAnimationFrame(frame);
+})();
+</script>
+
+</body>
+</html>
